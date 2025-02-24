@@ -86,7 +86,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <!-- Botón para agregar un paciente -->
     <div class="add-option">
-      <i class="fa-solid fa-user-injured"></i> <a href="add_paciente.php">Agregar Paciente</a> 
+      <i class="fa-solid fa-user-injured"></i> <a href="add_paciente.php">Agregar  nuevo Paciente</a> 
       </div>
     </div>
 
