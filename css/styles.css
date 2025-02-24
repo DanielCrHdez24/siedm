@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Quicksand;
+    text-decoration: none;
+}
+
+body{
+    background: rgb(255, 255, 255);
+}
+
+.container-all{
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 100px;
+    display: flex;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.cnt-form{
+    width: 75%;
+    padding: 45px;
+    background: #f0f8f6;
+}
+
+.logo{
+    width: 150px;
+    display: block;
+    margin: auto;
+}
+
+.title{
+    text-align: center;
+    margin-top: 25px;
+    font-weight: 300;
+    color: #383a39
+}
+
+.input-user,.input-password{
+    width: 100%;
+    height: 30px;
+    margin-top: 25px;
+    background: rgba(0, 0, 0, 0);
+    border: 0px;
+    outline: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    color: #125873;
+    font-size: 17px;
+}
+
+.button{
+    width: 100%;
+    height: 45px;
+    margin-top: 40px;
+    color: white;
+    border: 0px;
+    background: #125873;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.button:hover{
+    background: #0a9c9a;
+}
+
+.text-footer{
+    display: block;
+    margin-top: 70px;
+    text-align: center;
+    font-weight: 500;
+    color: #383a39;
+}
+
+.text-footer a{
+    color: #0a9c9a;
+    font-weight: 500;
+}
+
+/*imagen contenedor*/
+
+.cnt-text{
+    width: 70%;
+    background-image: url(../images/login.jpg);
+    background-position: center;
+    background-size: cover;
+    padding: 40px;
+    position: relative;
+}
+
+.capa{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #0a9c9a;
+    opacity: 0.8;
+}
+.title-slogan{
+    position: relative;
+    top: 80px;
+    color: white;
+    font-size: 40px;
+}
+.text-slogan{
+    position: relative;
+    top: 100px;
+    color: white;
+    font-size: 19px;
+}
+
+/*texto de error*/
+.msg-error{
+    color: red;
+    display: block;
+    margin-top: 6px;
+}
+
+/*Menú hamburguesa*/
+
+
+/*Responsive*/
+@media screen and (max-width: 800px){
+    .cnt-text{
+        display: none;
+    }
+    .cnt-form{
+        margin: auto;
+        width: 95%;
+
+    }
+}
+
+
+

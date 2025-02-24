@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Quicksand;
+    text-decoration: none;
+}
+
+body {
+    background: rgb(255, 255, 255);
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+/* Estilos para el menú lateral */
+.sidebar {
+    width: 320px;
+    height: 100vh;
+    background-color: #009688;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    transition: 0.3s;
+}
+
+/* Estilo para el encabezado del menú lateral */
+.menu-header {
+    display: flex;
+    align-items: center; /* Alineación en la misma línea */
+    justify-content: flex-start; /* Alineación a la izquierda */
+    margin-bottom: 20px;
+    padding-left: 20px; /* Espacio a la izquierda para el ícono */
+}
+
+/* Estilo para el ícono de menú */
+.menu-header .menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px; /* Espacio entre el ícono y el título */
+}
+
+/* Estilo para el título del menú lateral */
+.menu-header h2 {
+    color: white;
+    margin: 0; /* Elimina cualquier margen del h2 */
+}
+
+/* Ocultar el menú lateral en pantallas pequeñas */
+.sidebar.hide {
+    transform: translateX(-100%);
+}
+
+.sidebar a {
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.2s;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar a:hover {
+    background-color: #125873;
+    border-left: 5px solid #c7c7c7;
+}
+
+/* Submenú */
+.submenu-container {
+    position: relative;
+}
+
+/* Submenú oculto por defecto */
+.submenu {
+    display: none;
+    margin-left: 20px;
+}
+
+.submenu-container .submenu a {
+    padding-left: 30px; /* Añadir más espacio para los enlaces del submenú */
+}
+
+.submenu-toggle {
+    cursor: pointer;
+}
+
+/* Mostrar el submenú cuando se hace clic */
+.submenu-container.active .submenu {
+    display: block;
+}
+
+.submenu-container a:hover,
+.sidebar a:hover {
+    background-color: #125873;
+    border-left: 5px solid #c7c7c7;
+}
+
+/* Estilos para el enlace de Cerrar sesión */
+.sidebar .close-sesion:hover {
+    background-color: #c0392b;
+}
+
+/* Estilo del encabezado */
+.header {
+    width: calc(100% - 320px); /* Ajuste considerando el ancho del menú lateral */
+    padding: 10px;
+    background-color: #125873;
+    color: white;
+    display: flex;
+    justify-content: space-between; /* Espacia el contenido de izquierda a derecha */
+    align-items: center; /* Alinea verticalmente el contenido */
+    position: fixed;
+    top: 0;
+    left: 320px; /* Alineación con el menú lateral */
+    z-index: 10;
+}
+
+.header h1 {
+    text-align: center;
+    flex: 1; /* Ocupa todo el espacio disponible */
+}
+
+.header p {
+    margin: 0; /* Elimina el margen del p */
+    text-align: right; /* Alinea el texto a la derecha */
+}
+
+/* Estilos para el ícono de menú hamburguesa */
+.menu-icon {
+    display: block; /* Siempre visible */
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* Contenido principal */
+.container-panel {
+    margin-left: 320px; /* Igual al ancho del menú lateral */
+    margin-top: 60px; /* Ajuste para evitar superposición con el encabezado */
+    padding: 20px;
+}
+
+.container-panel h1{
+    text-align: center;
+    color: #009688;
+}
+.container-panel p {
+    margin-top: 20px; /* Ajusta este valor según el espacio que desees */
+    margin-bottom: 20px;
+}
+
+/*Iconos dentro del contenido principal*/
+.add-option {
+    display: inline-flex; /* Alinea los íconos en fila */
+    align-items: center;
+    margin: 10px 20px; /* Espaciado entre los botones */
+    font-size: 20px; /* Tamaño grande para los íconos */
+    cursor: pointer;
+    color: #333; /* Color del texto y el ícono */
+   
+}
+
+.add-option i {
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+.add-option:hover {
+    color: #009688; /* Color al pasar el mouse */
+    font-weight: bold;
+}
+
+
+/* Estilo para el formulario */
+form {
+    margin: 0 auto;
+    padding: 10px;   
+}
+
+label {
+    font-size: 15px;
+    
+}
+
+input, select {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+input:focus, select:focus {
+    border-color: #009688;
+    outline: none;
+}
+
+button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #34a598;
+}
+
+
+
+
+
+
+
+/* Mostrar el icono de hamburguesa junto al título en el menú lateral */
+@media (max-width: 768px) {
+    .header {
+        left: 0;
+        width: 100%;
+        justify-content: space-between; /* Alineación para que se muestre el texto y el ícono */
+    }
+
+    .sidebar {
+        width: 250px;
+    }
+
+    .container-panel {
+        margin-left: 0;
+        margin-top: 60px;
+        padding: 20px;
+    }
+    
+
+    /* Ajustes para el menú en pantallas pequeñas */
+    .sidebar {
+        width: 250px;
+    }
+
+    .header h1 {
+        display: inline-block;
+        margin-right: auto;
+    }
+
+    .header p {
+        display: none; /* Ocultar el texto en pantallas pequeñas */
+    }
+}
