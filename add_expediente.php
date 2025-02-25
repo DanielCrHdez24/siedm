@@ -35,7 +35,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="submenu-container">
       <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-file-medical"></i> Expedientes Médicos</a>
       <div class="submenu">
-        <a href="add_paciente.php">- Crear Expediente</a>
+        <a href="#">- Crear Expediente</a>
         <a href="#">- Buscar Expediente</a>
       </div>
     </div>
@@ -74,23 +74,46 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <p>Bienvenido, <strong><?php echo htmlspecialchars($_SESSION["nombreUsuario"]); ?></strong>!</p>
   </header>
 
-  <!-- Contenido principal -->
-  <div class="container-panel">
-    <h1>Bienvenido al Sistema Integral de Expedientes Médicos.</h1>
-    <p>Selecciona una opción para comenzar.</p>
+<!-- Contenido principal -->
+<div class="container-panel">
+    <h1>Agregar Expediente.</h1>
+    <p>Ingresa los datos para agregar el registro de un nuevo Expediente.</p>
 
-    <!-- Botón para agregar un médico -->
-    <div class="add-option">
-      <i class="fa-solid fa-user-doctor"></i><a href="add_medico.php">Agregar Médico</a> 
-    </div>
+    <!-- Formulario para agregar médico -->
+    <form action="agregar_expediente.php" method="POST">
 
-    <!-- Botón para agregar un paciente -->
-    <div class="add-option">
-      <i class="fa-solid fa-user-injured"></i> <a href="add_paciente.php">Agregar  Paciente</a> 
-      </div>
-    </div>
 
-  </div>
+            <label for="claveExpediente">Clave de Expediente:</label>
+            <input type="text" id="claveExpediente" name="claveExpediente" required placeholder="Ingrese clave de expediente">
+        
+       
+            <label for="nombrePaciente">Nombre de Paciente:</label>
+            <input type="text" id="nombrePaciente" name="nombrePaciente" required placeholder="Ingrese el nombre del Paciente">
+        
+            <label for="primerApellido">Primer apellido:</label>
+            <input type="text" id="primerApellido" name="primerApellido" required placeholder="Ingrese Primer Apellido">
+        
+          
+            <label for="segundoApellido">Segundo Apellido:</label>
+            <input type="text" id="SegundoApellido" name="SegundoApellido" required placeholder="Ingrese Segundo Apellido">
+
+
+            <label for="edad">Edad:</label>
+            <input type="text" id="edad" name="edad" required>
+             
+
+            <label for="sexo">Sexo:</label>
+            <input type="text" id="sexo" name="sexo" required>
+
+            <label for="fechaNacimiento">Sexo:</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+
+
+            <button type="addExpediente" class="btnaddExpediente">Agregar Expediente</button>
+        </div>
+    </form>
+</div>
+
 
   <!-- Incluir archivo JS -->
   <script src="js/scripts.js"></script>
