@@ -10,3 +10,31 @@
         die('Error en la conexión'. mysqli_connect_error());
     }
 ?>
+
+<?php
+// Conexión a la base de datos
+include 'conexion.php';
+
+if (isset($_GET['claveExpediente']) || isset($_GET['curp'])) {
+    $claveExpediente = $_GET['claveExpediente'];
+    $curp = $_GET['curp'];
+
+    // Comenzamos la consulta
+    $sql = "SELECT * FROM expedientes WHERE claveExpediente = ? OR curp = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param('ss', $claveExpediente, $curp);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows > 0) {
+        // Mostrar los resultados
+        while ($row = $resultado->fetch_assoc()) {
+            echo "Expediente encontrado: <br>";
+            echo "Nombre: " . $row['nombrePaciente'] . "<br>";
+            // Muestra más datos del expediente aquí
+        }
+    } else {
+        echo "No se encontraron expedientes.";
+    }
+}
+?>

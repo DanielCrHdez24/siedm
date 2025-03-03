@@ -157,9 +157,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <button type="submit" class="btnaddExpediente">Agregar Expediente</button>
 
 </form>
-
-
-
+<!-- Botón para regresar al Panel -->
+<div class="back-to-panel">
+        <a href="panel.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Panel</a>
+    </div>
 </div>
 
 
