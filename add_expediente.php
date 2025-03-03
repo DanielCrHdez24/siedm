@@ -80,38 +80,86 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <p>Ingresa los datos para agregar el registro de un nuevo Expediente.</p>
 
     <!-- Formulario para agregar médico -->
-    <form action="agregar_expediente.php" method="POST">
+    <form action="agregar_expediente.php" method="POST" enctype="multipart/form-data">
+
+<label for="fotoPaciente">Foto del Paciente:</label>
+<input type="file" id="fotoPaciente" name="fotoPaciente" accept="image/*" required>
+
+<label for="claveExpediente">Clave de Expediente:</label>
+<input type="text" id="claveExpediente" name="claveExpediente" required placeholder="Ingrese clave de expediente">
+
+<label for="nombrePaciente">Nombre de Paciente:</label>
+<input type="text" id="nombrePaciente" name="nombrePaciente" required placeholder="Ingrese el nombre del paciente">
+
+<label for="primerApellido">Primer Apellido:</label>
+<input type="text" id="primerApellido" name="primerApellido" required placeholder="Ingrese primer apellido">
+
+<label for="segundoApellido">Segundo Apellido:</label>
+<input type="text" id="segundoApellido" name="segundoApellido" required placeholder="Ingrese segundo apellido">
+
+<label for="curp">CURP:</label>
+<input type="text" id="curp" name="curp" required placeholder="Ingrese CURP">
+
+<label for="edad">Edad:</label>
+<input type="number" id="edad" name="edad" required min="0" max="120" placeholder="Ingrese la edad">
+
+<label for="sexo">Sexo:</label>
+<select id="sexo" name="sexo" required>
+    <option value="">Seleccione una opción</option>
+    <option value="Masculino">Masculino</option>
+    <option value="Femenino">Femenino</option>
+</select>
+
+<label for="fechaNacimiento">Fecha de Nacimiento:</label>
+<input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+
+<label for="derechohabiencia">Derechohabiencia:</label>
+<select id="derechohabiencia" name="derechohabiencia" required>
+    <option value="">Seleccione una opción</option>
+    <option value="IMSS">IMSS</option>
+    <option value="ISSSTE">ISSSTE</option>
+    <option value="INSABI">INSABI</option>
+    <option value="Privado">Privado</option>
+    <option value="Otro">Otro</option>
+</select>
+
+<label for="telefono">Teléfono de Contacto:</label>
+<input type="tel" id="telefono" name="telefono" required placeholder="Ingrese el teléfono de contacto">
+
+<label for="direccion">Domicilio:</label>
+<input type="text" id="direccion" name="direccion" required placeholder="Ingrese la dirección completa">
+
+<label for="tipoSangre">Tipo de Sangre:</label>
+<select id="tipoSangre" name="tipoSangre" required>
+    <option value="">Seleccione una opción</option>
+    <option value="A+">A+</option>
+    <option value="A-">A-</option>
+    <option value="B+">B+</option>
+    <option value="B-">B-</option>
+    <option value="AB+">AB+</option>
+    <option value="AB-">AB-</option>
+    <option value="O+">O+</option>
+    <option value="O-">O-</option>
+</select>
+
+<label for="religion">Religión:</label>
+<input type="text" id="religion" name="religion" placeholder="Ingrese religión (opcional)">
+
+<label for="ocupacion">Ocupación:</label>
+<input type="text" id="ocupacion" name="ocupacion" required placeholder="Ingrese ocupación">
+
+<label for="alergias">Alergias:</label>
+<input type="text" id="alergias" name="alergias" placeholder="Ingrese alergias (si aplica)">
+
+<label for="padecimientos">Padecimientos Crónicos:</label>
+<input type="text" id="padecimientos" name="padecimientos" placeholder="Ingrese padecimientos crónicos (si aplica)">
+
+<button type="submit" class="btnaddExpediente">Agregar Expediente</button>
+
+</form>
 
 
-            <label for="claveExpediente">Clave de Expediente:</label>
-            <input type="text" id="claveExpediente" name="claveExpediente" required placeholder="Ingrese clave de expediente">
-        
-       
-            <label for="nombrePaciente">Nombre de Paciente:</label>
-            <input type="text" id="nombrePaciente" name="nombrePaciente" required placeholder="Ingrese el nombre del Paciente">
-        
-            <label for="primerApellido">Primer apellido:</label>
-            <input type="text" id="primerApellido" name="primerApellido" required placeholder="Ingrese Primer Apellido">
-        
-          
-            <label for="segundoApellido">Segundo Apellido:</label>
-            <input type="text" id="SegundoApellido" name="SegundoApellido" required placeholder="Ingrese Segundo Apellido">
 
-
-            <label for="edad">Edad:</label>
-            <input type="text" id="edad" name="edad" required>
-             
-
-            <label for="sexo">Sexo:</label>
-            <input type="text" id="sexo" name="sexo" required>
-
-            <label for="fechaNacimiento">Sexo:</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
-
-
-            <button type="addExpediente" class="btnaddExpediente">Agregar Expediente</button>
-        </div>
-    </form>
 </div>
 
 
