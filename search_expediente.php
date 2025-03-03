@@ -35,8 +35,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <div class="submenu-container">
             <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-file-medical"></i> Expedientes Médicos</a>
             <div class="submenu">
-                <a href="#">- Crear Expediente</a>
-                <a href="#">- Buscar Expediente</a>
+                <a href="add_expediente.php">- Crear Expediente</a>
+                <a href="search_expediente.php">- Buscar Expediente</a>
             </div>
         </div>
 
