@@ -76,36 +76,30 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <!-- Contenido principal -->
 <div class="container-panel">
-    <h1>Agregar usuario Médico.</h1>
-    <p>Ingresa los datos para agregar el registro de un nuevo Médico.</p>
+    <h1>Agregar médico.</h1>
+    <p>Ingresa los datos para agregar el registro de un nuevo médico.</p>
 
     <!-- Formulario para agregar médico -->
     <form action="agregar_medico.php" method="POST">
-       
-            <label for="nombreUsuario">Nombre de Usuario:</label>
-            <input type="text" id="nombreUsuario" name="nombreUsuario" required placeholder="Ingrese el nombre de usuario">
-        
-            <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese la contraseña">
-        
-            <label for="rol">Rol:</label>
-            <select id="rol" name="rol" required>
-                <option value="medico">Médico</option>
-                <option value="admin">Administrador</option>
-                <option value="auxiliar">Auxiliar</option>
-            </select>
-        
-            <label for="cedulaProf">Cédula Profesional:</label>
-            <input type="text" id="cedulaProf" name="cedulaProf" required placeholder="Ingrese la cédula profesional">
+        <label for="nombreUsuario">Nombre de Médico:</label>
+        <input type="text" id="nombreUsuario" name="nombreUsuario" required placeholder="Ingrese el nombre de usuario">
 
-            <label for="fechaReg">Fecha de Registro:</label>
-            <input type="date" id="fechaReg" name="fechaReg" required>
+        <label for="primerApellido">Primer apellido:</label>
+        <input type="text" id="primerApellido" name="nprimerApellido" required placeholder="Ingrese Primer Apellido">
 
-            <button type="submit" class="btn-submit">Agregar Médico</button>
-        </div>
+        <label for="cedulaProf">Cédula Profesional:</label>
+        <input type="text" id="cedulaProf" name="cedulaProf" required placeholder="Ingrese la cédula profesional">
+
+        <label for="fechaReg">Fecha de Registro:</label>
+        <input type="date" id="fechaReg" name="fechaReg" required>
+
+        <button type="submit" class="btn-submit">Agregar Médico</button>
     </form>
+    <!-- Botón para regresar al Panel -->
+    <div class="back-to-panel">
+        <a href="panel.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Panel</a>
+    </div>
 </div>
-
 
   <!-- Incluir archivo JS -->
   <script src="js/scripts.js"></script>

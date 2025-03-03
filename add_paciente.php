@@ -79,28 +79,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <h1>Agregar paciente.</h1>
     <p>Ingresa los datos para agregar el registro de un nuevo Paciente.</p>
 
-    <!-- Formulario para agregar médico -->
-    <form action="agregar_medico.php" method="POST">
-       
-            <label for="nombreUsuario">Nombre de Paciente:</label>
-            <input type="text" id="nombreUsuario" name="nombreUsuario" required placeholder="Ingrese el nombre de usuario">
-        
-            <label for="primerApellido">Primer apellido:</label>
-            <input type="text" id="primerApellido" name="nprimerApellido" required placeholder="Ingrese Primer Apellido">
-        
-          
-        
-            <label for="cedulaProf">Cédula Profesional:</label>
-            <input type="text" id="cedulaProf" name="cedulaProf" required placeholder="Ingrese la cédula profesional">
+    <!-- Formulario para agregar paciente -->
+    <form action="agregar_paciente.php" method="POST">
+        <label for="nombrePaciente">Nombre de Paciente:</label>
+        <input type="text" id="nombrePaciente" name="nombrePaciente" required placeholder="Ingrese el nombre de paciente">
 
-            <label for="fechaReg">Fecha de Registro:</label>
-            <input type="date" id="fechaReg" name="fechaReg" required>
+        <label for="primerApellido">Primer apellido:</label>
+        <input type="text" id="primerApellido" name="nprimerApellido" required placeholder="Ingrese Primer Apellido">
 
-            <button type="submit" class="btn-submit">Agregar Médico</button>
-        </div>
+        <label for="segundoApellido">Segundo Apellido:</label>
+        <input type="text" id="segundoApellido" name="segundoApellido" required placeholder="Ingrese Segundo Apellido">
+
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+
+        <button type="submit" class="btn-submit">Agregar Paciente</button>
     </form>
-</div>
 
+    <!-- Botón para regresar al Panel -->
+    <div class="back-to-panel">
+        <a href="panel.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Panel</a>
+    </div>
+</div>
 
   <!-- Incluir archivo JS -->
   <script src="js/scripts.js"></script>
