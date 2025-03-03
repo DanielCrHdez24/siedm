@@ -35,7 +35,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="submenu-container">
       <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-file-medical"></i> Expedientes Médicos</a>
       <div class="submenu">
-        <a href="add_paciente.php">- Crear Expediente</a>
+        <a href="add_expediente.php">- Crear Expediente</a>
         <a href="#">- Buscar Expediente</a>
       </div>
     </div>
@@ -76,7 +76,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
   <!-- Contenido principal -->
   <div class="container-panel">
-    <h1>Bienvenido al Sistema Integral de Expedientes Médicos.</h1>
+    <h1>Bienvenido al Sistema Integral de Expedientes Digitales Médicos.</h1>
     <p>Selecciona una opción para comenzar.</p>
 
     <!-- Botón para agregar un médico -->
