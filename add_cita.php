@@ -43,7 +43,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="submenu-container">
       <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-calendar-check"></i> Citas Médicas</a>
       <div class="submenu">
-        <a href="add_cita.php">- Agendar Cita</a>
+        <a href="#">- Agendar Cita</a>
         <a href="#">- Ver Cita</a>
       </div>
     </div>
@@ -74,24 +74,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <p>Bienvenido, <strong><?php echo htmlspecialchars($_SESSION["nombreUsuario"]); ?></strong>!</p>
   </header>
 
-  <!-- Contenido principal -->
-  <div 4
-  class="container-panel">
-    <h1>Bienvenido al Sistema Integral de Expedientes Digitales Médicos.</h1>
-    <p>Selecciona una opción para comenzar.</p>
+<!-- Contenido principal -->
+<div class="container-panel">
+    <h1>Agregar cita.</h1>
+    <p>Ingresa los datos para agregar el registro de una nueva cita.</p>
 
-    <!-- Botón para agregar un médico -->
-    <div class="add-option">
-      <i class="fa-solid fa-user-doctor"></i><a href="add_medico.php">Agregar Médico</a> 
+    <!-- Formulario para agregar médico -->
+    
+    <!-- Botón para regresar al Panel -->
+    <div class="back-to-panel">
+        <a href="panel.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Panel</a>
     </div>
-
-    <!-- Botón para agregar un paciente -->
-    <div class="add-option">
-      <i class="fa-solid fa-user-injured"></i> <a href="add_paciente.php">Agregar  Paciente</a> 
-      </div>
-    </div>
-
-  </div>
+</div>
 
   <!-- Incluir archivo JS -->
   <script src="js/scripts.js"></script>
