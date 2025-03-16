@@ -10,6 +10,7 @@ require "code-login.php";
   <title>SIEDM - Iniciar Sesión</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -17,15 +18,23 @@ require "code-login.php";
     <div class="cnt-form">
       <img class="logo" src="images/logo.png" alt="Logo SIEDM">
       <h1 class="title">Iniciar sesión</h1>
-
+      <p></p>
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <input class="input-user" type="email" name="correo" placeholder="Correo electrónico" required>
+        <!-- Grupo Input Correo -->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="bi bi-person"></i></span>
+          <input class="form-control" type="email" name="correo" placeholder="Correo electrónico" required>
+        </div>
         <span class="msg-error"><?php echo isset($usuario_err) ? htmlspecialchars($usuario_err) : ''; ?></span>
 
-        <input class="input-password" type="password" name="password" placeholder="Contraseña" required>
+        <!-- Grupo Input Contraseña -->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
+        </div>
         <span class="msg-error"><?php echo isset($password_err) ? htmlspecialchars($password_err) : ''; ?></span>
 
-        <input class="button" type="submit" value="Aceptar">
+        <input class="button btn btn-primary w-100" type="submit" value="Aceptar">
       </form>
 
       <span class="text-footer">¿Necesitas ayuda? Contacta a <a href="#">Soporte</a>.</span>
