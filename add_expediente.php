@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// Verifica si el usuario ha iniciado sesión
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: index.php");
+  exit();
+}
 // Incluir la librería TCPDF
 require_once('tcpdf/tcpdf.php');
 
@@ -71,12 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 
-// Verifica si el usuario ha iniciado sesión
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: index.php");
-  exit();
-}
-?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">

@@ -12,19 +12,25 @@ if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
 
-$usuario = 'Daniel Cruz Hernández';
+// Datos del usuario a insertar
+$nombre = 'admin';
+$primer_apellido = 'admin';
+$segundo_apellido = 'admin';
+$correo = 'admin@example.com';
+$telefono = '1234567890';
 $contrasena = '123456';
 $contrasena_hash = password_hash($contrasena, PASSWORD_BCRYPT);
-$rol = '2';
-$cedula = '19191919';
-$fecha = '2025-02-23 00:00:00';
+$rol_id = 1; // ID del rol de administrador
+$paciente_id = NULL; // No es paciente, por lo tanto es NULL
+$fecha_registro = date('Y-m-d H:i:s'); // Fecha de registro actual
 
 // Preparar la consulta SQL
-$sql = 'INSERT INTO usuarios (nombreUsuario, contrasena, rol, cedulaProf, fechaReg) VALUES (?, ?, ?, ?, ?)';
+$sql = 'INSERT INTO usuarios (nombre, primer_apellido, segundo_apellido, correo, telefono, contrasena, rol_id, paciente_id, fecha_registro) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 if ($stmt = mysqli_prepare($conn, $sql)) {
     // Vincular parámetros
-    mysqli_stmt_bind_param($stmt, 'ssiss', $usuario, $contrasena_hash, $rol, $cedula, $fecha);
+    mysqli_stmt_bind_param($stmt, 'ssssssiss', $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $contrasena_hash, $rol_id, $paciente_id, $fecha_registro);
     
     // Ejecutar la consulta
     if (mysqli_stmt_execute($stmt)) {
@@ -42,3 +48,4 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 // Cerrar la conexión
 mysqli_close($conn);
 ?>
+
