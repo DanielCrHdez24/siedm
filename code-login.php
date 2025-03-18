@@ -23,10 +23,12 @@ $admin_password = "Admin123"; // ⚠️ Cámbiala y usa un hash en producción
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Sanitizar entrada
     $correo = filter_input(INPUT_POST, 'correo', FILTER_SANITIZE_EMAIL);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if (empty($correo)) {
         $correo_err = "Por favor, ingrese el correo.";
+    } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        $correo_err = "Por favor, ingrese un correo electrónico válido.";
     }
 
     if (empty($password)) {
@@ -46,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Buscar en la base de datos
-        $sql = "SELECT id, nombre, contrasena FROM usuarios WHERE correo = ?";
+        $sql = "SELECT id_usuario, nombre, contrasena FROM usuarios WHERE correo = ?";
         
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "s", $correo);
@@ -60,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     if (mysqli_stmt_fetch($stmt)) {
                         if (password_verify($password, $clave)) {
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
+                            $_SESSION["id"] = $idUsuario; // Cambié $id por $idUsuario
                             $_SESSION["nombreUsuario"] = $nombreUsuario;
 
                             // Cerrar consulta y redirigir

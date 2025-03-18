@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>Ingresa los datos para agregar el registro de un nuevo Expediente.</p>
 
     <!-- Formulario para agregar médico -->
-    <form action="agregar_expediente.php" method="POST" enctype="multipart/form-data">
+    <form action="insertar_expediente.php" method="POST" enctype="multipart/form-data">
 
       <label for="fotoPaciente">Foto del Paciente:</label>
       <input type="file" id="fotoPaciente" name="fotoPaciente" accept="image/*" required>
