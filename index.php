@@ -34,7 +34,7 @@ require "code-login.php";
         </div>
         <span class="msg-error"><?php echo isset($password_err) ? htmlspecialchars($password_err) : ''; ?></span>
 
-        <input class="button btn btn-primary w-100" type="submit" value="Aceptar">
+        <input class="button" type="submit" value="Aceptar">
       </form>
 
       <span class="text-footer">¿Necesitas ayuda? Contacta a <a href="#">Soporte</a>.</span>

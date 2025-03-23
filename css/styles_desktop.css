@@ -281,6 +281,25 @@ button:hover {
 }
 
 .btn-back:hover {
-    background-color: #0056b3;
+    background-color: #009688;
 }
 
+
+.card {
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+  }
+  
