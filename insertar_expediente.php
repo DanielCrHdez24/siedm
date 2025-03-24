@@ -71,8 +71,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         );
 
         if ($stmt->execute()) {
-            echo "Expediente agregado con éxito.";
-        } else {
+            $id_paciente = $stmt->insert_id; // <-- Aquí obtienes el ID generado
+            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Expediente+agregado+correctamente');
+            exit();
+        }
+         else {
             echo "Error al agregar el expediente: " . $stmt->error;
         }
         $stmt->close();
