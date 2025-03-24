@@ -81,24 +81,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <!-- Formulario para agregar paciente -->
     <form action="agregar_paciente.php" method="POST">
-        <label for="nombrePaciente">Nombre de Paciente:</label>
-        <input type="text" id="nombrePaciente" name="nombrePaciente" required placeholder="Ingrese el nombre de paciente">
+        <label for="nombre">Nombre de Paciente:</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente">
 
-        <label for="primerApellido">Primer apellido:</label>
-        <input type="text" id="primerApellido" name="nprimerApellido" required placeholder="Ingrese Primer Apellido">
+        <label for="primer_apellido">Primer apellido:</label>
+        <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido">
 
-        <label for="segundoApellido">Segundo Apellido:</label>
-        <input type="text" id="segundoApellido" name="segundoApellido" required placeholder="Ingrese Segundo Apellido">
+        <label for="segundo_apellido">Segundo Apellido:</label>
+        <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido">
 
-        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+        <label for="correo">Correo electrónico:</label>
+        <input type="mail" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}">
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña para el paciente">
+
+        <label for="contrasena2">Confirma la contraseña:</label>
+        <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña para el paciente">
+
+        <input type="text" id="id_rol" name="id_rol" required hidden value="4">
 
         <button type="submit" class="btn-submit">Agregar Paciente</button>
     </form>
 
     <!-- Botón para regresar al Panel -->
     <div class="back-to-panel">
-        <a href="panel.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Panel</a>
+        <a href="panel.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>
     </div>
 </div>
 

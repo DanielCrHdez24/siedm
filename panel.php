@@ -89,7 +89,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
         <h5>Agregar Paciente</h5>
         <p>Da de alta a un nuevo paciente en el sistema.</p>
-        <a href="add_paciente.php" class="btn btn-primary">Ir</a>
+        <a href="add_paciente.php" class="btn-back">Ir</a>
       </div>
 
       <!-- Icono para agregar médico -->
@@ -99,7 +99,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
         <h5>Agregar Médico</h5>
         <p>Registra un nuevo médico en el sistema.</p>
-        <a href="add_medico.php" class="btn btn-primary">Ir</a>
+        <a href="add_medico.php" class="btn-back">Ir</a>
       </div>
 
       <!-- Icono para gestionar citas -->
@@ -109,7 +109,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
         <h5>Gestionar Citas</h5>
         <p>Agendar y gestionar citas médicas.</p>
-        <a href="add_cita.php" class="btn btn-primary">Ir</a>
+        <a href="add_cita.php" class="btn-back">Ir</a>
       </div>
     </div>
   </div>
