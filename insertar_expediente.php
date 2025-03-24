@@ -1,94 +1,85 @@
 <?php
 session_start();
 
-// Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
 
-// Incluir la conexión a la base de datos
-include 'conexion.php'; // Asegúrate de tener este archivo con tus credenciales de base de datos
+include 'conexion.php';
 
-// Verificar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verifica si todos los campos POST existen
+    $required_fields = ['clave_expediente', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion', 'id_usuario'];
+    
+    foreach ($required_fields as $field) {
+        if (empty($_POST[$field])) {
+            die("Error: El campo '$field' es obligatorio.");
+        }
+    }
 
-    // Recoger los datos del formulario
-    $fotoPaciente = $_FILES['fotoPaciente']['name'];
-    $claveExpediente = $_POST['claveExpediente'];
-    $nombrePaciente = $_POST['nombrePaciente'];
-    $primerApellido = $_POST['primerApellido'];
-    $segundoApellido = $_POST['segundoApellido'];
+    $fotoPath = null;
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $tmp_name = $_FILES['foto']['tmp_name'];
+        $file_name = basename($_FILES['foto']['name']);
+        $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (in_array($file_type, $allowed_types)) {
+            $fotoPath = 'uploads/' . uniqid() . "_" . $file_name;
+            move_uploaded_file($tmp_name, $fotoPath);
+        } else {
+            die("Error: Solo se permiten imágenes JPG, PNG o GIF.");
+        }
+    }
+
+    // Recoger datos del formulario
+    $clave_expediente = $_POST['clave_expediente'];
     $curp = $_POST['curp'];
     $edad = $_POST['edad'];
     $sexo = $_POST['sexo'];
-    $fechaNacimiento = $_POST['fechaNacimiento'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
     $derechohabiencia = $_POST['derechohabiencia'];
-    $telefono = $_POST['telefono'];
     $direccion = $_POST['direccion'];
-    $tipoSangre = $_POST['tipoSangre'];
-    $religion = $_POST['religion'];
+    $tipo_sangre = $_POST['tipo_sangre'];
+    $religion = $_POST['religion'] ?? '';
     $ocupacion = $_POST['ocupacion'];
-    $alergias = $_POST['alergias'];
-    $padecimientos = $_POST['padecimientos'];
+    $alergias = $_POST['alergias'] ?? '';
+    $padecimientos = $_POST['padecimientos'] ?? '';
+    $id_usuario = $_POST['id_usuario'];
 
-    // Validar que los campos no estén vacíos
-    if (empty($claveExpediente) || empty($nombrePaciente) || empty($primerApellido) || empty($segundoApellido)) {
-        echo "Por favor, complete todos los campos obligatorios.";
-        exit();
-    }
-
-    // Guardar la foto si se sube
-    if ($_FILES['fotoPaciente']['error'] == UPLOAD_ERR_OK) {
-        $tmp_name = $_FILES['fotoPaciente']['tmp_name'];
-        $fotoPath = 'uploads/' . basename($fotoPaciente); // Guardar la foto en una carpeta 'uploads'
-        move_uploaded_file($tmp_name, $fotoPath);
-    } else {
-        $fotoPath = null; // Si no se sube foto, guardamos un valor nulo
-    }
-
-    // Insertar datos en la base de datos
-    $sql = "INSERT INTO pacientes (clave_expediente, foto, nombre, primer_apellido, segundo_apellido, curp, edad, sexo, fecha_nacimiento, derechohabiencia, telefono, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    // Preparamos el INSERT
+    $sql = "INSERT INTO pacientes (clave_expediente, foto, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro, id_usuario) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
 
     if ($stmt = $link->prepare($sql)) {
-        // Enlazar los parámetros
-        // Asegúrate de que la cadena de tipo tenga un 's' para cada valor de cadena
-        $stmt->bind_param("ssssssssssssssssss", 
-                          $claveExpediente, 
-                          $fotoPath, 
-                          $nombrePaciente, 
-                          $primerApellido, 
-                          $segundoApellido, 
-                          $curp, 
-                          $edad, 
-                          $sexo, 
-                          $fechaNacimiento, 
-                          $derechohabiencia, 
-                          $telefono, 
-                          $direccion, 
-                          $tipoSangre, 
-                          $religion, 
-                          $ocupacion, 
-                          $alergias, 
-                          $padecimientos);
+        $stmt->bind_param("sssisssssssssi", 
+            $clave_expediente,
+            $fotoPath,
+            $curp,
+            $edad,
+            $sexo,
+            $fecha_nacimiento,
+            $derechohabiencia,
+            $direccion,
+            $tipo_sangre,
+            $religion,
+            $ocupacion,
+            $alergias,
+            $padecimientos,
+            $id_usuario
+        );
 
-        // Ejecutar la consulta
         if ($stmt->execute()) {
             echo "Expediente agregado con éxito.";
-            // Puedes redirigir a otra página o mostrar un mensaje de éxito
-            // header("location: success.php"); 
         } else {
             echo "Error al agregar el expediente: " . $stmt->error;
         }
-
-        // Cerrar la declaración
         $stmt->close();
     } else {
-        echo "Error al preparar la consulta: " . $link->error;
+        echo "Error en la preparación: " . $link->error;
     }
 
-    // Cerrar la conexión
     $link->close();
 }
 ?>

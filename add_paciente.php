@@ -94,7 +94,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <input type="mail" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
 
         <label for="telefono">Teléfono:</label>
-        <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}">
+        <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10">
 
         <label for="contrasena">Contraseña:</label>
         <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña para el paciente">
