@@ -303,3 +303,76 @@ button:hover {
     font-size: 1rem;
   }
   
+
+  /* 📌 Mejora de la tabla de detalles del paciente */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #009688;
+    color: white;
+    font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* 📌 Estilo para la imagen del paciente */
+.img-thumbnail {
+    border-radius: 10px;
+    border: 3px solid #009688;
+    max-width: 150px;
+}
+
+/* 📌 Mejoras en los botones */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #009688;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #00796b;
+}
+
+.btn-back {
+    margin-top: 20px;
+}
+
+/* 📌 Ajustes en el formulario */
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 📌 Sombreado en tarjetas */
+.card {
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}   
