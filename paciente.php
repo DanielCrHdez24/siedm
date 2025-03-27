@@ -8,14 +8,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 include 'conexion.php';
 
-// Recibir el id_paciente de la URL
-$id_paciente = $_GET['id_paciente'] ?? null;
+// Validar y recibir el ID del paciente
+$id_paciente = filter_input(INPUT_GET, 'id_paciente', FILTER_VALIDATE_INT);
 
 if (!$id_paciente) {
-    die("ID de paciente no proporcionado.");
+    die("ID de paciente no válido o no proporcionado.");
 }
 
-// Consulta de datos del paciente
+// Consulta de datos del paciente junto con el id_usuario
 $sql = "SELECT * FROM pacientes WHERE id_paciente = ?";
 if ($stmt = $link->prepare($sql)) {
     $stmt->bind_param("i", $id_paciente);
@@ -24,16 +24,35 @@ if ($stmt = $link->prepare($sql)) {
 
     if ($resultado->num_rows === 1) {
         $paciente = $resultado->fetch_assoc();
+        $id_usuario = $paciente['id_usuario'];  // Obtener el id_usuario del paciente
+
+        // Ahora buscamos los datos del usuario
+        $sql2 = "SELECT * FROM usuarios WHERE id_usuario = ?";
+        if ($stmt2 = $link->prepare($sql2)) {
+            $stmt2->bind_param("i", $id_usuario);
+            $stmt2->execute();
+            $resultado2 = $stmt2->get_result();
+
+            if ($resultado2->num_rows === 1) {
+                $usuario = $resultado2->fetch_assoc();
+            } else {
+                die("Usuario no encontrado.");
+            }
+            $stmt2->close();
+        } else {
+            die("Error en la consulta de usuario: " . $link->error);
+        }
     } else {
         die("Paciente no encontrado.");
     }
     $stmt->close();
 } else {
-    die("Error en la consulta: " . $link->error);
+    die("Error en la consulta del paciente: " . $link->error);
 }
 
 $link->close();
 ?>
+
 
 
 <!DOCTYPE html>
@@ -105,6 +124,7 @@ $link->close();
 
     <!-- Contenido principal -->
     <div class="container-panel">
+        <p> </p>
         <h2 class="text-center">Información del Paciente</h2>
 
         <!-- Mensajes de notificación -->
@@ -117,7 +137,7 @@ $link->close();
         <!-- Foto del Paciente -->
         <div class="text-center my-3">
             <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" alt="Foto del paciente"
-                 class="" width="150">
+                class="" width="150">
         </div>
 
         <!-- Tabla de datos -->
@@ -126,6 +146,12 @@ $link->close();
                 <tr>
                     <th>Clave de Expediente</th>
                     <td><?php echo htmlspecialchars($paciente['clave_expediente']); ?></td>
+                    <th>Nombre</th>
+                    <td><?php echo htmlspecialchars($usuario['nombre']);
+                        echo " ";
+                        echo htmlspecialchars($usuario['primer_apellido']);
+                        echo " ";
+                        echo htmlspecialchars($usuario['segundo_apellido']); ?></td>
                     <th>CURP</th>
                     <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
                 </tr>
@@ -134,43 +160,50 @@ $link->close();
                     <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
                     <th>Sexo</th>
                     <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
-                </tr>
-                <tr>
                     <th>Fecha de Nacimiento</th>
                     <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
+                    <th>Teléfono</th>
+                    <td><?php echo htmlspecialchars($usuario['telefono']); ?></td>
                     <th>Derechohabiencia</th>
                     <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
                 </tr>
                 <tr>
                     <th>Dirección</th>
-                    <td colspan="3"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
+                    <td colspan="5"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
+                   
                 </tr>
+
                 <tr>
-                    <th>Tipo de Sangre</th>
+                <th>Tipo de Sangre</th>
                     <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
                     <th>Religión</th>
                     <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
-                </tr>
-                <tr>
                     <th>Ocupación</th>
                     <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
+                </tr>
+                <tr>
+                    
                     <th>Alergias</th>
                     <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
-                </tr>
-                <tr>
                     <th>Padecimientos Crónicos</th>
-                    <td colspan="3"><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
+                    <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
+                    <th>Fecha de Registro</th>
+                    <td><?php echo htmlspecialchars($paciente['fecha_registro']); ?></td>
                 </tr>
                 <tr>
-                    <th>Fecha de Registro</th>
-                    <td colspan="3"><?php echo htmlspecialchars($paciente['fecha_registro']); ?></td>
+                    
                 </tr>
+               
             </tbody>
         </table>
 
         <!-- Botón de regreso -->
         <div class="text-center mt-4">
-            <a href="panel.php" class="btn btn-outline-primary">
+            <a href="panel.php" class="btn-back">
                 <i class="fa-solid fa-arrow-left"></i> Volver al Panel
             </a>
         </div>
