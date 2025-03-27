@@ -19,7 +19,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles_desktop.css">
-  <title>Panel de Usuario</title>
+  <title>Gestión de pacientes.</title>
 </head>
 
 <body>
@@ -71,7 +71,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
   <!-- Encabezado -->
   <header class="header">
-    <h1>Panel de Usuario</h1>
+    <h1>Gestión de pacientes</h1>
     <p>Bienvenido, <strong><?php echo htmlspecialchars($_SESSION["nombreUsuario"]); ?></strong>!</p>
   </header>
 
@@ -86,30 +86,40 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <!-- Icono para agregar paciente -->
       <div class="col-md-4 text-center">
         <div class="option-icon">
-          <i class="fa-solid fa-user-injured fa-4x"></i>
+          <i class="fa-solid fa-user-plus fa-4x"></i>
         </div>
-        <h5>Gestionar Paciente</h5>
+        <h5>Agregar Paciente</h5>
         <p>Da de alta a un nuevo paciente en el sistema.</p>
-        <a href="panel_paciente.php" class="btn-back">Ir</a>
+        <a href="add_paciente.php" class="btn-back">Ir</a>
       </div>
 
-      <!-- Icono para agregar médico -->
+      <!-- Icono para actualizar paciente -->
       <div class="col-md-4 text-center">
         <div class="option-icon">
-          <i class="fa-solid fa-user-doctor fa-4x"></i>
+          <i class="fa-solid fa-user-pen fa-4x"></i>
         </div>
-        <h5>Gestionar Médico</h5>
-        <p>Registra un nuevo médico en el sistema.</p>
+        <h5>Modificar Paciente</h5>
+        <p>Modifica un pacxiente en el sistema.</p>
         <a href="add_medico.php" class="btn-back">Ir</a>
       </div>
 
-      <!-- Icono para gestionar citas -->
+      <!-- Icono para eliminar paciente -->
       <div class="col-md-4 text-center">
         <div class="option-icon">
-          <i class="fa-solid fa-calendar-check fa-4x"></i>
+          <i class="fa-solid fa-user-xmark fa-4x"></i>
         </div>
-        <h5>Gestionar Citas</h5>
-        <p>Agendar y gestionar citas médicas.</p>
+        <h5>Eliminar Paciente</h5>
+        <p>Elimina un paciente del sistema.</p>
+        <a href="add_cita.php" class="btn-back">Ir</a>
+      </div>
+      <p> </p>
+      <!-- Icono para buscar paciente -->
+      <div class="col-md-4 text-center">
+        <div class="option-icon">
+          <i class="fa-solid fa-magnifying-glass fa-4x"></i>
+        </div>
+        <h5>Buscar Paciente</h5>
+        <p>Busca un paciente del sistema.</p>
         <a href="add_cita.php" class="btn-back">Ir</a>
       </div>
     </div>
