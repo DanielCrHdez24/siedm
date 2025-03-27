@@ -21,7 +21,7 @@ if ($stmt = $link->prepare($sql)) {
     $stmt->bind_param("i", $id_paciente);
     $stmt->execute();
     $resultado = $stmt->get_result();
-    
+
     if ($resultado->num_rows === 1) {
         $paciente = $resultado->fetch_assoc();
     } else {
@@ -37,11 +37,58 @@ $link->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <!-- Menú Lateral -->
+    <div id="sidebar" class="sidebar">
+        <div class="menu-header">
+            <div class="menu-icon" id="menu-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <h2 style="color: white; text-align: center;">Menú</h2>
+        </div>
+
+        <!-- Opciones del menú -->
+        <div class="submenu-container">
+            <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-file-medical"></i> Expedientes Médicos</a>
+            <div class="submenu">
+                <a href="add_expediente.php">- Crear Expediente</a>
+                <a href="search_expediente.php">- Buscar Expediente</a>
+            </div>
+        </div>
+
+        <div class="submenu-container">
+            <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-calendar-check"></i> Citas Médicas</a>
+            <div class="submenu">
+                <a href="#">- Agendar Cita</a>
+                <a href="#">- Ver Cita</a>
+            </div>
+        </div>
+
+        <div class="submenu-container">
+            <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-file-import"></i> Digitalización y Actualización</a>
+            <div class="submenu">
+                <a href="#">- Digitalizar Historial</a>
+                <a href="#">- Actualizar Historial</a>
+            </div>
+        </div>
+
+        <div class="submenu-container">
+            <a href="javascript:void(0);" class="submenu-toggle"><i class="fa-solid fa-gear"></i> Soporte</a>
+            <div class="submenu">
+                <a href="#">- Configuración</a>
+                <a href="#">- Ayuda y Soporte Técnico</a>
+            </div>
+        </div>
+
+        <!-- Cerrar sesión -->
+        <a href="cerrar-sesion.php" class="close-sesion"><i class="fa-solid fa-sign-out-alt"></i> Cerrar sesión</a>
+    </div>
     <meta charset="UTF-8">
     <title>Detalles del Paciente</title>
     <link rel="stylesheet" href="css/styles_desktop.css">
 </head>
+
 <body>
 
     <h1>Detalles del Paciente</h1>
@@ -70,4 +117,5 @@ $link->close();
     <a href="panel.php" class="btn-back">Volver al panel</a>
 
 </body>
+
 </html>
