@@ -215,7 +215,7 @@ $link->close();
     </div>
 
     <div class="add-option">
-        <a href="modificar_paciente.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar paciente</a>
+        <a href="update_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar paciente</a>
     </div>
 
     <div class="add-option">

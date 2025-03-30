@@ -7,12 +7,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit();
 }
 $idRol = $_SESSION['idRol'];
+
 // Incluir la conexión a la base de datos
 include 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verificar si el ID del paciente existe
+    if (!isset($_POST['id_paciente']) || empty($_POST['id_paciente'])) {
+        die("Error: ID de paciente no proporcionado.");
+    }
+
+    $id_paciente = (int) $_POST['id_paciente'];  // Asegurar que es un número entero
+
     // Lista de campos requeridos
-    $required_fields = ['clave_expediente', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion', 'id_usuario'];
+    $required_fields = ['clave_expediente', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion'];
 
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
@@ -51,29 +59,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ocupacion        = trim($_POST['ocupacion']);
     $alergias         = trim($_POST['alergias'] ?? '');
     $padecimientos    = trim($_POST['padecimientos'] ?? '');
-    $id_usuario       = (int) $_POST['id_usuario'];
 
-    // Preparar la consulta SQL
-    $sql = "INSERT INTO pacientes (clave_expediente, foto, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro, id_usuario) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
+    // Preparar la consulta de actualización (UPDATE)
+    if ($fotoPath) {
+        $sql = "UPDATE pacientes 
+                SET foto = ?, curp = ?, edad = ?, sexo = ?, fecha_nacimiento = ?, 
+                    derechohabiencia = ?, direccion = ?, tipo_sangre = ?, religion = ?, ocupacion = ?, 
+                    alergias = ?, padecimientos = ?, fecha_actualizacion = NOW() 
+                WHERE id_paciente = ?";
+    } else {
+        $sql = "UPDATE pacientes 
+                SET curp = ?, edad = ?, sexo = ?, fecha_nacimiento = ?, 
+                    derechohabiencia = ?, direccion = ?, tipo_sangre = ?, religion = ?, ocupacion = ?, 
+                    alergias = ?, padecimientos = ?, fecha_actualizacion = NOW() 
+                WHERE id_paciente = ?";
+    }
 
     if ($stmt = $link->prepare($sql)) {
-        $stmt->bind_param("sssisssssssssi", 
-            $clave_expediente, $fotoPath, $curp, $edad, $sexo, $fecha_nacimiento, 
-            $derechohabiencia, $direccion, $tipo_sangre, $religion, $ocupacion, 
-            $alergias, $padecimientos, $id_usuario
-        );
+        if ($fotoPath) {
+            $stmt->bind_param("ssisssssssssi", 
+                $fotoPath, $curp, $edad, $sexo, $fecha_nacimiento, 
+                $derechohabiencia, $direccion, $tipo_sangre, $religion, $ocupacion, 
+                $alergias, $padecimientos, $id_paciente
+            );
+        } else {
+            $stmt->bind_param("sisssssssssi", 
+                $curp, $edad, $sexo, $fecha_nacimiento, 
+                $derechohabiencia, $direccion, $tipo_sangre, $religion, $ocupacion, 
+                $alergias, $padecimientos, $id_paciente
+            );
+        }
 
         if ($stmt->execute()) {
-            $id_paciente = $stmt->insert_id; // ID del nuevo paciente
             $stmt->close();
             $link->close();
 
-            // Redirigir correctamente a paciente.php
-            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Información+de+paciente+agregada+correctamente!');
+            // Redirigir con un mensaje de éxito
+            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Información+de+paciente+actualizada+correctamente!');
             exit();
         } else {
-            die("Error al agregar el expediente: " . $stmt->error);
+            die("Error al actualizar el expediente: " . $stmt->error);
         }
     } else {
         die("Error en la preparación de la consulta: " . $link->error);

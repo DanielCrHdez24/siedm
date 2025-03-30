@@ -44,8 +44,7 @@ mysqli_close($link);
 $nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $segundo_apellido, ENT_QUOTES, 'UTF-8');
 ?>
 
-$idRol = $_SESSION['idRol'];
-?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -57,7 +56,7 @@ $idRol = $_SESSION['idRol'];
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Dashboard</title>
+    <title>Información de Paciente</title>
 </head>
 
 <body class="principal">
