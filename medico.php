@@ -154,7 +154,7 @@ $link->close();
                     <div class="options-container">
 
     <div class="add-option">
-        <a href="modificar_medico.php?id_usuario=<?php echo $usuario['id_usuario']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar Información de médico</a>
+        <a href="update_medical.php?id_usuario=<?php echo $usuario['id_usuario']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar Información de médico</a>
     </div>
 
     <div class="add-option">
