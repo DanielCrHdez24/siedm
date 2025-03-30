@@ -20,7 +20,7 @@ $idRol = $_SESSION['idRol'];
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Agregar Paciente</title>
+    <title>Agregar Médico</title>
 </head>
 
 <body class="principal">
@@ -53,13 +53,13 @@ $idRol = $_SESSION['idRol'];
         </header>
 
         <div class="container">
-            <h2>Agregar usuario paciente.</h2>
+            <h2>Agregar usuario Médico.</h2>
             <p>
                 Ingrese los datos solicitados en los campos.
             </p>
             <p> </p>
-            <form class="form" action="insertar_paciente.php" method="POST">
-                <label for="nombre">Nombre de Paciente:</label>
+            <form class="form" action="insertar_medico.php" method="POST">
+                <label for="nombre">Nombre del Médico:</label>
                 <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente">
                 <p> </p>
                 <label for="primer_apellido">Primer apellido:</label>
@@ -80,7 +80,7 @@ $idRol = $_SESSION['idRol'];
                 <label for="contrasena2">Confirma la contraseña:</label>
                 <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña">
                 <p> </p>
-                <input type="text" id="id_rol" name="id_rol" required hidden value="4">
+                <input type="text" id="id_rol" name="id_rol" required hidden value="2">
 
                 <button type="submit" class="button">Continuar</button>
                 <button type="reset" class="button">Limpiar Datos</button>
