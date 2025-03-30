@@ -1,193 +1,290 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
+/* Variables CSS */
+:root {
+    --primary-color: #009688;
+    --secondary-color: #125873;
+    --hover-color: #0e5950;
+    --light-color: #f0f8f6;
+    --error-color: red;
+    --success-color: green;
+}
+
+/* Reset y estilos globales */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Quicksand;
+    font-family: 'Quicksand', sans-serif;
     text-decoration: none;
 }
 
-body {
-    background: rgb(255, 255, 255);
-    margin: 0;
-    font-family: Arial, sans-serif;
+/* Contenedor principal */
+.wrapper {
     display: flex;
+    flex-direction: column; /* Las secciones se apilan verticalmente */
+    min-height: 100vh; /* Asegura que la altura mínima de la página sea 100% */
 }
 
-/* Estilos para el menú lateral */
-.sidebar {
-    width: 320px;
-    height: 100vh;
-    background-color: #009688;
+body.principal {
+    width: 100%;
+    height: 100%;
+    background: var(--light-color);
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Encabezado principal */
+.header {
     position: fixed;
     top: 0;
     left: 0;
-    padding-top: 20px;
-    transition: 0.3s;
-}
-
-/* Estilo para el encabezado del menú lateral */
-.menu-header {
+    width: 100%;
+    padding: 1.3rem 8%;
+    background: #b3ebe5;
     display: flex;
-    align-items: center; /* Alineación en la misma línea */
-    justify-content: flex-start; /* Alineación a la izquierda */
-    margin-bottom: 20px;
-    padding-left: 20px; /* Espacio a la izquierda para el ícono */
-}
-
-/* Estilo para el ícono de menú */
-.menu-header .menu-icon {
-    font-size: 28px;
-    color: white;
-    cursor: pointer;
-    margin-right: 10px; /* Espacio entre el ícono y el título */
-}
-
-/* Estilo para el título del menú lateral */
-.menu-header h2 {
-    color: white;
-    margin: 0; /* Elimina cualquier margen del h2 */
-}
-
-/* Ocultar el menú lateral en pantallas pequeñas */
-.sidebar.hide {
-    transform: translateX(-100%);
-}
-
-.sidebar a {
-    padding: 15px 20px;
-    text-decoration: none;
-    font-size: 18px;
-    color: white;
-    display: block;
-    transition: 0.2s;
-}
-
-.sidebar a i {
-    margin-right: 10px;
-}
-
-.sidebar a:hover {
-    background-color: #125873;
-    border-left: 5px solid #c7c7c7;
-}
-
-/* Submenú */
-.submenu-container {
-    position: relative;
-}
-
-/* Submenú oculto por defecto */
-.submenu {
-    display: none;
-    margin-left: 20px;
-}
-
-.submenu-container .submenu a {
-    padding-left: 30px; /* Añadir más espacio para los enlaces del submenú */
-}
-
-.submenu-toggle {
-    cursor: pointer;
-}
-
-/* Mostrar el submenú cuando se hace clic */
-.submenu-container.active .submenu {
-    display: block;
-}
-
-.submenu-container a:hover,
-.sidebar a:hover {
-    background-color: #125873;
-    border-left: 5px solid #c7c7c7;
-}
-
-/* Estilos para el enlace de Cerrar sesión */
-.sidebar .close-sesion:hover {
-    background-color: #c0392b;
-}
-
-/* Estilo del encabezado */
-.header {
-    width: calc(100% - 320px); /* Ajuste considerando el ancho del menú lateral */
-    padding: 10px;
-    background-color: #125873;
-    color: white;
-    display: flex;
-    justify-content: space-between; /* Espacia el contenido de izquierda a derecha */
-    align-items: center; /* Alinea verticalmente el contenido */
-    position: fixed;
-    top: 0;
-    left: 320px; /* Alineación con el menú lateral */
-    z-index: 10;
-}
-
-.header h1 {
-    text-align: center;
-    flex: 1; /* Ocupa todo el espacio disponible */
-}
-
-.header p {
-    margin: 0; /* Elimina el margen del p */
-    text-align: right; /* Alinea el texto a la derecha */
-}
-
-/* Estilos para el ícono de menú hamburguesa */
-.menu-icon {
-    display: block; /* Siempre visible */
-    font-size: 28px;
-    color: white;
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-/* Contenido principal */
-.container-panel {
-    margin-left: 320px; /* Igual al ancho del menú lateral */
-    margin-top: 60px; /* Ajuste para evitar superposición con el encabezado */
-    padding: 20px;
-}
-
-.container-panel h1{
-    text-align: center;
-    color: #009688;
-}
-.container-panel p {
-    margin-top: 20px; /* Ajusta este valor según el espacio que desees */
-    margin-bottom: 20px;
-}
-
-/*Iconos dentro del contenido principal*/
-.add-option {
-    display: inline-flex; /* Alinea los íconos en fila */
+    justify-content: space-between;
     align-items: center;
-    margin: 10px 20px; /* Espaciado entre los botones */
-    font-size: 20px; /* Tamaño grande para los íconos */
-    cursor: pointer;
-    color: #333; /* Color del texto y el ícono */
-   
+    z-index: 100;
+    transition: all 0.5s ease-in-out;
 }
 
-.add-option i {
-    margin-right: 10px; /* Espacio entre el ícono y el texto */
-}
-
-.add-option:hover {
-    color: #009688; /* Color al pasar el mouse */
+/* Logo */
+.header .logo {
+    font-size: 1.5rem;
     font-weight: bold;
+    color: var(--primary-color);
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Barra de navegación */
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbar a {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar a:hover {
+    color: var(--secondary-color);
+    text-decoration: none; 
+    border-bottom: 1px solid var(--secondary-color); 
+    padding-bottom: 4px; 
+}
+
+/* Estilo para el enlace "Cerrar sesión" */
+.navbar a.logout-link {
+    color: #ac1a07;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar a.logout-link:hover {
+    color: red;
+    border-bottom: 1px solid red;
+}
+
+/* Contenedor principal */
+.container {
+    flex: 1; /* Hace que el contenedor ocupe el espacio restante */
+    padding-top: 120px; /* Evita que se oculte debajo del header */
+    padding-left: 2%;
+    padding-right: 2%;
+    
+}
+
+.btn{
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn:hover{
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.btn-logout{
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-logout:hover{
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    background: #ac1a07;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.15s ease-in-out;
+}
+
+.card-container {
+    display: flex;            /* Usa flexbox para los elementos hijos */
+    flex-wrap: wrap;          /* Permite que las tarjetas se envuelvan en nuevas filas cuando no caben */
+    gap: 1rem;                /* Espacio entre las tarjetas */
+    justify-content: center;  /* Centra las tarjetas horizontalmente */
+}
+
+.card {
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    text-align: center;
+    width: 350px;
+    
 }
 
 
-/* Estilo para el formulario */
+.option-icon {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}	
+
+.option-icon-logout {
+    font-size: 3.5rem;
+    color: red;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}	
+
+
+h2 {
+    padding-bottom: 10px; /* Espacio interno debajo del h2 */
+}
+p {
+    padding-bottom: 10px; /* Espacio interno debajo del párrafo */
+}
+.footer {
+    background: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Para que las celdas estén juntas */
+    margin-top: 20px; /* Espacio superior */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px;
+}
+
+table th, table td {
+    padding: 9px; /* Aumentar el espacio dentro de las celdas */
+    text-align: left; /* Alineación del texto */
+    font-size: 11px; /* Tamaño de la fuente */
+    border-bottom: 1px solid #ddd; /* Línea divisoria suave entre filas */
+}
+
+table th {
+    background-color: var(--primary-color);
+    color: white; /* Color de texto en los encabezados */
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternar fondo de las filas */
+}
+
+table tr:hover {
+    background-color:#125873;
+    color: white; /* Resaltar fila al pasar el ratón */
+}
+
+/* Estilo de las celdas para las imágenes */
+table img {
+    border-radius: 10px; /* Imágenes redondeadas */
+    max-width: 200px;
+    height: auto;
+    width: auto;
+    display: center; /* Centrar la imagen en la celda */
+}
+
+/* Estilo de las celdas de texto largo */
+table td[colspan="5"] {
+    word-wrap: break-word; /* Evitar que el texto se desborde */
+}
+
+
+/* Botón del menú móvil */
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* Estilo oculto para el menú móvil */
+.navbar.responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    top: 5rem;
+    left: 1%;
+    background: var(--light-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 200px;
+    display: none; /* Inicialmente oculto */
+}
+
+
+/* Formularios */
 form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
-    padding: 10px;   
+    margin-bottom: 10px;
 }
 
 label {
     font-size: 15px;
-    
 }
 
 input, select {
@@ -197,182 +294,167 @@ input, select {
     border-radius: 5px;
     width: 100%;
     margin-bottom: 10px;
-    margin-top: 10px;
 }
 
 input:focus, select:focus {
-    border-color: #009688;
+    border-color: var(--primary-color);
     outline: none;
 }
 
+input:invalid {
+    border-color: var(--error-color);
+}
+
+input:valid {
+    border-color: var(--success-color);
+}
+
 button {
+    display: inline-block;
     padding: 12px;
     font-size: 16px;
-    background-color: #009688;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px;
 }
 
 button:hover {
-    background-color: #34a598;
+    background-color: var(--hover-color);
 }
 
-
-
-
-
-
-
-/* Mostrar el icono de hamburguesa junto al título en el menú lateral */
-@media (max-width: 768px) {
-    .header {
-        left: 0;
-        width: 100%;
-        justify-content: space-between; /* Alineación para que se muestre el texto y el ícono */
-    }
-
-    .sidebar {
-        width: 250px;
-    }
-
-    .container-panel {
-        margin-left: 0;
-        margin-top: 60px;
-        padding: 20px;
-    }
+.alert-success {
+    background-color: var(--success-color);  /* Utiliza la variable para el color de fondo */
+    color: white;  /* Texto blanco */
+    padding: 10px 15px;  /* Relleno alrededor del texto */
+    border-radius: 5px;  /* Bordes redondeados */
+    margin-bottom: 15px;  /* Espacio debajo de la alerta */
+    font-size: 1rem;  /* Tamaño de la fuente */
     
+}
 
-    /* Ajustes para el menú en pantallas pequeñas */
-    .sidebar {
-        width: 250px;
+.alert-error {
+    background-color: var(--error-color);  /* Utiliza la variable para el color de fondo */
+    color: white;  /* Texto blanco */
+    padding: 10px 15px;  /* Relleno alrededor del texto */
+    border-radius: 5px;  /* Bordes redondeados */
+    margin-bottom: 15px;  /* Espacio debajo de la alerta */
+    font-size: 1rem;  /* Tamaño de la fuente */
+  
+}
+
+/* Contenedor principal de las opciones */
+.options-container {
+    display: flex;            /* Usa Flexbox para los elementos hijos */
+    justify-content: space-around; /* Distribuye las opciones con espacio entre ellas */
+    align-items: center;      /* Centra verticalmente los elementos */
+    flex-wrap: wrap;          /* Permite que se envuelvan si no caben en la pantalla */
+    gap: 20px;                /* Espacio entre cada opción */
+    padding: 20px;            /* Espaciado interno */
+}
+
+/* Estilo para cada opción */
+.add-option {
+    flex: 1;                  /* Hace que cada opción ocupe el mismo espacio */
+    text-align: center;       /* Centra el texto dentro de cada opción */
+}
+
+/* Estilo para los enlaces dentro de las opciones */
+.add-option a {
+    display: inline-flex; /* Usamos flexbox para alinear el ícono y el texto */
+    align-items: center; /* Centra verticalmente el ícono y el texto */
+    font-size: 1rem; /* Tamaño de la fuente */
+    color: var(--secondary-color); /* Color del texto (usa una variable de color) */
+    text-decoration: none; /* Elimina subrayado */
+    padding: 0.5rem 1rem; /* Espaciado dentro del enlace */
+    border-radius: 8px; /* Bordes redondeados */
+    transition: background 0.3s, color 0.3s; /* Transición suave en hover */
+}
+
+/* Estilo al pasar el mouse (hover) */
+.add-option a:hover {
+    background-color: var(--primary-color); /* Color de fondo al pasar el ratón */
+    color: white; /* Cambia el color del texto al pasar el ratón */
+}
+
+/* Estilo para los íconos dentro de los enlaces */
+.add-option a i {
+    margin-right: 0.5rem; /* Espacio entre el ícono y el texto */
+    font-size: 1.5rem; /* Tamaño del ícono */
+}
+
+/* Estilo adicional para el caso de "Eliminar paciente" */
+.add-option a[href*="eliminar_paciente"] {
+    color: red; /* Color rojo para eliminar */
+}
+
+.add-option a[href*="eliminar_paciente"]:hover {
+    background-color: red; /* Fondo rojo en hover */
+    color: white; /* Texto blanco en hover */
+}
+
+/* Media Queries para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .header .logo {
+        display: none; /* Oculta el logo en pantallas pequeñas */
     }
 
-    .header h1 {
-        display: inline-block;
-        margin-right: auto;
+    .menu-toggle {
+        display: block; /* Muestra el botón del menú móvil */
     }
 
-    .header p {
-        display: none; /* Ocultar el texto en pantallas pequeñas */
+    .navbar {
+        display: none; /* Oculta la barra de navegación principal */
+    }
+
+    .navbar.responsive {
+        display: flex; /* Muestra el menú desplegable en móvil */
+    }
+
+    .table {
+        width: 100%;
+        overflow-x: auto;  /* Permite desplazamiento horizontal en pantallas pequeñas */
+        border-collapse: collapse; /* Para que las celdas estén juntas */
+    margin-top: 20px; /* Espacio superior */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 9px;
+      
+    }
+    table th, table td {
+        font-size: 11px; /* Ajustar el tamaño de la fuente en pantallas pequeñas */
+        padding: 6px; /* Reducir el espaciado de las celdas */
+        display: flex;
+    }
+    tr {
+       
+        width: 100%; /* Asegura que ocupen todo el ancho */
+    }
+    table img {
+        border-radius: 10px; /* Imágenes redondeadas */
+        max-width: 200px;
+        height: auto;
+        width: auto;
+        display: center; /* Centrar la imagen en la celda */
+    }
+    .options-container {
+        justify-content: space-around; /* Distribuye las opciones con espacio entre ellas */
+        align-items: center;      /* Centra verticalmente los elementos */
+        gap: 20px;                /* Espacio entre cada opción */
+        padding: 20px;            /* Espaciado interno */
+    }
+    .add-option {
+        text-align: center;       /* Centra el texto dentro de cada opción */
+    }
+    .add-option a {
+        display: inline-flex; /* Usamos flexbox para alinear el ícono y el texto */
+        align-items: center; /* Centra verticalmente el ícono y el texto */
+        font-size: 10px; /* Tamaño de la fuente */
+        color: var(--secondary-color); /* Color del texto (usa una variable de color) */
+        text-decoration: none; /* Elimina subrayado */
+        padding: 0.5rem 1rem; /* Espaciado dentro del enlace */
+        border-radius: 8px; /* Bordes redondeados */
+        transition: background 0.3s, color 0.3s; /* Transición suave en hover */
     }
 }
-.back-to-panel {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.btn-back {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #009688;
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-}
-
-.btn-back i {
-    margin-right: 5px;
-}
-
-.btn-back:hover {
-    background-color: #009688;
-}
-
-
-.card {
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card-title {
-    font-size: 1.25rem;
-  }
-  
-  .card-text {
-    font-size: 1rem;
-  }
-  
-
-  /* 📌 Mejora de la tabla de detalles del paciente */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background: white;
-}
-
-.table th, .table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.table th {
-    background-color: #009688;
-    color: white;
-    font-weight: bold;
-}
-
-.table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-/* 📌 Estilo para la imagen del paciente */
-.img-thumbnail {
-    border-radius: 10px;
-    border: 3px solid #009688;
-    max-width: 150px;
-}
-
-/* 📌 Mejoras en los botones */
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    font-size: 16px;
-    color: white;
-    background-color: #009688;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    text-decoration: none;
-    text-align: center;
-}
-
-.btn:hover {
-    background-color: #00796b;
-}
-
-.btn-back {
-    margin-top: 20px;
-}
-
-/* 📌 Ajustes en el formulario */
-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 📌 Sombreado en tarjetas */
-.card {
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}   
