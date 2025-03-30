@@ -395,6 +395,15 @@ button:hover {
     color: white; /* Texto blanco en hover */
 }
 
+.add-option a[href*="eliminar_medico"] {
+    color: red; /* Color rojo para eliminar */
+}
+
+.add-option a[href*="eliminar_medico"]:hover {
+    background-color: red; /* Fondo rojo en hover */
+    color: white; /* Texto blanco en hover */
+}
+
 /* Media Queries para pantallas pequeñas */
 @media screen and (max-width: 768px) {
     .header .logo {

@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "El ID del usuario recién insertado es: " . $id_usuario;
 
             // Redirigir o hacer lo que necesites con el ID
-            header('Location: info_medico.php?id_usuario=' . $id_usuario . '&mensaje=Médico+agregado+correctamente');
+            header('Location: medico.php?id_usuario=' . $id_usuario . '&mensaje=Médico+agregado+correctamente');
             exit();
         } else {
             echo "Error al agregar paciente: " . mysqli_error($link);
