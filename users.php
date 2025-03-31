@@ -8,7 +8,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 $idRol = $_SESSION['idRol'];
-$id_Usuario = $_SESSION['idUsuario'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -54,65 +53,66 @@ $id_Usuario = $_SESSION['idUsuario'];
         </header>
 
         <div class="container">
-            <h2>Hola, <?php echo $_SESSION["nombreUsuario"]; ?>!</h2>
-            <?php if (isset($_GET['mensaje'])): ?>
-                <div class="alert alert-success">
-                    <?php echo htmlspecialchars($_GET['mensaje']); ?>
-                </div>
-            <?php endif; ?>
+            <h2>Gestión de Usuarios!</h2>
+            <?php
+if (isset($_GET['mensaje'])): 
+    $mensaje = htmlspecialchars($_GET['mensaje']);
+?>
+    <div class="alert alert-success" role="alert">
+        <?php echo $mensaje; ?>
+    </div>
+<?php endif; ?>
             <p>
-                Ingrese a las opciones del menú para gestionar los datos de los usuarios, citas, historial médico y configuración del sistema.
+                Ingrese a las opciones para gestionar los datos de los usuarios.
             </p>
             <p></p>
             <div class="card-container">
                 <div class="card">
                     <div class="option-icon">
-                        <i class="bi bi-person-badge"></i>
+                        <i class="bi bi-house-door"></i>
                     </div>
-                    <h3>Mi perfil</h3>
-                    <p>Actualiza tus datos personales o contraseña de acceso.</p>
-                    <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'error.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
-
-                    <a href="<?php echo $url; ?>" class="btn">Ir</a>
+                    <h3>Inicio</h3>
+                    <p>Regresa al panel principal.</p>
+                    <a href="panel.php" class="btn">Ir</a>
                 </div>
+                <?php if ($idRol == 1): ?>
+                    <div class="card">
+                        <div class="option-icon">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h3>Agregar Médico o Recepcionista</h3>
+                        <p>Crea usuarios Médico o Recepcionista.</p>
+                        <a href="add_medical.php" class="btn">Ir</a>
+                    </div>
+                <?php endif; ?>
+                <?php if ($idRol == 1): ?>
+                    <div class="card">
+                        <div class="option-icon">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </div>
+                        <h3>Modificar Médico o recepcionista</h3>
+                        <p>Busca, modifica o elimina usuarios.</p>
+                        <a href="rud_medical.php" class="btn">Ir</a>
+                    </div>
+                <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <div class="card">
                         <div class="option-icon">
-                            <i class="bi bi-people"></i>
+                            <i class="bi bi-person-plus-fill"></i>
                         </div>
-                        <h3>Gestion de Usuarios</h3>
-                        <p>Crea, modifica y elimina usuarios con diferentes roles.</p>
-                        <a href="users.php" class="btn">Ir</a>
+                        <h3>Agregar usuario Paciente</h3>
+                        <p>Da de alta usuarios con rol de pacientes.</p>
+                        <a href="add_patient.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
-                <div class="card">
-                    <div class="option-icon">
-                        <i class="bi bi-calendar"></i>
-                    </div>
-                    <h3>Gestion de Citas</h3>
-                    <p>Crea, modifica y cancela citas para pacientes o médicos.</p>
-                    <a href="citas.php" class="btn">Ir</a>
-                </div>
-                <?php if ($idRol == 1 || $idRol == 2 || $idRol == 4): ?>
+                <?php if ($idRol == 1 || $idRol == 2): ?>
                     <div class="card">
                         <div class="option-icon">
-                            <i class="bi bi-file-earmark-ruled"></i>
+                            <i class="fa-solid fa-user-injured"></i>
                         </div>
-                        <h3>Historial Médico</h3>
-                        <p>Crea, modifica y elimina historial médico de pacientes.</p>
-                        <a href="historial.php" class="btn">Ir</a>
+                        <h3>Modificar usuario Paciente</h3>
+                        <p>Busca, modifica o elimina a paciente.</p>
+                        <a href="rud_patient.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>

@@ -1,53 +1,36 @@
 <?php
 session_start();
 
+// Verificar si el usuario está autenticado
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
+
 $idRol = $_SESSION['idRol'];
 include 'conexion.php';
 
-// Validar y recibir el ID del paciente
-$id_paciente = filter_input(INPUT_GET, 'id_paciente', FILTER_VALIDATE_INT);
-
-if (!$id_paciente) {
-    die("ID de paciente no válido o no proporcionado.");
+// Obtener el id_usuario de la URL
+$id_usuario = $_GET['id_usuario'] ?? null; 
+if ($id_usuario === null) {
+    die("ID de usuario no proporcionado.");
 }
 
-// Consulta de datos del paciente junto con el id_usuario
-$sql = "SELECT * FROM pacientes WHERE id_paciente = ?";
-if ($stmt = $link->prepare($sql)) {
-    $stmt->bind_param("i", $id_paciente);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+// Buscar los datos del usuario
+$sql2 = "SELECT * FROM usuarios WHERE id_usuario = ?";
+if ($stmt2 = $link->prepare($sql2)) {
+    $stmt2->bind_param("i", $id_usuario);
+    $stmt2->execute();
+    $resultado2 = $stmt2->get_result();
 
-    if ($resultado->num_rows === 1) {
-        $paciente = $resultado->fetch_assoc();
-        $id_usuario = $paciente['id_usuario'];  // Obtener el id_usuario del paciente
-
-        // Ahora buscamos los datos del usuario
-        $sql2 = "SELECT * FROM usuarios WHERE id_usuario = ?";
-        if ($stmt2 = $link->prepare($sql2)) {
-            $stmt2->bind_param("i", $id_usuario);
-            $stmt2->execute();
-            $resultado2 = $stmt2->get_result();
-
-            if ($resultado2->num_rows === 1) {
-                $usuario = $resultado2->fetch_assoc();
-            } else {
-                die("Usuario no encontrado.");
-            }
-            $stmt2->close();
-        } else {
-            die("Error en la consulta de usuario: " . $link->error);
-        }
+    if ($resultado2->num_rows === 1) {
+        $usuario = $resultado2->fetch_assoc();
     } else {
-        die("Paciente no encontrado.");
+        die("Usuario no encontrado.");
     }
-    $stmt->close();
+    $stmt2->close();  // Aquí se cierra la declaración correctamente
 } else {
-    die("Error en la consulta del paciente: " . $link->error);
+    die("Error en la consulta de usuario: " . $link->error);
 }
 
 $link->close();
@@ -65,7 +48,7 @@ $link->close();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Información del paciente</title>
+    <title>Información del usuario</title>
 </head>
 
 <body class="principal">
@@ -136,7 +119,7 @@ $link->close();
                 </header>
 
                 <div class="container">
-                    <h2>Información del Paciente</h2>
+                    <h2>Información del Médico o Recepcionista</h2>
 
                     <?php if (isset($_GET['mensaje'])): ?>
                         <div class="alert alert-success">
@@ -146,85 +129,48 @@ $link->close();
 
 
 
-                    <!-- Información del paciente -->
+                    <!-- Información del médico -->
                     <table class="table" style="font-size:80%;">
                         <tbody>
-                            <tr>
-
-                                <!-- Aquí la imagen ocupa toda una columna -->
-                                <td rowspan="7" style="text-align: center; vertical-align: middle;">
-
-        <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
-
-    </td>
-                            </tr>
 
 
                             <tr>
-                                <th>Clave de Expediente</th>
-                                <td><?php echo htmlspecialchars($paciente['clave_expediente']); ?></td>
                                 <th>Nombre</th>
                                 <td><?php echo htmlspecialchars($usuario['nombre']) . " " . htmlspecialchars($usuario['primer_apellido']) . " " . htmlspecialchars($usuario['segundo_apellido']); ?></td>
-                                <th>CURP</th>
-                                <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
-                            </tr>
-                            <tr>
-                                <th>Edad</th>
-                                <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
-                                <th>Sexo</th>
-                                <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
-                                <th>Fecha de Nacimiento</th>
-                                <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
-                            </tr>
-                            <tr>
                                 <th>E-mail</th>
                                 <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
                                 <th>Teléfono</th>
                                 <td><?php echo htmlspecialchars($usuario['telefono']); ?></td>
-                                <th>Derechohabiencia</th>
-                                <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
                             </tr>
                             <tr>
-                                <th>Dirección</th>
-                                <td colspan="5"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
-                            </tr>
-                            <tr>
-                                <th>Tipo de Sangre</th>
-                                <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
-                                <th>Religión</th>
-                                <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
-                                <th>Ocupación</th>
-                                <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
-                            </tr>
-                            <tr>
-                                <th>Alergias</th>
-                                <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
-                                <th>Padecimientos Crónicos</th>
-                                <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
                                 <th>Fecha de Registro</th>
-                                <td><?php echo htmlspecialchars($paciente['fecha_registro']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['fecha_registro']); ?></td>
                             </tr>
                         </tbody>
                     </table>
                     <P></P>
-                    <h2 class="text-center">Opciones del Paciente</h2>
+                    <h2 class="text-center">Opciones del Médico</h2>
 
                     <div class="options-container">
-    <div class="add-option">
-        <a href="add_cita.php"><i class="fa-solid fa-calendar-plus"></i> Agregar una cita</a>
-    </div>
 
     <div class="add-option">
-        <a href="update_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar paciente</a>
+        <a href="update_medical.php?id_usuario=<?php echo $usuario['id_usuario']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar Información de usuario</a>
     </div>
-
+    <?php if ($idRol == 1): ?>
     <div class="add-option">
-        <a href="delete_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este paciente?');"><i class="fa-solid fa-user-times"></i> Eliminar paciente</a>
+        <a href="delete_usuario.php?id_usuario=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este usuario?');">
+            <i class="fa-solid fa-user-times"></i> Eliminar usuario
+        </a>
     </div>
-
+<?php else: ?>
     <div class="add-option">
-        <a href="historial_medico.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-file-medical-alt"></i> Ver historial médico</a>
+        <a href="delete_medical.php?id_usuario=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este usuario?');">
+            <i class="fa-solid fa-user-times"></i> Eliminar usuario
+        </a>
     </div>
+<?php endif; ?>
+    
+
     <div class="add-option">
         <a href="panel.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a>
     </div>
