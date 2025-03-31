@@ -93,9 +93,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             $stmt->close();
             $link->close();
-
-            // Redirigir con un mensaje de éxito
-            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Información+de+paciente+actualizada+correctamente!');
+        
+            // Redirigir dependiendo del valor de idRol
+            if ($_SESSION['idRol'] == 4) {
+                // Redirigir a perfil.php si el rol es 4
+                header('Location: perfil.php?mensaje=Información+de+paciente+actualizada+correctamente!');
+            } else {
+                // Redirigir a paciente.php para otros roles
+                header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Información+de+paciente+actualizada+correctamente!');
+            }
             exit();
         } else {
             die("Error al actualizar el expediente: " . $stmt->error);
