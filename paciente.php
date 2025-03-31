@@ -117,7 +117,7 @@ $link->close();
         <!-- Foto del Paciente -->
         <div class="text-center my-3">
             <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" alt="Foto del paciente"
-                 class="" width="150">
+                class="" width="150">
         </div>
 
         <!-- Tabla de datos -->
