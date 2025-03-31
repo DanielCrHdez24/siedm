@@ -219,7 +219,7 @@ $link->close();
     </div>
 
     <div class="add-option">
-        <a href="eliminar_paciente.php?id_paciente=<?php echo $paciente['id_paciente']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este paciente?');"><i class="fa-solid fa-user-times"></i> Eliminar paciente</a>
+        <a href="delete_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este paciente?');"><i class="fa-solid fa-user-times"></i> Eliminar paciente</a>
     </div>
 
     <div class="add-option">

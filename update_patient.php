@@ -119,16 +119,16 @@ mysqli_close($link);
                 <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" value="<?php echo htmlspecialchars($telefono); ?>">
 
                 <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña">
+                <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese nueva contraseña">
                 
                 <label for="contrasena2">Confirma la contraseña:</label>
-                <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña">
+                <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma la nueva contraseña">
                 <p> </p>
                 <input type="text" id="id_rol" name="id_rol" required hidden value="4">
                 
                 <button type="submit" class="button">Actualizar</button>
-                <button type="reset" class="button">Limpiar Datos</button>
-                <button type="button" class="button" onclick="window.location.href='paciente.php';">Cancelar</button>
+                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
+                
             </form>
         </div>
 

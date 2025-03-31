@@ -48,7 +48,7 @@ $link->close();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Información del paciente</title>
+    <title>Información del Médico</title>
 </head>
 
 <body class="principal">
@@ -119,7 +119,7 @@ $link->close();
                 </header>
 
                 <div class="container">
-                    <h2>Información del Paciente</h2>
+                    <h2>Información del Médico</h2>
 
                     <?php if (isset($_GET['mensaje'])): ?>
                         <div class="alert alert-success">
@@ -129,7 +129,7 @@ $link->close();
 
 
 
-                    <!-- Información del paciente -->
+                    <!-- Información del médico -->
                     <table class="table" style="font-size:80%;">
                         <tbody>
 

@@ -54,6 +54,14 @@ $idRol = $_SESSION['idRol'];
 
         <div class="container">
             <h2>Gestión de Usuarios!</h2>
+            <?php
+if (isset($_GET['mensaje'])): 
+    $mensaje = htmlspecialchars($_GET['mensaje']);
+?>
+    <div class="alert alert-success" role="alert">
+        <?php echo $mensaje; ?>
+    </div>
+<?php endif; ?>
             <p>
                 Ingrese a las opciones para gestionar los datos de los usuarios.
             </p>
