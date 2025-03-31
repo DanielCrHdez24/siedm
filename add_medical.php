@@ -58,42 +58,47 @@ $idRol = $_SESSION['idRol'];
                 Ingrese los datos solicitados en los campos.
             </p>
             <p> </p>
-            <form class="form" action="insertar_medico.php" method="POST">
-            <label for="id_rol">Rol del usuario:</label>
-            <select id="id_rol" name="id_rol" required>
+            <<form class="form" action="insertar_medico.php" method="POST" onsubmit="return validateForm()">
+                <label for="id_rol">Rol del usuario:</label>
+                <select id="id_rol" name="id_rol" required>
                     <option value="" disabled selected>Seleccione un rol</option>
                     <option value="2">Médico</option>
                     <option value="3">Recepcionista</option>
                 </select>
                 <p></p>
+
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente">
-                <p> </p>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <p></p>
+
                 <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido">
-                <p> </p>
+                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <p></p>
+
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido">
-                <p> </p>
+                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <p></p>
+
                 <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
-                <p> </p>
+                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" title="Ingrese un correo electrónico válido">
+                <p></p>
+
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10">
-                <p> </p>
+                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de teléfono válido de 10 dígitos">
+                <p></p>
+
                 <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña">
-                <p> </p>
+                <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña" minlength="6" title="La contraseña debe tener al menos 6 caracteres">
+                <p></p>
+
                 <label for="contrasena2">Confirma la contraseña:</label>
-                <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña">
-                <p> </p>
-                
-                
+                <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña" minlength="6" title="La contraseña debe tener al menos 6 caracteres">
+                <p></p>
 
                 <button type="submit" class="button">Continuar</button>
                 <button type="reset" class="button">Limpiar Datos</button>
                 <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
-            </form>
+                </form>
 
         </div>
 
