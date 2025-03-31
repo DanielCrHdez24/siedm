@@ -394,12 +394,20 @@ button:hover {
     background-color: red; /* Fondo rojo en hover */
     color: white; /* Texto blanco en hover */
 }
-
-.add-option a[href*="eliminar_medico"] {
+/* Estilo adicional para el caso de "Eliminar paciente" */
+.add-option a[href*="delete_usuario"] {
     color: red; /* Color rojo para eliminar */
 }
 
-.add-option a[href*="eliminar_medico"]:hover {
+.add-option a[href*="delete_usuario"]:hover {
+    background-color: red; /* Fondo rojo en hover */
+    color: white; /* Texto blanco en hover */
+}
+.add-option a[href*="delete_medical"] {
+    color: red; /* Color rojo para eliminar */
+}
+
+.add-option a[href*="delete_medical"]:hover {
     background-color: red; /* Fondo rojo en hover */
     color: white; /* Texto blanco en hover */
 }

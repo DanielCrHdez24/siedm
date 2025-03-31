@@ -48,7 +48,7 @@ $link->close();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Información del Médico</title>
+    <title>Información del usuario</title>
 </head>
 
 <body class="principal">
@@ -119,7 +119,7 @@ $link->close();
                 </header>
 
                 <div class="container">
-                    <h2>Información del Médico</h2>
+                    <h2>Información del Médico o Recepcionista</h2>
 
                     <?php if (isset($_GET['mensaje'])): ?>
                         <div class="alert alert-success">
@@ -154,12 +154,22 @@ $link->close();
                     <div class="options-container">
 
     <div class="add-option">
-        <a href="update_medical.php?id_usuario=<?php echo $usuario['id_usuario']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar Información de médico</a>
+        <a href="update_medical.php?id_usuario=<?php echo $usuario['id_usuario']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar Información de usuario</a>
     </div>
-
+    <?php if ($idRol == 1): ?>
     <div class="add-option">
-        <a href="eliminar_medico.php?id_usuario=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este médico?');"><i class="fa-solid fa-user-times"></i> Eliminar médico</a>
+        <a href="delete_usuario.php?id_usuario=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este usuario?');">
+            <i class="fa-solid fa-user-times"></i> Eliminar usuario
+        </a>
     </div>
+<?php else: ?>
+    <div class="add-option">
+        <a href="delete_medical.php?id_usuario=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este usuario?');">
+            <i class="fa-solid fa-user-times"></i> Eliminar usuario
+        </a>
+    </div>
+<?php endif; ?>
+    
 
     <div class="add-option">
         <a href="panel.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a>

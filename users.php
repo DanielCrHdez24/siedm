@@ -80,8 +80,8 @@ if (isset($_GET['mensaje'])):
                         <div class="option-icon">
                             <i class="fa-solid fa-user-doctor"></i>
                         </div>
-                        <h3>Agregar usuario Médico</h3>
-                        <p>Crea usuarios con el rol de Médico.</p>
+                        <h3>Agregar Médico o Recepcionista</h3>
+                        <p>Crea usuarios Médico o Recepcionista.</p>
                         <a href="add_medical.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
@@ -90,8 +90,8 @@ if (isset($_GET['mensaje'])):
                         <div class="option-icon">
                             <i class="fa-solid fa-user-pen"></i>
                         </div>
-                        <h3>Modificar usuario Médico</h3>
-                        <p>Busca, modifica o elimina usuario Médico.</p>
+                        <h3>Modificar Médico o recepcionista</h3>
+                        <p>Busca, modifica o elimina usuarios.</p>
                         <a href="rud_medical.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>

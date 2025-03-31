@@ -1,23 +1,17 @@
 <?php
 session_start();
 
-// Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
-
 $idRol = $_SESSION['idRol'];
-
-// Incluir la conexión a la base de datos
-include 'conexion.php';
-
-// Verificar si el id_usuario está presente en la URL
-if (isset($_GET['id_usuario'])) {
-    $id_usuario = (int) $_GET['id_usuario'];
-} else {
-    die("Error: El id_usuario no está presente.");
+ // Utiliza esta variable para obtener los datos relacionados con el usuario
+ $id_usuario = $_GET['id_usuario'] ?? null; 
+if ($id_usuario === null) {
+    die("ID de usuario no proporcionado.");
 }
+include 'conexion.php';
 
 // Recuperar los datos del médico para precargar en el formulario
 $sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
@@ -56,7 +50,7 @@ mysqli_close($link);
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Actualizar Médico</title>
+    <title>Confrimar eliminar cuenta</title>
 </head>
 
 <body class="principal">
@@ -89,18 +83,9 @@ mysqli_close($link);
         </header>
 
         <div class="container">
-            <h2>Actualizar información del Médico</h2>
-            <?php
-if (isset($_GET['mensaje'])): 
-    $mensaje = htmlspecialchars($_GET['mensaje']);
-?>
-    <div class="alert alert-success" role="alert">
-        <?php echo $mensaje; ?>
-    </div>
-<?php endif; ?>
-            
-            <form class="form" action="actualizar_medico.php" method="POST">
-                
+        <h2 style="color: red; font-size: 24px; text-align: center;">¿Está seguro que quiere eliminar su cuenta?</h2>
+        <h3 style="color: red; font-size: 18px; text-align: center;">Se eliminará de forma permanente y no podrá recuperar la información ni ingresar al sistema.</h3>
+            <form class="form" action="borrar_usuario.php" method="POST">
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
 
                 <label for="nombre">Nombre del Médico:</label>
@@ -124,9 +109,14 @@ if (isset($_GET['mensaje'])):
                 <label for="contrasena2">Confirma la contraseña:</label>
                 <input type="password" id="contrasena2" name="contrasena2" placeholder="Confirma nueva contraseña (opcional)">
 
-                <button type="submit" class="button">Actualizar</button>
-                <button type="reset" class="button">Limpiar Datos</button>
-                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
+                
+                <button type="submit" class="button" 
+            style="color: white; background: red;"
+            onmouseover="this.style.backgroundColor='#ac1a07'; this.style.color='white';" 
+            onmouseout="this.style.backgroundColor='red'; this.style.color='white';">
+        Eliminar cuenta
+    </button>
+                <button type="button" class="button" onclick="window.location.href='panel.php';">Cancelar</button>
             </form>
         </div>
 

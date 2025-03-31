@@ -53,13 +53,20 @@ $idRol = $_SESSION['idRol'];
         </header>
 
         <div class="container">
-            <h2>Agregar usuario Médico.</h2>
+            <h2>Agregar usuario Médico o Recepcionista.</h2>
             <p>
                 Ingrese los datos solicitados en los campos.
             </p>
             <p> </p>
             <form class="form" action="insertar_medico.php" method="POST">
-                <label for="nombre">Nombre del Médico:</label>
+            <label for="id_rol">Rol del usuario:</label>
+            <select id="id_rol" name="id_rol" required>
+                    <option value="" disabled selected>Seleccione un rol</option>
+                    <option value="2">Médico</option>
+                    <option value="3">Recepcionista</option>
+                </select>
+                <p></p>
+                <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente">
                 <p> </p>
                 <label for="primer_apellido">Primer apellido:</label>
@@ -80,7 +87,8 @@ $idRol = $_SESSION['idRol'];
                 <label for="contrasena2">Confirma la contraseña:</label>
                 <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña">
                 <p> </p>
-                <input type="text" id="id_rol" name="id_rol" required hidden value="2">
+                
+                
 
                 <button type="submit" class="button">Continuar</button>
                 <button type="reset" class="button">Limpiar Datos</button>
