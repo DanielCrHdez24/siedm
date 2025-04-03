@@ -59,34 +59,40 @@ $idRol = $_SESSION['idRol'];
             </p>
             <p> </p>
             <form class="form" action="insertar_paciente.php" method="POST">
-                <label for="nombre">Nombre de Paciente:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente">
-                <p> </p>
-                <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido">
-                <p> </p>
-                <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido">
-                <p> </p>
-                <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
-                <p> </p>
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10">
-                <p> </p>
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña">
-                <p> </p>
-                <label for="contrasena2">Confirma la contraseña:</label>
-                <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña">
-                <p> </p>
-                <input type="text" id="id_rol" name="id_rol" required hidden value="4">
+    <label for="nombre">Nombre de Paciente:</label>
+    <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
+    <p></p>
+    
+    <label for="primer_apellido">Primer apellido:</label>
+    <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="El primer apellido solo puede contener letras y espacios.">
+    <p></p>
+    
+    <label for="segundo_apellido">Segundo Apellido:</label>
+    <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
+    <p></p>
+    
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
+    <p></p>
+    
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
+    <p></p>
+    
+    <label for="contrasena">Contraseña:</label>
+    <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña">
+    <p></p>
+    
+    <label for="contrasena2">Confirma la contraseña:</label>
+    <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña">
+    <p></p>
+    
+    <input type="text" id="id_rol" name="id_rol" required hidden value="4">
 
-                <button type="submit" class="button">Continuar</button>
-                <button type="reset" class="button">Limpiar Datos</button>
-                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
-            </form>
-
+    <button type="submit" class="button">Continuar</button>
+    <button type="reset" class="button">Limpiar Datos</button>
+    <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
+</form>
         </div>
 
         <footer class="footer">
