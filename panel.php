@@ -92,7 +92,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                         <div class="option-icon">
                             <i class="bi bi-people"></i>
                         </div>
-                        <h3>Gestion de Usuarios</h3>
+                        <h3>Gestión de Usuarios</h3>
                         <p>Crea, modifica y elimina usuarios con diferentes roles.</p>
                         <a href="users.php" class="btn">Ir</a>
                     </div>
@@ -101,7 +101,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                     <div class="option-icon">
                         <i class="bi bi-calendar"></i>
                     </div>
-                    <h3>Gestion de Citas</h3>
+                    <h3>Gestión de Citas</h3>
                     <p>Crea, modifica y cancela citas para pacientes o médicos.</p>
                     <a href="citas.php" class="btn">Ir</a>
                 </div>
