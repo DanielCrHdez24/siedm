@@ -184,6 +184,7 @@ $nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $se
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
             <p>Karen Elizabeth Patlán Villareal - 22300138</p>
+            <p>Irma Rafael Soto - 18100213</p>
             <p>&copy; 2025 - SIEDM</p>
         </footer>
     </div>
