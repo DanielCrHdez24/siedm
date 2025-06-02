@@ -12,7 +12,7 @@ include 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Lista de campos requeridos
-    $required_fields = ['clave_expediente', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion', 'id_usuario'];
+    $required_fields = ['clave_expediente', 'nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'telefono', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion'];
 
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
@@ -40,6 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Recoger datos del formulario y sanitizar
     $clave_expediente  = trim($_POST['clave_expediente']);
+    $nombre           = trim($_POST['nombre']);
+    $primer_apellido = trim($_POST['primer_apellido']);
+    $segundo_apellido = trim($_POST['segundo_apellido']);
+    $correo           = trim($_POST['correo']);
+    $telefono         = trim($_POST['telefono']);
     $curp             = trim($_POST['curp']);
     $edad             = (int) $_POST['edad'];
     $sexo             = trim($_POST['sexo']);
@@ -51,17 +56,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ocupacion        = trim($_POST['ocupacion']);
     $alergias         = trim($_POST['alergias'] ?? '');
     $padecimientos    = trim($_POST['padecimientos'] ?? '');
-    $id_usuario       = (int) $_POST['id_usuario'];
+   
 
     // Preparar la consulta SQL
-    $sql = "INSERT INTO pacientes (clave_expediente, foto, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro, id_usuario) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
+    $sql = "INSERT INTO pacientes (clave_expediente, foto, nombre, primer_apellido, segundo_apellido, correo, telefono, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, NOW())";
 
     if ($stmt = $link->prepare($sql)) {
-        $stmt->bind_param("sssisssssssssi", 
-            $clave_expediente, $fotoPath, $curp, $edad, $sexo, $fecha_nacimiento, 
+        $stmt->bind_param("ssssssssisssssssss", 
+            $clave_expediente, $fotoPath, $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $curp, $edad, $sexo, $fecha_nacimiento, 
             $derechohabiencia, $direccion, $tipo_sangre, $religion, $ocupacion, 
-            $alergias, $padecimientos, $id_usuario
+            $alergias, $padecimientos
         );
 
         if ($stmt->execute()) {

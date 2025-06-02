@@ -10,38 +10,9 @@ $idRol = $_SESSION['idRol'];
 // Incluir la conexión a la base de datos
 include 'conexion.php';
 
-// Obtener y validar el ID del usuario de la URL
-$id_usuario = isset($_GET['id_usuario']) ? (int) $_GET['id_usuario'] : 0;
-
-if ($id_usuario <= 0) {
-    header("location: panel.php?error=ID+de+usuario+inválido");
-    exit();
-}
-
-// Consultar los datos del usuario
-$sql = "SELECT nombre, primer_apellido, segundo_apellido FROM usuarios WHERE id_usuario = ?";
-if ($stmt = mysqli_prepare($link, $sql)) {
-    mysqli_stmt_bind_param($stmt, 'i', $id_usuario);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $nombre, $primer_apellido, $segundo_apellido);
-
-    if (!mysqli_stmt_fetch($stmt)) {
-        mysqli_stmt_close($stmt);
-        header("location: panel.php?error=Usuario+no+encontrado");
-        exit();
-    }
-
-    mysqli_stmt_close($stmt);
-} else {
-    error_log("Error en consulta SQL: " . mysqli_error($link));
-    header("location: panel.php?error=Error+interno");
-    exit();
-}
 
 mysqli_close($link);
 
-// Sanitizar el nombre completo para evitar XSS
-$nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $segundo_apellido, ENT_QUOTES, 'UTF-8');
 ?>
 
 
@@ -89,8 +60,8 @@ $nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $se
         </header>
 
         <div class="container">
-            <h1>Agregar Expediente.</h1>
-            <p>Ingresa los datos de <strong><?php echo htmlspecialchars($nombre . ' ' . $primer_apellido . ' ' . $segundo_apellido); ?></strong> para completar el nuevo expediente.</p>
+            <h1>Agregar paciente.</h1>
+            <p>Ingresa los datos del paciente para iniciar el nuevo expediente.</p>
 
 
             <!-- Formulario para agregar expediente -->
@@ -101,7 +72,26 @@ $nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $se
 
                 <label for="clave_expediente">Clave de Expediente:</label>
                 <input type="text" id="clave_expediente" name="clave_expediente" required placeholder="Ingrese clave de expediente">
+                
+                <label for="nombre">Nombre de Paciente:</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
+                <p></p>
 
+                <label for="primer_apellido">Primer apellido:</label>
+                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="El primer apellido solo puede contener letras y espacios.">
+                <p></p>
+
+                <label for="segundo_apellido">Segundo Apellido:</label>
+                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
+                <p></p>
+
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
+                <p></p>
+
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
+                <p></p>    
                 <label for="curp">CURP:</label>
                 <input type="text" id="curp" name="curp" required placeholder="Ingrese CURP">
 

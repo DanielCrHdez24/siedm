@@ -102,7 +102,7 @@ if (isset($_GET['mensaje'])):
                         </div>
                         <h3>Agregar usuario Paciente</h3>
                         <p>Da de alta usuarios con rol de pacientes.</p>
-                        <a href="add_patient.php" class="btn">Ir</a>
+                        <a href="info_paciente.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>

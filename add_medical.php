@@ -58,7 +58,7 @@ $idRol = $_SESSION['idRol'];
                 Ingrese los datos solicitados en los campos.
             </p>
             <p> </p>
-            <<form class="form" action="insertar_medico.php" method="POST" onsubmit="return validateForm()">
+            <form class="form" action="insertar_medico.php" method="POST" onsubmit="return validateForm()">
                 <label for="id_rol">Rol del usuario:</label>
                 <select id="id_rol" name="id_rol" required>
                     <option value="" disabled selected>Seleccione un rol</option>
