@@ -18,14 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $segundo_apellido = trim($_POST['segundo_apellido']);
     $correo = trim($_POST['correo']);
     $telefono = trim($_POST['telefono']);
-    $contrasena = $_POST['contrasena'];
-    $contrasena2 = $_POST['contrasena2'];
 
-    // Validación: Verificar que las contraseñas coincidan
-    if (!empty($contrasena) && $contrasena !== $contrasena2) {
-        echo "Las contraseñas no coinciden.";
-        exit();
-    }
 
     // Validación del correo electrónico
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
