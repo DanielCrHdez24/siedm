@@ -101,6 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                         <a href="delete_patient.php?id_paciente=<?php echo $fila['id_paciente']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este paciente?');">
                             <i class="fas fa-trash"></i> Eliminar
                         </a>
+                        <a href="citas.php?id_paciente=<?php echo $fila['id_paciente']; ?>">
+                            <i class="fas fa-calendar-alt"></i> Citas
+                        </a>
                     </td>
                 </tr>
             <?php endwhile; ?>
