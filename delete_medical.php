@@ -6,7 +6,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit();
 }
 $idRol = $_SESSION['idRol'];
-$id_usuario = $_SESSION['idUsuario']; // Utiliza esta variable para obtener los datos relacionados con el usuario
+$id_usuario = filter_input(INPUT_GET,'id_usuario',FILTER_VALIDATE_INT); // Utiliza esta variable para obtener los datos relacionados con el usuario
 include 'conexion.php';
 
 // Recuperar los datos del médico para precargar en el formulario

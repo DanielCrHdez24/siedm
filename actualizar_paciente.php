@@ -1,71 +1,101 @@
 <?php
 session_start();
 
-// Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
 
-// Conexión a la base de datos
 include 'conexion.php';
 
-// Verifica si la solicitud es POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_paciente = $_POST['id_paciente']; 
+    $id_paciente = $_POST['id_paciente'];
     $nombre = trim($_POST['nombre']);
     $primer_apellido = trim($_POST['primer_apellido']);
     $segundo_apellido = trim($_POST['segundo_apellido']);
     $correo = trim($_POST['correo']);
     $telefono = trim($_POST['telefono']);
+    $curp = trim($_POST['curp']);
+    $edad = $_POST['edad'];
+    $sexo = $_POST['sexo'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $derechohabiencia = $_POST['derechohabiencia'];
+    $direccion = trim($_POST['direccion']);
+    $tipo_sangre = $_POST['tipo_sangre'];
+    $religion = trim($_POST['religion']);
+    $ocupacion = trim($_POST['ocupacion']);
+    $alergias = trim($_POST['alergias']);
+    $padecimientos = trim($_POST['padecimientos']);
+    $fecha_actualizacion = date("Y-m-d H:i:s");
 
 
-    // Validación del correo electrónico
+    // Validar correo
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
         echo "Correo electrónico inválido.";
         exit();
     }
 
-    // Consultar el ID del usuario asociado al paciente
-    $sql_usuario = "SELECT id_usuario FROM pacientes WHERE id_paciente = ?";
-    if ($stmt_usuario = mysqli_prepare($link, $sql_usuario)) {
-        mysqli_stmt_bind_param($stmt_usuario, "i", $id_paciente);
-        mysqli_stmt_execute($stmt_usuario);
-        mysqli_stmt_bind_result($stmt_usuario, $id_usuario);
+    // Procesar imagen si se envió una nueva
+    $foto_ruta = null;
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $foto_tmp = $_FILES['foto']['tmp_name'];
+        $nombre_foto = basename($_FILES['foto']['name']);
+        $ruta_destino = "uploads/" . time() . "_" . $nombre_foto;
 
-        if (!mysqli_stmt_fetch($stmt_usuario)) {
-            echo "Error: No se encontró el paciente.";
+        if (move_uploaded_file($foto_tmp, $ruta_destino)) {
+            $foto_ruta = $ruta_destino;
+        } else {
+            echo "Error al subir la foto.";
             exit();
         }
-        mysqli_stmt_close($stmt_usuario);
-    } else {
-        echo "Error en la consulta de paciente: " . mysqli_error($link);
-        exit();
     }
 
-    // Si hay una nueva contraseña, la encriptamos
-    $contrasena_hash = !empty($contrasena) ? password_hash($contrasena, PASSWORD_BCRYPT) : null;
+    // Construir consulta SQL de actualización
+    $sql = "UPDATE pacientes SET 
+                nombre = ?, 
+                primer_apellido = ?, 
+                segundo_apellido = ?, 
+                correo = ?, 
+                telefono = ?, 
+                curp = ?, 
+                edad = ?, 
+                sexo = ?, 
+                fecha_nacimiento = ?, 
+                derechohabiencia = ?, 
+                direccion = ?, 
+                tipo_sangre = ?, 
+                religion = ?, 
+                ocupacion = ?, 
+                alergias = ?, 
+                padecimientos = ?,
+                fecha_actualizacion = ?";
 
-    // Preparar la consulta de actualización
-    if ($contrasena_hash) {
-        $sql = "UPDATE usuarios 
-                SET nombre = ?, primer_apellido = ?, segundo_apellido = ?, correo = ?, telefono = ?, contrasena = ? 
-                WHERE id_usuario = ?";
-    } else {
-        $sql = "UPDATE usuarios 
-                SET nombre = ?, primer_apellido = ?, segundo_apellido = ?, correo = ?, telefono = ? 
-                WHERE id_usuario = ?";
+    // Si se subió una nueva foto, actualizarla también
+    if ($foto_ruta !== null) {
+        $sql .= ", foto = ?";
     }
+
+    $sql .= " WHERE id_paciente = ?";
 
     if ($stmt = mysqli_prepare($link, $sql)) {
-        if ($contrasena_hash) {
-            mysqli_stmt_bind_param($stmt, "ssssssi", $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $contrasena_hash, $id_usuario);
-        } else {
-            mysqli_stmt_bind_param($stmt, "sssssi", $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $id_usuario);
-        }
+        if ($foto_ruta !== null) {
+    mysqli_stmt_bind_param($stmt, "sssssssissssssssssi",
+        $foto_ruta, $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono,
+        $curp, $edad, $sexo, $fecha_nacimiento, $derechohabiencia,
+        $direccion, $tipo_sangre, $religion, $ocupacion,
+        $alergias, $padecimientos,$fecha_actualizacion, $id_paciente
+    );
+} else {
+    mysqli_stmt_bind_param($stmt, "ssssssissssssssssi",
+        $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono,
+        $curp, $edad, $sexo, $fecha_nacimiento, $derechohabiencia,
+        $direccion, $tipo_sangre, $religion, $ocupacion,
+        $alergias, $padecimientos, $fecha_actualizacion, $id_paciente
+    );
+}
 
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: update_info_paciente.php?id_usuario=" . $id_usuario . "&mensaje=Paciente+actualizado+correctamente");
+            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Información+de+paciente+actualizada+correctamente!');
             exit();
         } else {
             echo "Error al actualizar paciente: " . mysqli_error($link);
@@ -73,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         mysqli_stmt_close($stmt);
     } else {
-        echo "Error en la consulta de actualización: " . mysqli_error($link);
+        echo "Error en la preparación de la consulta: " . mysqli_error($link);
     }
 } else {
     echo "Acceso no autorizado.";

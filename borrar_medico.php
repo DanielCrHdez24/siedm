@@ -39,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $link->commit();
 
         // Cerrar sesión y redirigir con mensaje
-        session_destroy();
-        header("Location: index.php");
+        
+        header("Location: panel.php");
         exit();
     } catch (Exception $e) {
         $link->rollback();

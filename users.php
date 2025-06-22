@@ -115,16 +115,7 @@ if (isset($_GET['mensaje'])):
                         <a href="rud_patient.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
-                <?php if ($idRol == 1 || $idRol == 2): ?>
-                    <div class="card">
-                        <div class="option-icon">
-                            <i class="bi bi-gear"></i>
-                        </div>
-                        <h3>Configuración</h3>
-                        <p>Backup y restauración.</p>
-                        <a href="settings.php" class="btn">Ir</a>
-                    </div>
-                <?php endif; ?>
+               
                 <div class="card">
                     <div class="option-icon-logout">
                         <i class="bi bi-box-arrow-left"></i>

@@ -17,9 +17,9 @@ $resultados = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
     $busqueda = trim($_POST["buscar"]);
 
-    // Consulta para buscar por ID, Nombre o CURP
-    $sql = "SELECT id_paciente, nombre, curp, fecha_nacimiento FROM pacientes 
-            WHERE id_paciente LIKE ? OR nombre LIKE ? OR curp LIKE ?";
+    // Consulta para buscar por ID, Nombre o correo
+    $sql = "SELECT id_usuario, nombre, correo FROM usuarios 
+            WHERE id_usuario LIKE ? OR nombre LIKE ? OR correo LIKE ?";
     $stmt = $link->prepare($sql);
     $param = "%" . $busqueda . "%";
     $stmt->bind_param("sss", $param, $param, $param);
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
         <div class="container">
             <h2>Modificación de Usuarios!</h2>
-            <p>Ingrese Nombre, CURP o ID de Paciente.</p>
+            <p>Ingrese Nombre, correo o ID de Usuario.</p>
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
@@ -82,23 +82,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>CURP</th>
-                <th>Fecha de Nacimiento</th>
+                <th>Correo</th>
                 <th>Acciones</th> <!-- Nueva columna -->
             </tr>
         </thead>
         <tbody>
             <?php while ($fila = $resultados->fetch_assoc()): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($fila["id_paciente"]); ?></td>
+                    <td><?php echo htmlspecialchars($fila["id_usuario"]); ?></td>
                     <td><?php echo htmlspecialchars($fila["nombre"]); ?></td>
-                    <td><?php echo htmlspecialchars($fila["curp"]); ?></td>
-                    <td><?php echo htmlspecialchars($fila["fecha_nacimiento"]); ?></td>
+                    <td><?php echo htmlspecialchars($fila["correo"]); ?></td>
                     <td>
-                        <a href="update_patient.php?id_paciente=<?php echo $fila['id_paciente']; ?>" class="btn-modificar">
+                        <a href="update_medical.php?id_usuario=<?php echo $fila['id_usuario']; ?>" class="btn-modificar">
                             <i class="fas fa-edit"></i> Modificar
                         </a>
-                        <a href="delete_patient.php?id_paciente=<?php echo $fila['id_paciente']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este paciente?');">
+                        <a href="delete_medical.php?id_usuario=<?php echo $fila['id_usuario']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este paciente?');">
                             <i class="fas fa-trash"></i> Eliminar
                         </a>
                     </td>
@@ -109,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
     <p style="margin-top: 20px;">No se encontraron resultados.</p>
 <?php endif; ?>
-
+<br>
         </div>
 
         <footer class="footer">

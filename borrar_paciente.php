@@ -20,22 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         exit();
     }
 
-    // Consultar el ID de usuario asociado al paciente
-    $sql_usuario = "SELECT id_usuario FROM pacientes WHERE id_paciente = ?";
-    if ($stmt_usuario = mysqli_prepare($link, $sql_usuario)) {
-        mysqli_stmt_bind_param($stmt_usuario, "i", $id_paciente);
-        mysqli_stmt_execute($stmt_usuario);
-        mysqli_stmt_bind_result($stmt_usuario, $id_usuario);
-
-        if (!mysqli_stmt_fetch($stmt_usuario)) {
-            echo "Error: No se encontró el paciente.";
-            exit();
-        }
-        mysqli_stmt_close($stmt_usuario);
-    } else {
-        echo "Error en la consulta de paciente: " . mysqli_error($link);
-        exit();
-    }
 
     // Iniciar una transacción para asegurar la consistencia de los datos
     mysqli_begin_transaction($link);
@@ -55,24 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         // Si hay un error con la consulta de eliminación, deshacer la transacción
         mysqli_rollback($link);
         echo "Error en la consulta de eliminación del paciente: " . mysqli_error($link);
-        exit();
-    }
-
-    // Eliminar al usuario asociado en la tabla usuarios
-    $sql_usuario = "DELETE FROM usuarios WHERE id_usuario = ?";
-    if ($stmt_usuario = mysqli_prepare($link, $sql_usuario)) {
-        mysqli_stmt_bind_param($stmt_usuario, "i", $id_usuario);
-        if (!mysqli_stmt_execute($stmt_usuario)) {
-            // Si falla la eliminación del usuario, deshacer la transacción
-            mysqli_rollback($link);
-            echo "Error al eliminar usuario: " . mysqli_error($link);
-            exit();
-        }
-        mysqli_stmt_close($stmt_usuario);
-    } else {
-        // Si hay un error con la consulta de eliminación del usuario, deshacer la transacción
-        mysqli_rollback($link);
-        echo "Error en la consulta de eliminación del usuario: " . mysqli_error($link);
         exit();
     }
 

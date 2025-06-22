@@ -80,7 +80,7 @@ mysqli_close($link);
             <h2>Modificar Paciente</h2>
             <p>Modifique los datos solicitados en los campos.</p>
             
-            <form class="form" action="actualizar_paciente.php" method="POST">
+            <form class="form" action="actualizar_paciente.php" method="POST" enctype="multipart/form-data">
                 <!-- Campo oculto para enviar el id_paciente -->
                 <input type="hidden" name="id_paciente" value="<?php echo ($id_paciente); ?>">
 

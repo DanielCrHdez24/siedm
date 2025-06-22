@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_stmt_execute($stmt)) {
             if ($_SESSION['idRol'] == 1) {
                 // Redirigir a perfil.php si el rol es 4
-                header('Location: update_medical.php?id_usuario=' . $id_usuario . '&mensaje=Información+de+usuario+actualizada+correctamente!');
+                header('Location: medico.php?id_usuario=' . $id_usuario . '&mensaje=Información+de+usuario+actualizada+correctamente!');
                 
             } else {
                 // Redirigir a paciente.php para otros roles
