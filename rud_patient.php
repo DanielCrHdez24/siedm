@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
     $busqueda = trim($_POST["buscar"]);
 
     // Consulta para buscar por ID, Nombre o CURP
-    $sql = "SELECT id_paciente, nombre, curp, fecha_nacimiento FROM pacientes 
+    $sql = "SELECT id_paciente, nombre, primer_apellido, segundo_apellido, curp, fecha_nacimiento FROM pacientes 
             WHERE id_paciente LIKE ? OR nombre LIKE ? OR curp LIKE ?";
     $stmt = $link->prepare($sql);
     $param = "%" . $busqueda . "%";
@@ -91,18 +91,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
             <?php while ($fila = $resultados->fetch_assoc()): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($fila["id_paciente"]); ?></td>
-                    <td><?php echo htmlspecialchars($fila["nombre"]); ?></td>
+                    <td><?php echo htmlspecialchars($fila["nombre"] . ' ' . $fila["primer_apellido"] . ' ' . $fila["segundo_apellido"]); ?></td>
                     <td><?php echo htmlspecialchars($fila["curp"]); ?></td>
                     <td><?php echo htmlspecialchars($fila["fecha_nacimiento"]); ?></td>
                     <td>
                         <a href="update_patient.php?id_paciente=<?php echo $fila['id_paciente']; ?>" class="btn-modificar">
-                            <i class="fas fa-edit"></i> Modificar
+                            <i class="fas fa-edit"> </i> Modificar 
                         </a>
                         <a href="delete_patient.php?id_paciente=<?php echo $fila['id_paciente']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este paciente?');">
-                            <i class="fas fa-trash"></i> Eliminar
+                            <i class="fas fa-trash"> </i> Eliminar 
                         </a>
                         <a href="citas.php?id_paciente=<?php echo $fila['id_paciente']; ?>">
-                            <i class="fas fa-calendar-alt"></i> Citas
+                            <i class="fas fa-calendar-alt"> </i> Citas 
+                        </a>
+                        <a href="historial_medico.php?id_paciente=<?php echo $fila['id_paciente'];?>">
+                            <i class="fas fa-file-medical-alt"> </i> Historial Médico 
                         </a>
                     </td>
                 </tr>
