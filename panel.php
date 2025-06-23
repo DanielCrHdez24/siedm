@@ -112,7 +112,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                         </div>
                         <h3>Historial Médico</h3>
                         <p>Crea, modifica y elimina historial médico de pacientes.</p>
-                        <a href="historial.php" class="btn">Ir</a>
+                        <a href="historial_medico.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>

@@ -104,9 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                         <a href="citas.php?id_paciente=<?php echo $fila['id_paciente']; ?>">
                             <i class="fas fa-calendar-alt"> </i> Citas 
                         </a>
-                        <a href="historial_medico.php?id_paciente=<?php echo $fila['id_paciente'];?>">
-                            <i class="fas fa-file-medical-alt"> </i> Historial Médico 
-                        </a>
+                        
                     </td>
                 </tr>
             <?php endwhile; ?>
