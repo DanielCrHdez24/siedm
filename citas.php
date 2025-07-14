@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
@@ -12,16 +11,13 @@ $idRol = $_SESSION['idRol'];
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Gestión de Citas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Gestión de Citas</title>
 </head>
 
 <body class="principal">
@@ -49,25 +45,26 @@ $idRol = $_SESSION['idRol'];
         </header>
 
         <div class="container">
-            <h2>Gestión de Citas</h2>
-            <!-- Aquí puedes agregar el contenido para agendar, consultar y cancelar citas -->
-            <div class="citas-container">
-                <!-- Ejemplo de sección para agendar cita -->
-                <div class="cita-card">
+            <h2>Gestión de Citas Médicas</h2>
+            <div class="card-container">
+                <div class="card">
+                    <i class="fa-solid fa-calendar-plus option-icon"></i>
                     <h3>Agendar Cita</h3>
-                    <p>Formulario para agendar una nueva cita.</p>
+                    <p>Programa una nueva consulta médica de forma rápida.</p>
                     <a href="agendar_cita.php" class="btn">Agendar</a>
                 </div>
-                <!-- Ejemplo de sección para consultar cita -->
-                <div class="cita-card">
-                    <h3>Consultar Cita</h3>
-                    <p>Consulta las citas agendadas.</p>
+
+                <div class="card">
+                    <i class="fa-solid fa-magnifying-glass option-icon"></i>
+                    <h3>Consultar Citas</h3>
+                    <p>Visualiza todas las citas que han sido programadas.</p>
                     <a href="consultar_cita.php" class="btn">Consultar</a>
                 </div>
-                <!-- Ejemplo de sección para cancelar cita -->
-                <div class="cita-card">
+
+                <div class="card">
+                    <i class="fa-solid fa-calendar-xmark option-icon"></i>
                     <h3>Cancelar Cita</h3>
-                    <p>Cancela una cita existente.</p>
+                    <p>Elimina una cita programada que ya no será atendida.</p>
                     <a href="cancelar_cita.php" class="btn">Cancelar</a>
                 </div>
             </div>
@@ -84,5 +81,4 @@ $idRol = $_SESSION['idRol'];
 
     <script src="js/menu.js"></script>
 </body>
-
 </html>
