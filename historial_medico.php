@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
                                     <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
                                     <td><?= htmlspecialchars($cita['motivo']) ?></td>
-                                    <td><?= htmlspecialchars($cita['diagnostico']) ?></td>
+                                    <td><?= htmlspecialchars($cita['diagnostico'] ?? 'NO ATENDIDA') ?></td>
                                     <td><?= htmlspecialchars($cita['estado']) ?></td>
                                 </tr>
                             <?php endwhile; ?>

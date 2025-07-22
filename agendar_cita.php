@@ -63,6 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
         <div class="container">
             <h2>Agendar Cita Médica</h2>
             <p>Buscar paciente por CURP, nombre o ID:</p>
+                    <?php if (isset($_GET['mensaje'])): ?>
+    <div class="alert-success">
+        <?= htmlspecialchars($_GET['mensaje']); ?>
+    </div>
+<?php endif; ?>
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
@@ -81,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                                 <th>Fecha de nacimiento</th>
                                 <th>Fecha</th>
                                 <th>Hora</th>
+                                <th>Médico</th>
                                 <th>Motivo</th>
                                 <th>Agendar</th>
                             </tr>
@@ -96,6 +102,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                                     </td>
                                     <td>
                                         <input type="time" name="hora_cita" required>
+                                    </td>
+                                    <td>
+                                        <select name="id_usuario" id="">
+                                            <?php
+                                            // Aquí debes obtener los usuarios disponibles para la cita
+                                            $sql = "SELECT id_usuario, nombre, primer_apellido, segundo_apellido FROM usuarios WHERE id_rol = 2";
+                                            $resultado_usuarios = $link->query($sql);
+
+                                            if ($resultado_usuarios->num_rows > 0) {
+                                                while ($usuario = $resultado_usuarios->fetch_assoc()) {
+                                                    echo '<option value="' . $usuario["id_usuario"] . '">' . htmlspecialchars($usuario["nombre"] . ' ' . $usuario["primer_apellido"] . ' ' . $usuario["segundo_apellido"]) . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option value="">No hay médicos disponibles</option>';
+                                            }
+                                            ?>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="motivo" required placeholder="Motivo">
@@ -114,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                 <p class="alert-error">No se encontraron pacientes con esa búsqueda.</p>
             <?php endif; ?>
         </div>
-
+<br>
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
