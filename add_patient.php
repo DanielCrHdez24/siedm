@@ -60,15 +60,15 @@ $idRol = $_SESSION['idRol'];
             <p> </p>
             <form class="form" action="insertar_paciente.php" method="POST">
                 <label for="nombre">Nombre de Paciente:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
+                <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
                 <p></p>
 
                 <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="El primer apellido solo puede contener letras y espacios.">
+                <input type="text" id="primer_apellido" name="primer_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="El primer apellido solo puede contener letras y espacios.">
                 <p></p>
 
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
+                <input type="text" id="segundo_apellido" name="segundo_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
                 <p></p>
 
                 <label for="correo">Correo electrónico:</label>

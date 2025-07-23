@@ -68,23 +68,23 @@ $idRol = $_SESSION['idRol'];
                 <p></p>
 
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
                 <p></p>
 
                 <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <input type="text" id="primer_apellido" name="primer_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
                 <p></p>
 
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <input type="text" id="segundo_apellido" name="segundo_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
                 <p></p>
 
                 <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" title="Ingrese un correo electrónico válido">
+                <input type="email" id="correo" name="correo"  required placeholder="Ingrese correo electrónico" title="Ingrese un correo electrónico válido">
                 <p></p>
 
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de teléfono válido de 10 dígitos">
+                <input type="tel" id="telefono" name="telefono"  required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de teléfono válido de 10 dígitos">
                 <p></p>
 
                 <label for="contrasena">Contraseña:</label>
