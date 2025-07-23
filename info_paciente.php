@@ -74,15 +74,15 @@ mysqli_close($link);
                 <input type="text" id="clave_expediente" name="clave_expediente" required placeholder="Ingrese clave de expediente">
                 
                 <label for="nombre">Nombre de Paciente:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
+                <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
                 <p></p>
 
                 <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="El primer apellido solo puede contener letras y espacios.">
+                <input type="text" id="primer_apellido" name="primer_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="El primer apellido solo puede contener letras y espacios.">
                 <p></p>
 
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
+                <input type="text" id="segundo_apellido" name="segundo_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
                 <p></p>
 
                 <label for="correo">Correo electrónico:</label>
@@ -93,7 +93,7 @@ mysqli_close($link);
                 <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
                 <p></p>    
                 <label for="curp">CURP:</label>
-                <input type="text" id="curp" name="curp" required placeholder="Ingrese CURP">
+                <input type="text" id="curp" name="curp" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese CURP">
 
                 <label for="edad">Edad:</label>
                 <input type="number" id="edad" name="edad" required min="0" max="120" placeholder="Ingrese la edad">
@@ -119,7 +119,7 @@ mysqli_close($link);
                 </select>
 
                 <label for="direccion">Domicilio:</label>
-                <input type="text" id="direccion" name="direccion" required placeholder="Ingrese la dirección completa">
+                <input type="text" id="direccion" name="direccion" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese la dirección completa">
 
                 <label for="tipo_sangre">Tipo de Sangre:</label>
                 <select id="tipo_sangre" name="tipo_sangre" required>
@@ -135,16 +135,16 @@ mysqli_close($link);
                 </select>
 
                 <label for="religion">Religión:</label>
-                <input type="text" id="religion" name="religion" placeholder="Ingrese religión (opcional)">
+                <input type="text" id="religion" name="religion" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese religión (opcional)">
 
                 <label for="ocupacion">Ocupación:</label>
-                <input type="text" id="ocupacion" name="ocupacion" required placeholder="Ingrese ocupación">
+                <input type="text" id="ocupacion" name="ocupacion" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese ocupación">
 
                 <label for="alergias">Alergias:</label>
-                <input type="text" id="alergias" name="alergias" placeholder="Ingrese alergias (si aplica)">
+                <input type="text" id="alergias" name="alergias" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese alergias (si aplica)">
 
                 <label for="padecimientos">Padecimientos Crónicos:</label>
-                <input type="text" id="padecimientos" name="padecimientos" placeholder="Ingrese padecimientos crónicos (si aplica)">
+                <input type="text" id="padecimientos" name="padecimientos" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese padecimientos crónicos (si aplica)">
 
                 <!-- Campo oculto para pasar el id_usuario -->
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
