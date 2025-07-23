@@ -68,11 +68,11 @@ $idRol = $_SESSION['idRol'];
                 <p></p>
 
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
                 <p></p>
 
                 <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <input type="text" id="primer_apellido" name="primer_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Primer Apellido" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
                 <p></p>
 
                 <label for="segundo_apellido">Segundo Apellido:</label>

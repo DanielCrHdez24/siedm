@@ -285,6 +285,7 @@ form {
 
 label {
     font-size: 15px;
+    text-transform: uppercase;
 }
 
 input, select {
