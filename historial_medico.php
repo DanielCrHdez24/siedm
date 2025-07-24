@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
             <h2>Historial Médico del Paciente</h2>
             <form method="POST" class="form">
-                <input type="text" name="busqueda" placeholder="Buscar por nombre, CURP o ID" required>
+                <input type="text" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
                 <button type="submit">Buscar</button>
             </form>
 
