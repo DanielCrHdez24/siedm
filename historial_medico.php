@@ -9,44 +9,64 @@ $idRol = $_SESSION['idRol'];
 include 'conexion.php';
 
 $busqueda = $_POST['busqueda'] ?? '';
+$paciente_id_get = $_GET['id_paciente'] ?? null;
+
 $paciente = null;
 $citas = [];
 $historial_result = null;
 $docs_result = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $sql = "SELECT * FROM pacientes WHERE nombre LIKE ? OR curp LIKE ? OR id_paciente = ?";
-    $stmt = $link->prepare($sql);
-    $like = "%" . $busqueda . "%";
-    $stmt->bind_param("ssi", $like, $like, $busqueda);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $busqueda = $_POST['busqueda'];
+        // Si la búsqueda es numérica, busca por id, sino por nombre o curp
+        if (is_numeric($busqueda)) {
+            // Buscar por id
+            $sql = "SELECT * FROM pacientes WHERE id_paciente = ?";
+            $stmt = $link->prepare($sql);
+            $stmt->bind_param("i", $busqueda);
+        } else {
+            // Buscar por nombre o curp
+            $sql = "SELECT * FROM pacientes WHERE nombre LIKE ? OR curp LIKE ?";
+            $like = "%" . $busqueda . "%";
+            $stmt = $link->prepare($sql);
+            $stmt->bind_param("ss", $like, $like);
+        }
+    } else {
+        // Si viene por GET id_paciente
+        $busqueda = $paciente_id_get;
+        $sql = "SELECT * FROM pacientes WHERE id_paciente = ?";
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param("i", $busqueda);
+    }
     $stmt->execute();
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
         $paciente = $resultado->fetch_assoc();
 
-        // Obtener citas médicas
+        // Aquí sigue igual...
+        // Obtener citas, historial, documentos...
         $sql_citas = "SELECT * FROM citas_medicas WHERE id_paciente = ? ORDER BY fecha_cita DESC, hora_cita DESC";
         $stmt_citas = $link->prepare($sql_citas);
         $stmt_citas->bind_param("i", $paciente['id_paciente']);
         $stmt_citas->execute();
         $citas = $stmt_citas->get_result();
 
-        // Obtener historial médico
         $sql_historial = "SELECT * FROM historial_medico WHERE id_paciente = ? ORDER BY fecha_consulta DESC";
         $stmt_historial = $link->prepare($sql_historial);
         $stmt_historial->bind_param("i", $paciente['id_paciente']);
         $stmt_historial->execute();
         $historial_result = $stmt_historial->get_result();
 
-        // Obtener documentos digitalizados
-        $sql_docs = "SELECT * FROM documentos_digitalizados WHERE id_expediente = ?";
+        $sql_docs = "SELECT * FROM documentos_digitalizados WHERE id_paciente = ?";
         $stmt_docs = $link->prepare($sql_docs);
-        $stmt_docs->bind_param("i", $paciente['id_paciente']); // Suponiendo que id_expediente = id_paciente
+        $stmt_docs->bind_param("i", $paciente['id_paciente']);
         $stmt_docs->execute();
         $docs_result = $stmt_docs->get_result();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="container">
             <h2>Historial Médico del Paciente</h2>
+            <?php if (isset($_GET['mensaje'])): ?>
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border-radius: 5px;">
+        <?= htmlspecialchars($_GET['mensaje']) ?>
+    </div>
+<?php endif; ?>
             <form method="POST" class="form">
                 <input type="text" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
                 <button type="submit">Buscar</button>
@@ -92,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if ($paciente): ?>
                 <h3>Datos del Paciente</h3>
+                
                 <table class="table" style="font-size:80%;">
                     <tbody>
                         <tr>
@@ -175,27 +201,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 <br>
                 <h3>Documentos Digitalizados</h3>
+
                 <?php if ($docs_result && $docs_result->num_rows > 0): ?>
-                    <ul>
-                        <?php while ($doc = $docs_result->fetch_assoc()): ?>
-                            <li>
-                                <a href="<?= htmlspecialchars($doc['ruta_archivo']) ?>" target="_blank">
-                                    <?= htmlspecialchars($doc['nombre_archivo']) ?> (<?= $doc['fecha_subida'] ?>)
-                                </a>
-                            </li>
-                        <?php endwhile; ?>
-                    </ul>
+                    <table class="table" style="font-size:80%;">
+                        <thead>
+                            <tr>
+                                <th>ID Documento</th>
+                                <th>Tipo de Documento</th>
+                                <th>Nombre del Archivo</th>
+                                <th>Fecha de Subida</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php while ($doc = $docs_result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($doc['id_documento']) ?></td>
+                                    <td><?= htmlspecialchars($doc['tipo_documento']) ?></td>
+                                    <td>
+                                        <a href="<?= htmlspecialchars($doc['ruta_archivo']) ?>" target="_blank">
+                                            <?= htmlspecialchars($doc['nombre_archivo']) ?>
+                                        </a>
+                                    </td>
+                                    <td><?= htmlspecialchars($doc['fecha_subida']) ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 <?php else: ?>
                     <p>No hay documentos disponibles.</p>
-
                 <?php endif; ?>
                 <br>
                 <h4>Subir nuevo documento:</h4>
-                <form action="subir_documento.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id_expediente" value="<?= $paciente['id_paciente'] ?>">
-                    <input type="file" name="archivo" accept=".pdf,.jpg,.jpeg,.png" required>
-                    <button type="submit">Subir</button>
-                </form>
+                <table>
+                    <tr>
+                        <th>Tipo de Documento</th>
+                        <th>Archivo</th>
+                        <th></th>
+                    </tr>
+
+                    <form action="subir_documento.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
+
+                        <td>
+                            <select name="tipo_documento" id="tipo_documento" required>
+                                <option value="" disabled selected>Seleccione el tipo de documento</option>
+                                <option value="EXÁMEN DE SANGRE">EXÁMEN DE SANGRE</option>
+                                <option value="RADIOGRAFÍA">RADIOGRAFÍA</option>
+                                <option value="ELECTROCARDIOGRAMA">ELECTROCARDIOGRAMA</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="file" name="archivo" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </td>
+                        <td>
+                            <button type="submit">Subir</button>
+                        </td>
+                    </form>
+                </table>
                 <br>
                 <button onclick="window.print()" class="btn">🖨️ Imprimir / Guardar como PDF</button>
             <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
