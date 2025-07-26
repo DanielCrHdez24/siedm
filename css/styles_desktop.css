@@ -285,6 +285,7 @@ form {
 
 label {
     font-size: 15px;
+    text-transform: uppercase;
 }
 
 input, select {
@@ -311,8 +312,8 @@ input:valid {
 
 button {
     display: inline-block;
-    padding: 12px;
-    font-size: 16px;
+    padding: 10px;
+    font-size: 15px;
     background-color: var(--primary-color);
     color: white;
     border: none;
