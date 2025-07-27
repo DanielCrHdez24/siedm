@@ -260,7 +260,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                     </form>
                 </table>
                 <br>
-                <button onclick="window.print()" class="btn">🖨️ Imprimir / Guardar como PDF</button>
+            
+               <form action="generar_pdf.php" method="post" target="_blank">
+  <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
+  <button type="submit" class="btn btn-danger">Generar PDF</button>
+</form>
+
+
             <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
                 <p style="color:red;">No se encontró ningún paciente con esos datos.</p>
             <?php endif; ?>
