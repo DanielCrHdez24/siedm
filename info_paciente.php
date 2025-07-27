@@ -93,7 +93,15 @@ mysqli_close($link);
                 <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
                 <p></p>    
                 <label for="curp">CURP:</label>
-                <input type="text" id="curp" name="curp" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese CURP">
+
+                <input type="text" id="curp" name="curp" 
+                        maxlength="18"
+                        required 
+                        pattern="^[A-Z]{4}\d{6}[HM][A-Z]{5}[0-9A-Z]\d$"
+                        placeholder="Ej. GARC800101HDFLRS09"
+                        style="text-transform: uppercase;"
+                        title="Debe tener 18 caracteres en mayúsculas con formato válido.">
+
 
                 <label for="edad">Edad:</label>
                 <input type="number" id="edad" name="edad" required min="0" max="120" placeholder="Ingrese la edad">
@@ -166,6 +174,23 @@ mysqli_close($link);
     </div>
 
     <script src="js/menu.js"></script>
+    <script>
+        const curpInput = document.getElementById("curp");
+
+        // Convierte a mayúsculas 
+        curpInput.addEventListener("input", function () {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Validación extra al enviar el formulario
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[0-9A-Z]\d$/;
+            if (!curpRegex.test(curpInput.value)) {
+            alert("El CURP no es válido. Verifica que tenga 18 caracteres, esté en mayúsculas y cumpla el formato correcto.");
+            e.preventDefault(); // Detiene el envío del formulario
+            }
+        });
+</script>
 </body>
 
 </html>

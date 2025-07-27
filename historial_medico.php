@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
     </div>
 <?php endif; ?>
             <form method="POST" class="form">
-                <input type="text" name="busqueda" placeholder="Buscar por nombre, CURP o ID" required>
+                <input type="text" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
                 <button type="submit">Buscar</button>
             </form>
 
