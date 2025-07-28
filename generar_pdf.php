@@ -20,10 +20,17 @@ if (!$paciente) {
 }
 
 // Consulta citas
-$stmt = $link->prepare("SELECT * FROM citas_medicas WHERE id_paciente = ? ORDER BY fecha_cita");
+$stmt = $link->prepare("SELECT * FROM citas_medicas WHERE id_paciente = ? ORDER BY fecha_cita DESC");
 $stmt->bind_param("i", $id_paciente);
 $stmt->execute();
 $result_citas = $stmt->get_result();
+
+
+//Consulta recetas
+$stmt = $link->prepare("SELECT * FROM recetas WHERE id_paciente = ?");
+$stmt->bind_param("i", $id_paciente);
+$stmt->execute();
+$result_recetas = $stmt->get_result();
 
 // Consulta documentos
 $stmt = $link->prepare("SELECT * FROM documentos_digitalizados WHERE id_paciente = ? ORDER BY fecha_subida");
@@ -34,7 +41,7 @@ $result_documentos = $stmt->get_result();
 // Crear PDF
 $pdf = new TCPDF();
 $pdf->AddPage();
-$pdf->SetFont('helvetica', '', 9);
+$pdf->SetFont('helvetica', '', 8);
 $pdf->SetMargins(10, 10, 10);
 
 $html = '
@@ -52,82 +59,157 @@ $html = '
         </td>
     </tr>
 </table>';
-$html .= '<h3>Datos del Paciente</h3>';
-$html .= '<table border="1" cellpadding="5">
-    <tbody>
-        <tr>
-            <td rowspan="7" style="text-align: center;">
-                <img src="' . htmlspecialchars($paciente['foto']) . '" width="100" height="100">
-            </td>
-            <th>Clave de Expediente</th>
-            <td>' . htmlspecialchars($paciente['clave_expediente']) . '</td>
-            <th>Nombre</th>
-            <td>' . htmlspecialchars($paciente['nombre']) . ' ' . htmlspecialchars($paciente['primer_apellido']) . ' ' . htmlspecialchars($paciente['segundo_apellido']) . '</td>
-            <th>CURP</th>
-            <td>' . htmlspecialchars($paciente['curp']) . '</td>
-        </tr>
-        <tr>
-            <th>Edad</th>
-            <td>' . htmlspecialchars($paciente['edad']) . '</td>
-            <th>Sexo</th>
-            <td>' . htmlspecialchars($paciente['sexo']) . '</td>
-            <th>Fecha Nac.</th>
-            <td>' . htmlspecialchars($paciente['fecha_nacimiento']) . '</td>
-        </tr>
-        <tr>
-            <th>Correo</th>
-            <td>' . htmlspecialchars($paciente['correo']) . '</td>
-            <th>Teléfono</th>
-            <td>' . htmlspecialchars($paciente['telefono']) . '</td>
-            <th>Derechohabiencia</th>
-            <td>' . htmlspecialchars($paciente['derechohabiencia']) . '</td>
-        </tr>
-        <tr>
-            <th>Dirección</th>
-            <td colspan="5">' . htmlspecialchars($paciente['direccion']) . '</td>
-        </tr>
-        <tr>
-            <th>Tipo Sangre</th>
-            <td>' . htmlspecialchars($paciente['tipo_sangre']) . '</td>
-            <th>Religión</th>
-            <td>' . htmlspecialchars($paciente['religion']) . '</td>
-            <th>Ocupación</th>
-            <td>' . htmlspecialchars($paciente['ocupacion']) . '</td>
-        </tr>
-        <tr>
-            <th>Alergias</th>
-            <td>' . htmlspecialchars($paciente['alergias']) . '</td>
-            <th>Crónicos</th>
-            <td>' . htmlspecialchars($paciente['padecimientos']) . '</td>
-            <th>Fecha Registro</th>
-            <td>' . htmlspecialchars($paciente['fecha_registro']) . '</td>
-        </tr>
-    </tbody>
-</table>';
-
-
-
-$html .= '<h3>Citas Médicas</h3>';
-if ($result_citas->num_rows > 0) {
-    $html .= '<ul>';
-    while ($cita = $result_citas->fetch_assoc()) {
-        $html .= '<li>' . htmlspecialchars($cita['fecha_cita']) . ': ' . htmlspecialchars($cita['motivo']) . '</li>';
+$html .= '
+<style>
+    .seccion-titulo {
+        background-color: #009682;
+        color: white;
+        font-weight: bold;
+        padding: 5px;
+        font-size: 10pt;
+        margin-top: 10px;
     }
-    $html .= '</ul>';
+    .dato { font-weight: bold; color: #333; }
+    .valor { color: #555; }
+</style>
+
+<div class="seccion-titulo">Datos del Paciente</div>
+
+<table cellpadding="2" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td width="15%" style="text-align:center; vertical-align:top;">
+            <img src="' . htmlspecialchars($paciente['foto']) . '" width="70" height="70" alt="Foto del Paciente"
+                 style="border:1px solid #ccc; border-radius:5px;">
+        </td>
+        <td width="30%" style="vertical-align:top;">
+            <div><span class="dato">Nombre: </span><span class="valor">' . htmlspecialchars($paciente['nombre']) . ' ' . htmlspecialchars($paciente['primer_apellido']) . ' ' . htmlspecialchars($paciente['segundo_apellido']) . '</span></div>
+            <div><span class="dato">Sexo: </span><span class="valor">' . htmlspecialchars($paciente['sexo']) . '</span></div>
+            <div><span class="dato">Teléfono: </span><span class="valor">' . htmlspecialchars($paciente['telefono']) . '</span></div>
+        </td>
+        <td width="25%" style="vertical-align:top;">
+            <div><span class="dato">CURP: </span><span class="valor">' . htmlspecialchars($paciente['curp']) . '</span></div>
+            <div><span class="dato">Fecha de Nacimiento: </span><span class="valor">' . htmlspecialchars($paciente['fecha_nacimiento']) . '</span></div>
+            <div><span class="dato">Derechohabiencia: </span><span class="valor">' . htmlspecialchars($paciente['derechohabiencia']) . '</span></div>
+        </td>
+        <td width="30%" style="vertical-align:top;">
+            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($paciente['edad']) . ' años</span></div>
+            <div><span class="dato">Correo: </span><span class="valor">' . htmlspecialchars($paciente['correo']) . '</span></div>
+            <div><span class="dato">Religión: </span><span class="valor">' . htmlspecialchars($paciente['religion']) . '</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td width="70%" style="vertical-align:top;">
+            <div><span class="dato">Dirección: </span><span class="valor">' . htmlspecialchars($paciente['direccion']) . '</span></div>
+        </td>
+        <td width="30%" style="vertical-align:top;">
+            <div><span class="dato">Tipo de Sangre: </span><span class="valor">' . htmlspecialchars($paciente['tipo_sangre']) . '</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%" style="vertical-align:top;">
+            <div><span class="dato">Ocupación: </span><span class="valor">' . htmlspecialchars($paciente['ocupacion']) . '</span></div>
+        </td>
+        <td width="25%" style="vertical-align:top;">
+            <div><span class="dato">Alergias: </span><span class="valor">' . htmlspecialchars($paciente['alergias']) . '</span></div>
+        </td>
+        <td width="25%" style="vertical-align:top;">
+            <div><span class="dato">Padecimientos Crónicos: </span><span class="valor">' . htmlspecialchars($paciente['padecimientos']) . '</span></div>
+        </td>
+        <td width="30%" style="vertical-align:top;">
+            <div><span class="dato">Fecha de Registro: </span><span class="valor">' . htmlspecialchars($paciente['fecha_registro']) . '</span></div>
+        </td>
+    </tr>
+</table>
+<br>
+<div class="seccion-titulo">Citas Médicas</div>';
+if ($result_citas->num_rows > 0) {
+    $html .= '<table cellpadding="2" cellspacing="0" border="0" width="100%">';
+    while ($cita = $result_citas->fetch_assoc()) {
+        $html .= '
+       
+            <tr>
+                <td width="20%" style="vertical-align:top;">
+                    <div><span class="dato">Fecha cita: </span><span class="valor">' . htmlspecialchars($cita['fecha_cita']) . '</span></div>
+                </td>
+                <td width="20%" style="vertical-align:top;">
+                    <div><span class="dato">Hora cita: </span><span class="valor">' . htmlspecialchars($cita['hora_cita']) . '</span></div>
+                </td>
+                <td width="60%" style="vertical-align:top;">
+                    <div><span class="dato">Motivo: </span><span class="valor">' . htmlspecialchars($cita['motivo']) . '</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%" style="vertical-align:top;">
+                    <div><span class="dato">Peso: </span><span class="valor">' . htmlspecialchars($cita['peso']) . ' KG</span></div>
+                </td>
+                <td width="20%" style="vertical-align:top;">
+                    <div><span class="dato">Talla: </span><span class="valor">' . htmlspecialchars($cita['talla']) . ' M</span></div>
+                </td>
+                <td width="20%" style="vertical-align:top;">
+                    <div><span class="dato">Temperatura: </span><span class="valor">' . htmlspecialchars($cita['temperatura']) . ' °C</span></div>
+                </td>
+                <td width="40%" style="vertical-align:top;">
+                    <div><span class="dato">Diagnostico: </span><span class="valor">' . htmlspecialchars($cita['diagnostico']) . '</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" style="vertical-align:top;">
+                    <div><span class="dato">Tratamiento: </span></div>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" style="vertical-align:top;">
+                    <span class="valor">' . htmlspecialchars($cita['indicaciones']) . '</span>
+                </td>
+            </tr>
+             <tr>
+                <td width="100%" style="vertical-align:top;">
+                    <div><span class="dato">Recomendaciones: </span></div>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" style="vertical-align:top;">
+                    <span class="valor">' . htmlspecialchars($cita['recomendaciones']) . '</span>
+                </td>
+            </tr>
+            <hr style="border:1px solid #125873; margin:10px 0;"><br>
+            ';
+    
+    }
+    $html .= '</table>';
 } else {
-    $html .= '<p>No hay citas médicas registradas.</p>';
+    $html .= '<p>No hay citas médicas registradas.</p><br>';
 }
 
-$html .= '<h3>Documentos Digitalizados</h3>';
+
+
+$html .= '<p></p>';
+$html .= '<div class="seccion-titulo">Documentos Digitalizados</div>';
+
 if ($result_documentos->num_rows > 0) {
-    $html .= '<ul>';
+    $html .= '<table cellpadding="2" cellspacing="0" border="0" width="100%">';
+    $html .= '
+    <tr>
+        <th width="20%" style="font-weight:bold;">Fecha de Subida</th>
+        <th width="30%" style="font-weight:bold;">Tipo de documento</th>    
+        <th width="40%" style="font-weight:bold;">Nombre del Archivo</th>
+
+    </tr>';
+    $html .= '<tbody>';
     while ($doc = $result_documentos->fetch_assoc()) {
-        $html .= '<li>' . htmlspecialchars($doc['nombre_archivo']) . ' - ' . htmlspecialchars($doc['fecha_subida']) . '</li>';
+        $html .= '
+        <tr>
+            <td width="20%">' . htmlspecialchars($doc['fecha_subida']) . '</td>
+            <td width="30%">' . htmlspecialchars($doc['tipo_documento']) . '</td>
+            <td width="40%">' . htmlspecialchars($doc['nombre_archivo']) . '</td>
+        </tr>';
     }
-    $html .= '</ul>';
+    $html .= '</tbody>';
+    $html .= '</table>';
 } else {
     $html .= '<p>No hay documentos digitalizados.</p>';
 }
+$html .= '<p></p>';
 
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output('historial_medico.pdf', 'I');

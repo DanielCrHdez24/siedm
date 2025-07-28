@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_cita = $_POST["fecha_cita"];
     $hora_cita = $_POST["hora_cita"];
     $motivo = $_POST["motivo"];
-    $estado = "Agendada";
+    $estado = "AGENDADA";
 
     // Verifica que el id_usuario esté definido
     if (!$id_usuario) {
