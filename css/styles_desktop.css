@@ -227,9 +227,13 @@ table tr:nth-child(even) {
 }
 
 table tr:hover {
-    background-color:#12587371;
-    color: white; /* Resaltar fila al pasar el ratón */
+    background-color:#12587348;
+    
 }
+table a:hover {
+    text-decoration: underline;
+}
+
 
 /* Estilo de las celdas para las imágenes */
 table img {
