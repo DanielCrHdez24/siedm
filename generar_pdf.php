@@ -211,6 +211,7 @@ if ($result_documentos->num_rows > 0) {
 }
 $html .= '<p></p>';
 
+
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output('historial_medico.pdf', 'I');
 exit;

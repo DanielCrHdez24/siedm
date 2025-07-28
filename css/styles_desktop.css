@@ -227,7 +227,7 @@ table tr:nth-child(even) {
 }
 
 table tr:hover {
-    background-color:#125873;
+    background-color:#12587371;
     color: white; /* Resaltar fila al pasar el ratón */
 }
 
