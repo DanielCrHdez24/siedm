@@ -20,17 +20,12 @@ if (!$paciente) {
 }
 
 // Consulta citas
-$stmt = $link->prepare("SELECT * FROM citas_medicas WHERE id_paciente = ? ORDER BY fecha_cita DESC");
+$stmt = $link->prepare("SELECT c.*, u.nombre, u.primer_apellido, u.segundo_apellido FROM citas_medicas AS c INNER JOIN usuarios AS u ON c.id_usuario = u.id_usuario WHERE c.id_paciente = ? ORDER BY c.fecha_cita DESC");
 $stmt->bind_param("i", $id_paciente);
 $stmt->execute();
 $result_citas = $stmt->get_result();
 
 
-//Consulta recetas
-$stmt = $link->prepare("SELECT * FROM recetas WHERE id_paciente = ?");
-$stmt->bind_param("i", $id_paciente);
-$stmt->execute();
-$result_recetas = $stmt->get_result();
 
 // Consulta documentos
 $stmt = $link->prepare("SELECT * FROM documentos_digitalizados WHERE id_paciente = ? ORDER BY fecha_subida");
@@ -170,6 +165,11 @@ if ($result_citas->num_rows > 0) {
             <tr>
                 <td width="100%" style="vertical-align:top;">
                     <span class="valor">' . htmlspecialchars($cita['recomendaciones']) . '</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="40%" style="vertical-align:top;">
+                    <div><span class="dato">Médico: </span><span class="valor">' . htmlspecialchars($cita['nombre'] . ' ' . $cita['primer_apellido'] . ' ' . $cita['segundo_apellido']) . '</span></div>
                 </td>
             </tr>
             <hr style="border:1px solid #125873; margin:10px 0;"><br>
