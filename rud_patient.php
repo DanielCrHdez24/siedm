@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
         </header>
 
         <div class="container">
-            <h2>Modificación de Usuarios!</h2>
+            <h2>Modificación de Pacientes!</h2>
             <p>Ingrese Nombre, CURP o ID de Paciente.</p>
 
             <!-- Formulario de búsqueda -->
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
             <!-- Resultados de búsqueda -->
 <?php if (!empty($resultados) && $resultados->num_rows > 0): ?>
-    <table border="1" cellpadding="10" style="margin-top: 20px;">
+    <table class="table" cellpadding="10" style="margin-top: 20px;">
         <thead>
             <tr>
                 <th>ID</th>
@@ -101,9 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                         <a href="delete_patient.php?id_paciente=<?php echo $fila['id_paciente']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este paciente?');">
                             <i class="fas fa-trash"> </i> Eliminar 
                         </a>
-                        <a href="citas.php?id_paciente=<?php echo $fila['id_paciente']; ?>">
-                            <i class="fas fa-calendar-alt"> </i> Citas 
-                        </a>
+                        
                         
                     </td>
                 </tr>

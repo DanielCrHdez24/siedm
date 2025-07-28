@@ -39,7 +39,7 @@ if (!$result) {
             </a>
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
-                <a href="perfil.php">Mi perfil</a>
+                <a href="perfil_dif.php">Mi perfil</a>
                 <a href="citas.php">Gestión de Citas</a>
                 <a href="historial_medico.php">Historial Médico</a>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>

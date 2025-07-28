@@ -82,7 +82,7 @@ $nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $se
             </a>
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
-                <a href="perfil.php">Mi perfil</a>
+                <a href="perfil_dif.php">Mi perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
                     <a href="users.php">Gestión de Usuarios</a>

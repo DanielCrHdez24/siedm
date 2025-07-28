@@ -9,6 +9,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 $idRol = $_SESSION['idRol'];
 $id_Usuario = $_SESSION['idUsuario'];
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

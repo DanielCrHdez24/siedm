@@ -57,7 +57,7 @@ mysqli_close($link);
             </a>
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
-                <a href="perfil.php">Mi perfil</a>
+                <a href="perfil_dif.php">Mi perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
                     <a href="users.php">Gestión de Usuarios</a>
@@ -83,7 +83,7 @@ mysqli_close($link);
             <form class="form" action="actualizar_medico.php" method="POST">
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
 
-                <label for="nombre">Nombre del Médico:</label>
+                <label for="nombre">Nombre del Usuario:</label>
                 <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" required>
 
                 <label for="primer_apellido">Primer Apellido:</label>

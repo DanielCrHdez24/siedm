@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
             <!-- Resultados de búsqueda -->
 <?php if (!empty($resultados) && $resultados->num_rows > 0): ?>
-    <table border="1" cellpadding="10" style="margin-top: 20px;">
+    <table class="table" cellpadding="10" style="margin-top: 20px;">
         <thead>
             <tr>
                 <th>ID</th>
