@@ -42,7 +42,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                     <a href="historial_medico.php">Historial Médico</a>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
-                    <a href="settings.php">Configuración</a>
+                    <a href="configuración.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
             </nav>

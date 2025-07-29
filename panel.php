@@ -123,7 +123,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                         </div>
                         <h3>Configuración</h3>
                         <p>Backup y restauración.</p>
-                        <a href="settings.php" class="btn">Ir</a>
+                        <a href="Configuración.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
                 <div class="card">
