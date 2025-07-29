@@ -22,8 +22,8 @@
 /* Contenedor principal */
 .wrapper {
     display: flex;
-    flex-direction: column; /* Las secciones se apilan verticalmente */
-    min-height: 100vh; /* Asegura que la altura mínima de la página sea 100% */
+    flex-direction: column; 
+    min-height: 100vh; 
 }
 
 body.principal {

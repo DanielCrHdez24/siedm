@@ -109,8 +109,8 @@ mysqli_close($link);
                 <label for="sexo">Sexo:</label>
                 <select id="sexo" name="sexo" required>
                     <option value="">Seleccione una opción</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">MASCULINO</option>
+                    <option value="Femenino">FEMENINO</option>
                 </select>
 
                 <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
@@ -187,7 +187,7 @@ mysqli_close($link);
             const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[0-9A-Z]\d$/;
             if (!curpRegex.test(curpInput.value)) {
             alert("El CURP no es válido. Verifica que tenga 18 caracteres, esté en mayúsculas y cumpla el formato correcto.");
-            e.preventDefault(); // Detiene el envío del formulario
+            e.preventDefault(); 
             }
         });
 </script>

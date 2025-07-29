@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
-                <input type="text" name="buscar" value="<?= htmlspecialchars($busqueda); ?>" placeholder="Ej. CURP, Juan, 123">
+                <input type="text" name="buscar" oninput="this.value = this.value.toUpperCase()" value="<?= htmlspecialchars($busqueda); ?>" placeholder="Ej. CURP, Juan, 123">
                 <button type="submit">Buscar</button>
             </form>
 
