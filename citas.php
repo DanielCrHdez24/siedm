@@ -55,6 +55,13 @@ $idRol = $_SESSION['idRol'];
                 </div>
 
                 <div class="card">
+                    <i class="fa-solid fa-user-md option-icon"></i>
+                    <h3>Atender Citas</h3>
+                    <p>En esta sección se atienden las consultas médicas programadas.</p>
+                    <a href="atender_cita.php" class="btn">Atender</a>
+                </div>
+
+                <div class="card">
                     <i class="fa-solid fa-magnifying-glass option-icon"></i>
                     <h3>Consultar Citas</h3>
                     <p>Visualiza todas las citas que han sido programadas.</p>

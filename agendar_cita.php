@@ -83,7 +83,8 @@ if ($paciente_id_get !== null) {
             <!-- Formulario de búsqueda -->
             <form method="POST">
                 <input type="text" name="buscar" oninput="this.value = this.value.toUpperCase()" value="<?= htmlspecialchars($busqueda); ?>" placeholder="Ej. CURP, Juan, 123">
-                <button type="submit">Buscar</button>
+                <button type="submit" class="btn">Buscar</button>
+                <button type="button" class="btn" onclick="history.back();">Volver</button>
             </form>
 
             <!-- Mostrar resultados -->
@@ -152,7 +153,7 @@ if ($paciente_id_get !== null) {
             <?php endif; ?>
        <br>
         
-            <button type="submit" class="btn" onclick="history.go(-1);">Volver</button>
+            
         
         </div>
         <br>
