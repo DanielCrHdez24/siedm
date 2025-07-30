@@ -13,6 +13,7 @@ $id_paciente = filter_input(INPUT_GET, 'id_paciente', FILTER_VALIDATE_INT);
 
 if (!$id_paciente) {
     die("ID de paciente no válido o no proporcionado.");
+    
 }
 
 // Consulta de datos del paciente junto con el id_usuario
@@ -194,7 +195,7 @@ $link->close();
 
                     <div class="options-container">
     <div class="add-option">
-        <a href="agendar_cita.php"><i class="fa-solid fa-calendar-plus"></i> Agendar una cita</a>
+        <a href="agendar_cita.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-calendar-plus"></i> Agendar una cita</a>
     </div>
 
     <div class="add-option">

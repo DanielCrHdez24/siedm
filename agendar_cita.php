@@ -10,10 +10,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $idRol = $_SESSION['idRol'];
 
 $busqueda = "";
+$paciente_id_get = $_GET['id_paciente'] ?? null;
 $resultados = [];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
-    $busqueda = trim($_POST["buscar"]);
+if ($paciente_id_get !== null) {
+    //Si viene el id_paciente por GET, buscar solo por ID
+    $sql = "SELECT id_paciente, nombre, primer_apellido, segundo_apellido, curp, fecha_nacimiento 
+            FROM pacientes 
+            WHERE id_paciente = ?";
+    $stmt = $link->prepare($sql);
+    $stmt->bind_param("i", $paciente_id_get);
+    $stmt->execute();
+    $resultados = $stmt->get_result();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buscar'])) {
+    //Si es búsqueda manual
+    $busqueda = trim($_POST['buscar']);
     $sql = "SELECT id_paciente, nombre, primer_apellido, segundo_apellido, curp, fecha_nacimiento 
             FROM pacientes 
             WHERE id_paciente LIKE ? OR nombre LIKE ? OR curp LIKE ?";
@@ -37,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 </head>
 
 <body class="principal">
-    <div class="wrapper">
+    < class="wrapper">
         <header class="header">
             <a href="#" class="logo">
                 <img src="./images/logo.png" alt="Logo SIEDM" width="150px" />
@@ -63,11 +74,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
         <div class="container">
             <h2>Agendar Cita Médica</h2>
             <p>Buscar paciente por CURP, nombre o ID:</p>
-                    <?php if (isset($_GET['mensaje'])): ?>
-    <div class="alert-success">
-        <?= htmlspecialchars($_GET['mensaje']); ?>
-    </div>
-<?php endif; ?>
+            <?php if (isset($_GET['mensaje'])): ?>
+                <div class="alert-success">
+                    <?= htmlspecialchars($_GET['mensaje']); ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
@@ -124,9 +135,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                                         <input type="text" name="motivo" required placeholder="Motivo">
                                     </td>
                                     <td style=" text-align: center;">
-                                        <button type="submit" name="id_paciente" value="<?= $p['id_paciente'] ?>" class="btn">
-                                            <i class="fas fa-calendar-plus"></i> Agendar
-                                        </button>
+                                        <form action="agendar_cita.php" method="post">
+                                            <input type="hidden" name="id_paciente" value="<?= $p['id_paciente'] ?>">
+                                            <button type="submit" class="btn">
+                                                <i class="fas fa-calendar-plus"></i> Agendar
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -136,8 +150,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
             <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
                 <p class="alert-error">No se encontraron pacientes con esa búsqueda.</p>
             <?php endif; ?>
+       <br>
+        
+            <button type="submit" class="btn" onclick="history.go(-1);">Volver</button>
+        
         </div>
-<br>
+        <br>
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
@@ -149,4 +167,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
     <script src="js/menu.js"></script>
 </body>
+
 </html>
