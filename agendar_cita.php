@@ -136,7 +136,7 @@ if ($paciente_id_get !== null) {
                                         <input type="text" name="motivo" required placeholder="Motivo">
                                     </td>
                                     <td style=" text-align: center;">
-                                        <form action="agendar_cita.php" method="post">
+                                        <form action="atender_cita.php" method="post">
                                             <input type="hidden" name="id_paciente" value="<?= $p['id_paciente'] ?>">
                                             <button type="submit" class="btn">
                                                 <i class="fas fa-calendar-plus"></i> Agendar
