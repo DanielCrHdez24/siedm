@@ -74,6 +74,7 @@ $link->close();
         </header>
 
         <div class="container">
+            <br>
             <h2 style="color: red; font-size: 24px; text-align: center;">¿Está seguro que quiere eliminar al paciente?</h2>
             <h3 style="color: red; font-size: 18px; text-align: center;">Se eliminará de forma permanente el paciente y no podrá recuperar la información.</h3>
 
@@ -87,66 +88,64 @@ $link->close();
 
             <!-- Información del paciente -->
             <table class="table" style="font-size:80%;">
-                <tbody>
-                    <tr>
+                        <tbody>
+                            <tr>
 
-                        <!-- Aquí la imagen ocupa toda una columna -->
-                        <td rowspan="7" style="text-align: center; vertical-align: middle;">
+                                <!-- Aquí la imagen ocupa toda una columna -->
+                                <td rowspan="7" style="text-align: center; vertical-align: middle;">
 
-                            <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
+        <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
 
-                        </td>
-                    </tr>
+    </td>
+                            </tr>
 
 
-                    <tr>
-                        <th>Clave de Expediente</th>
-                        <td><?php echo htmlspecialchars($paciente['clave_expediente']); ?></td>
-                        <th>Nombre</th>
-                        <td><?php echo htmlspecialchars($paciente['nombre']) . " " . htmlspecialchars($paciente['primer_apellido']) . " " . htmlspecialchars($paciente['segundo_apellido']); ?></td>
-                        <th>CURP</th>
-                        <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Edad</th>
-                        <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
-                        <th>Sexo</th>
-                        <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
-                        <th>Fecha de Nacimiento</th>
-                        <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
-                    </tr>
-                    <tr>
-                        <th>E-mail</th>
-                        <td><?php echo htmlspecialchars($paciente['correo']); ?></td>
-                        <th>Teléfono</th>
-                        <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
-                        <th>Derechohabiencia</th>
-                        <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Dirección</th>
-                        <td colspan="5"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Tipo de Sangre</th>
-                        <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
-                        <th>Religión</th>
-                        <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
-                        <th>Ocupación</th>
-                        <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Alergias</th>
-                        <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
-                        <th>Padecimientos Crónicos</th>
-                        <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
-                        <th>Fecha de Registro</th>
-                        <td><?php echo htmlspecialchars($paciente['fecha_registro']); ?></td>
-                    </tr>
-                </tbody>
-            </table>
+                            <tr>
+                                <!--<th>Clave de Expediente</th>
+                                <td><?php #echo htmlspecialchars($paciente['clave_expediente']); ?></td>-->
+                                <th>Nombre</th>
+                                <td><?php echo htmlspecialchars($paciente['nombre']) . " " . htmlspecialchars($paciente['primer_apellido']) . " " . htmlspecialchars($paciente['segundo_apellido']); ?></td>
+                                <th>CURP</th>
+                                <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
+                                <th>Edad</th>
+                                <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Teléfono</th>
+                                <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
+                                <th>Fecha de Nacimiento</th>
+                                <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
+                                <th>Sexo</th>
+                                <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
+                                
+                            </tr>
+                            <tr>
+                                <th>E-mail</th>
+                                <td><?php echo htmlspecialchars($paciente['correo']); ?></td>
+                                <th>Derechohabiencia</th>
+                                <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
+                                <th>Tipo de Sangre</th>
+                                <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Dirección</th>
+                                <td colspan="3"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
+                                <th>Religión</th>
+                                <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Ocupación</th>
+                                <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
+                                <th>Alergias</th>
+                                <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
+                                <th>Padecimientos Crónicos</th>
+                                <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
             <P></P>
-            <h2 class="text-center">Opciones del Paciente</h2>
+            
 
             <div class="options-container">
 

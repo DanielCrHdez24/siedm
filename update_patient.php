@@ -86,18 +86,19 @@ mysqli_close($link);
 
 
                 <label for="foto">Foto del Paciente:</label>
-                <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto; width: 150px; height: auto;">
+                <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto; width: 150px; height: auto; border-radius: .5px;" alt="Foto del Paciente">
+                <br>
                 <input type="file" id="foto" name="foto" accept="image/*">
-
+                
                 <label for="nombre">Nombre de Paciente:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre de paciente" value="<?php echo htmlspecialchars($paciente['nombre']); ?>">
-                
+                <input type="text" id="nombre" name="nombre" oninput="this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" value="<?php echo htmlspecialchars($paciente['nombre']); ?>">
+
                 <label for="primer_apellido">Primer apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ingrese Primer Apellido" value="<?php echo htmlspecialchars($paciente['primer_apellido']); ?>">
-                
+                <input type="text" id="primer_apellido" name="primer_apellido" oninput="this.value.toUpperCase()" required placeholder="Ingrese Primer Apellido" value="<?php echo htmlspecialchars($paciente['primer_apellido']); ?>">
+
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" required placeholder="Ingrese Segundo Apellido" value="<?php echo htmlspecialchars($paciente['segundo_apellido']); ?>">
-                
+                <input type="text" id="segundo_apellido" name="segundo_apellido" oninput="this.value.toUpperCase()" required placeholder="Ingrese Segundo Apellido" value="<?php echo htmlspecialchars($paciente['segundo_apellido']); ?>">
+
                 <label for="correo">Correo electrónico:</label>
                 <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" value="<?php echo htmlspecialchars($paciente['correo']); ?>">
 
@@ -105,7 +106,7 @@ mysqli_close($link);
                 <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" value="<?php echo htmlspecialchars($paciente['telefono']); ?>">
                 
                 <label for="curp">CURP:</label>
-                <input type="text" id="curp" name="curp" required placeholder="Ingrese CURP" value="<?php echo htmlspecialchars($paciente['curp']); ?>">
+                <input type="text" id="curp" name="curp" oninput="this.value.toUpperCase()" required placeholder="Ingrese CURP" value="<?php echo htmlspecialchars($paciente['curp']); ?>">
 
                 <label for="edad">Edad:</label>
                 <input type="number" id="edad" name="edad" required min="0" max="120" placeholder="Ingrese la edad" value="<?php echo htmlspecialchars($paciente['edad']); ?>">
@@ -113,8 +114,8 @@ mysqli_close($link);
                 <label for="sexo">Sexo:</label>
                 <select id="sexo" name="sexo" required>
                     <option value="">Seleccione una opción</option>
-                    <option value="Masculino" <?php echo ($paciente['sexo'] == 'Masculino') ? 'selected' : ''; ?>>Masculino</option>
-                    <option value="Femenino" <?php echo ($paciente['sexo'] == 'Femenino') ? 'selected' : ''; ?>>Femenino</option>
+                    <option value="Masculino" <?php echo ($paciente['sexo'] == 'MASCULINO') ? 'selected' : ''; ?>>MASCULINO</option>
+                    <option value="Femenino" <?php echo ($paciente['sexo'] == 'FEMENINO') ? 'selected' : ''; ?>>FEMENINO</option>
                 </select>
 
                 <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
@@ -147,19 +148,19 @@ mysqli_close($link);
                 </select>
 
                 <label for="religion">Religión:</label>
-                <input type="text" id="religion" name="religion" placeholder="Ingrese religión (opcional)" value="<?php echo htmlspecialchars($paciente['religion']); ?>">
+                <input type="text" id="religion" oninput="this.value.toUpperCase()" name="religion" placeholder="Ingrese religión (opcional)" value="<?php echo htmlspecialchars($paciente['religion']); ?>">
 
                 <label for="ocupacion">Ocupación:</label>
-                <input type="text" id="ocupacion" name="ocupacion" required placeholder="Ingrese ocupación" value="<?php echo htmlspecialchars($paciente['ocupacion']); ?>">
+                <input type="text" id="ocupacion" oninput="this.value.toUpperCase()" name="ocupacion" required placeholder="Ingrese ocupación" value="<?php echo htmlspecialchars($paciente['ocupacion']); ?>">
 
                 <label for="alergias">Alergias:</label>
-                <input type="text" id="alergias" name="alergias" placeholder="Ingrese alergias (si aplica)" value="<?php echo htmlspecialchars($paciente['alergias']); ?>">
+                <input type="text" id="alergias" oninput="this.value.toUpperCase()" name="alergias" placeholder="Ingrese alergias (si aplica)" value="<?php echo htmlspecialchars($paciente['alergias']); ?>">
 
                 <label for="padecimientos">Padecimientos Crónicos:</label>
-                <input type="text" id="padecimientos" name="padecimientos" placeholder="Ingrese padecimientos crónicos (si aplica)" value="<?php echo htmlspecialchars($paciente['padecimientos']); ?>">
+                <input type="text" id="padecimientos" oninput="this.value.toUpperCase()" name="padecimientos" placeholder="Ingrese padecimientos crónicos (si aplica)" value="<?php echo htmlspecialchars($paciente['padecimientos']); ?>">
                 <p></p>
-                <button type="submit" class="button">Actualizar</button>
-                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
+                <button type="submit" class="btn">Actualizar</button>
+                <button type="button" class="btn-logout" onclick="history.back();">Cancelar</button>
             </form>
         </div>
 

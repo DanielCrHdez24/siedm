@@ -194,7 +194,7 @@ $link->close();
 
                     <div class="options-container">
     <div class="add-option">
-        <a href="add_cita.php"><i class="fa-solid fa-calendar-plus"></i> Agregar una cita</a>
+        <a href="agendar_cita.php"><i class="fa-solid fa-calendar-plus"></i> Agendar una cita</a>
     </div>
 
     <div class="add-option">
