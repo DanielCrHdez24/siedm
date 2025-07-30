@@ -70,9 +70,9 @@ mysqli_close($link);
                 <label for="foto">Foto del Paciente:</label>
                 <input type="file" id="foto" name="foto" accept="image/*" required>
 
-                <label for="clave_expediente">Clave de Expediente:</label>
-                <input type="text" id="clave_expediente" name="clave_expediente" required placeholder="Ingrese clave de expediente">
-                
+                <!--<label for="clave_expediente">Clave de Expediente:</label>-->
+                <!--<input type="text" id="clave_expediente" name="clave_expediente" required placeholder="Ingrese clave de expediente">-->
+
                 <label for="nombre">Nombre de Paciente:</label>
                 <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
                 <p></p>
@@ -157,9 +157,9 @@ mysqli_close($link);
                 <!-- Campo oculto para pasar el id_usuario -->
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
 
-                <button type="submit" class="button">Finalizar</button>
-                <button type="reset" class="button">Limpiar Datos</button>
-                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
+                <button type="submit" class="btn">Guardar</button>
+                <button type="reset" class="btn">Limpiar Datos</button>
+                <button type="button" class="btn-logout" onclick="window.location.href='users.php';">Cancelar</button>
             </form>
 
         </div>

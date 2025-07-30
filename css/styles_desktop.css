@@ -82,15 +82,15 @@ body.principal {
 
 /* Estilo para el enlace "Cerrar sesión" */
 .navbar a.logout-link {
-    color: #ac1a07;
+    color: red;
     font-size: 1.1rem;
     text-decoration: none;
     font-weight: 500;
 }
 
 .navbar a.logout-link:hover {
-    color: red;
-    border-bottom: 1px solid red;
+    color: #ac1a07;
+    border-bottom: 1px solid #ac1a07;
 }
 
 /* Contenedor principal */
@@ -104,50 +104,55 @@ body.principal {
 
 .btn{
     display: inline-block;
-    padding: 0.5rem 1rem;
+    font-size: 15px;
+    padding: 10px;
     margin-top: 1rem;
     background: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
+
 }
 
 .btn:hover{
     display: inline-block;
-    padding: 0.5rem 1rem;
+    font-size: 15px;
+    padding: 10px;
     margin-top: 1rem;
     background: var(--secondary-color);
     color: white;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
 }
 
 .btn-logout{
     display: inline-block;
-    padding: 0.5rem 1rem;
+    font-size: 15px;
+    padding: 10px;
     margin-top: 1rem;
     background: red;
     color: white;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
+    transition: background 0.2s ease-in-out;
 }
 
 .btn-logout:hover{
     display: inline-block;
-    padding: 0.5rem 1rem;
+    font-size: 15px;
+    padding: 10px;
     margin-top: 1rem;
     background: #ac1a07;
     color: white;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     cursor: pointer;
-    transition: background 0.15s ease-in-out;
+    transition: background 0.2s ease-in-out;
 }
 
 .card-container {
@@ -321,20 +326,20 @@ button {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: .5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: var(--hover-color);
+    background-color: var(--secondary-color);
 }
 
 .alert-success {
     background-color: var(--success-color);  /* Utiliza la variable para el color de fondo */
     color: white;  /* Texto blanco */
     padding: 10px 15px;  /* Relleno alrededor del texto */
-    border-radius: 5px;  /* Bordes redondeados */
+    border-radius: .5px;  /* Bordes redondeados */
     margin-bottom: 15px;  /* Espacio debajo de la alerta */
     font-size: 1rem;  /* Tamaño de la fuente */
     

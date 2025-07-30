@@ -12,7 +12,7 @@ include 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Lista de campos requeridos
-    $required_fields = ['clave_expediente', 'nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'telefono', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion'];
+    $required_fields = ['nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'telefono', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion'];
 
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Recoger datos del formulario y sanitizar
-    $clave_expediente  = trim($_POST['clave_expediente']);
+
     $nombre           = trim($_POST['nombre']);
     $primer_apellido = trim($_POST['primer_apellido']);
     $segundo_apellido = trim($_POST['segundo_apellido']);
@@ -56,21 +56,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ocupacion        = trim($_POST['ocupacion']);
     $alergias         = trim($_POST['alergias'] ?? '');
     $padecimientos    = trim($_POST['padecimientos'] ?? '');
-   
+
+    // Verificar si la CURP ya existe
+    $sql_check = "SELECT curp FROM pacientes WHERE curp = ?";
+    $stmt_check = $link->prepare($sql_check);
+    $stmt_check->bind_param("s", $curp);
+    $stmt_check->execute();
+    $stmt_check->store_result();
+
+    if ($stmt_check->num_rows > 0) {
+        // Si ya existe, redirigir con mensaje de error
+        $stmt_check->close();
+        $link->close();
+         echo "<script>
+            alert('⚠️ La CURP - $curp  ya está registrada.');
+            history.back();
+          </script>";
+        exit();
+    }
+    $stmt_check->close();
 
     // Preparar la consulta SQL
-    $sql = "INSERT INTO pacientes (clave_expediente, foto, nombre, primer_apellido, segundo_apellido, correo, telefono, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, NOW())";
+    $sql = "INSERT INTO pacientes (foto, nombre, primer_apellido, segundo_apellido, correo, telefono, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, NOW())";
 
     if ($stmt = $link->prepare($sql)) {
-        $stmt->bind_param("ssssssssisssssssss", 
-            $clave_expediente, $fotoPath, $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $curp, $edad, $sexo, $fecha_nacimiento, 
-            $derechohabiencia, $direccion, $tipo_sangre, $religion, $ocupacion, 
-            $alergias, $padecimientos
+        $stmt->bind_param(
+            "sssssssisssssssss",
+            $fotoPath,
+            $nombre,
+            $primer_apellido,
+            $segundo_apellido,
+            $correo,
+            $telefono,
+            $curp,
+            $edad,
+            $sexo,
+            $fecha_nacimiento,
+            $derechohabiencia,
+            $direccion,
+            $tipo_sangre,
+            $religion,
+            $ocupacion,
+            $alergias,
+            $padecimientos
         );
 
         if ($stmt->execute()) {
-            $id_paciente = $stmt->insert_id; // ID del nuevo paciente
+            $id_paciente = $stmt->insert_id;
             $stmt->close();
             $link->close();
 
@@ -87,4 +120,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Cerrar la conexión
 $link->close();
-?>
