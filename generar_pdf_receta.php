@@ -79,58 +79,39 @@ $html .= '
 <table cellpadding="2" cellspacing="0" border="0" width="100%">
     <tr>
     
-        <td width="30%" style="vertical-align:top;">
+        <td width="40%" style="vertical-align:top;">
             <div><span class="dato">Nombre: </span><span class="valor">' . htmlspecialchars($paciente['nombre']) . ' ' . htmlspecialchars($paciente['primer_apellido']) . ' ' . htmlspecialchars($paciente['segundo_apellido']) . '</span></div>
             <div><span class="dato">Sexo: </span><span class="valor">' . htmlspecialchars($paciente['sexo']) . '</span></div>
-            <div><span class="dato">Teléfono: </span><span class="valor">' . htmlspecialchars($paciente['telefono']) . '</span></div>
+            
         </td>
-        <td width="25%" style="vertical-align:top;">
-            <div><span class="dato">CURP: </span><span class="valor">' . htmlspecialchars($paciente['curp']) . '</span></div>
+        <td width="30%" style="vertical-align:top;">
             <div><span class="dato">Fecha de Nacimiento: </span><span class="valor">' . htmlspecialchars($paciente['fecha_nacimiento']) . '</span></div>
-            <div><span class="dato">Derechohabiencia: </span><span class="valor">' . htmlspecialchars($paciente['derechohabiencia']) . '</span></div>
+            
         </td>
-        <td width="30%" style="vertical-align:top;">
-            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($paciente['edad']) . ' años</span></div>
-            <div><span class="dato">Correo: </span><span class="valor">' . htmlspecialchars($paciente['correo']) . '</span></div>
-            <div><span class="dato">Religión: </span><span class="valor">' . htmlspecialchars($paciente['religion']) . '</span></div>
+        <td width="15%" style="vertical-align:top;">
+            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($paciente['edad']) . ' años</span></div>  
         </td>
-    </tr>
-    <tr>
-        <td width="70%" style="vertical-align:top;">
-            <div><span class="dato">Dirección: </span><span class="valor">' . htmlspecialchars($paciente['direccion']) . '</span></div>
-        </td>
-        <td width="30%" style="vertical-align:top;">
+        <td width="15%" style="vertical-align:top;">
             <div><span class="dato">Tipo de Sangre: </span><span class="valor">' . htmlspecialchars($paciente['tipo_sangre']) . '</span></div>
         </td>
     </tr>
     <tr>
-        <td width="20%" style="vertical-align:top;">
-            <div><span class="dato">Ocupación: </span><span class="valor">' . htmlspecialchars($paciente['ocupacion']) . '</span></div>
-        </td>
-        <td width="25%" style="vertical-align:top;">
-            <div><span class="dato">Alergias: </span><span class="valor">' . htmlspecialchars($paciente['alergias']) . '</span></div>
-        </td>
-        <td width="25%" style="vertical-align:top;">
+        <td width="50%" style="vertical-align:top;">
             <div><span class="dato">Padecimientos Crónicos: </span><span class="valor">' . htmlspecialchars($paciente['padecimientos']) . '</span></div>
-        </td>
-        <td width="30%" style="vertical-align:top;">
-            <div><span class="dato">Fecha de Registro: </span><span class="valor">' . htmlspecialchars($paciente['fecha_registro']) . '</span></div>
-        </td>
+        </td>    
     </tr>
 </table>
 <br>
-<div class="seccion-titulo">Citas Médica</div>';
+<div class="seccion-titulo">Cita Médica</div>';
 
-        $html .= '
+$html .= '
        
             <tr>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Fecha cita: </span><span class="valor">' . htmlspecialchars($cita['fecha_cita']) . '</span></div>
+                <td width="35%" style="vertical-align:top;">
+                    <div><span class="dato">Fecha cita: </span><span class="valor">' . htmlspecialchars($cita['fecha_atnc']) . '</span></div>
                 </td>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Hora cita: </span><span class="valor">' . htmlspecialchars($cita['hora_cita']) . '</span></div>
-                </td>
-                <td width="60%" style="vertical-align:top;">
+                
+                <td width="65%" style="vertical-align:top;">
                     <div><span class="dato">Motivo: </span><span class="valor">' . htmlspecialchars($cita['motivo']) . '</span></div>
                 </td>
             </tr>
@@ -144,10 +125,12 @@ $html .= '
                 <td width="20%" style="vertical-align:top;">
                     <div><span class="dato">Temperatura: </span><span class="valor">' . htmlspecialchars($cita['temperatura']) . ' °C</span></div>
                 </td>
-                <td width="40%" style="vertical-align:top;">
-                    <div><span class="dato">Diagnostico: </span><span class="valor">' . htmlspecialchars($cita['diagnostico']) . '</span></div>
-                </td>
+                
             </tr>
+            <tr>
+                <td width="100%" style="vertical-align:top;">
+                    <div><span class="dato">Diagnóstico: </span></div>
+                </td>
             <tr>
                 <td width="100%" style="vertical-align:top;">
                     <div><span class="dato">Tratamiento: </span></div>
@@ -171,13 +154,20 @@ $html .= '
             <tr>
                 <td width="40%" style="vertical-align:top;">
                     <div><span class="dato">Médico: </span><span class="valor">' . htmlspecialchars($medico['nombre'] . ' ' . $medico['primer_apellido'] . ' ' . $medico['segundo_apellido']) . '</span></div>
+                    
+                </td>
+                <td width="30%" style="vertical-align:top;">
+                    <div><span class="dato">Cédula profesional: </span><span class="valor">' . htmlspecialchars($medico['cedula_profesional']) . '</span></div>
+                </td>
+                <td width="30%" style="vertical-align:top;">
+                    <div><span class="dato">Firma:</span></div>
                 </td>
             </tr>
-            <hr style="border:1px solid #125873; margin:10px 0;"><br>
+            <br>
             ';
-    
 
-    $html .= '</table>';
+
+$html .= '</table>';
 
 
 $html .= '<p></p>';
