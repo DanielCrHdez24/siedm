@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Historial Médico</title>
+    <title>Atender Cita</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
         </header>
 
         <div class="container">
-            <h2>Historial Médico del Paciente</h2>
+            <h2>Seleccionar cita</h2>
             <?php if (isset($_GET['mensaje'])): ?>
                 <div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border-radius: 5px;">
                     <?= htmlspecialchars($_GET['mensaje']) ?>

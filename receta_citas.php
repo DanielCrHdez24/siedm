@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Procesar cita</title>
+    <title>Receta cita</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
@@ -128,52 +128,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                     </tbody>
                 </table>
                 <br>
-                <h3>Detalles de la Cita</h3>
+                <h3>Receta</h3>
                 <table class="table" style="font-size:80%;">
                     <tbody>
                         <tr>
-                            <th>Fecha de la Cita</th>
-                            <td><?php echo htmlspecialchars($citas['fecha_cita']); ?></td>
-                            <th>Hora de la Cita</th>
-                            <td><?php echo htmlspecialchars($citas['hora_cita']); ?></td>
-                             <th>Motivo de la cita</th>
-                            <td><?php echo htmlspecialchars($citas['motivo']); ?></td>
+                            <th>Peso</th>
+                            <td><?php echo htmlspecialchars($citas['peso']); ?> kg</td>
+                            <th>Talla</th>
+                            <td><?php echo htmlspecialchars($citas['talla']); ?> cm</td>
+                            <th>Temperatura</th>
+                            <td><?php echo htmlspecialchars($citas['temperatura']); ?> °C</td>
+                        </tr>
+                        <tr>
+                            <th>Diagnóstico</th>
+                            <td colspan="5"><?php echo htmlspecialchars($citas['diagnostico']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Indicaciones</th>
+                            <td colspan="5"><?php echo htmlspecialchars($citas['indicaciones']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Recomendaciones</th>
+                            <td colspan="5"><?php echo htmlspecialchars($citas['recomendaciones']); ?></td>
                         </tr>
                     </tbody>
-                    </table>
+                </table>
                 <br>
-                <h3>Llenar datos para la cita</h3>
-                <form method="POST" action="guardar_cita.php">
-                    
-                    <label for="peso">Peso:</label>
-                    <input type="text" name="peso" id="peso" required placeholder="Ingrese el peso en KILOGRAMOS Ej. 50.45 KG" pattern="^\d+(\.\d{1,2})?$" title="El peso debe ser un número válido con hasta dos decimales.">
 
-                    <label for="talla">Talla:</label>
-                    <input type="text" name="talla" id="talla" required placeholder="Ingrese la talla en METROS Ej. 1.75 M" pattern="^\d+(\.\d{1,2})?$" title="La talla debe ser un número válido con hasta dos decimales.">
-                   
-                    <label for="temperatura">Temperatura:</label>
-                    <input type="text" name="temperatura" id="temperatura" required placeholder="Ingrese la temperatura en CELSIUS Ej. 36.5 °C" pattern="^\d+(\.\d{1,2})?$" title="La temperatura debe ser un número válido con hasta dos decimales.">
-
-                    <label for="diagnostico">Diagnostico:</label>
-                    <textarea name="diagnostico" id="diagnostico" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el diagnóstico del paciente" rows="4" cols="50"></textarea>
-
-                    <label for="indicaciones">Indicaciones:</label>
-                    <textarea name="indicaciones" id="indicaciones" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese las indicaciones y medicamento para el paciente" rows="4" cols="50"></textarea>
-
-                    <label for="recomendaciones">Recomendaciones:</label>
-                    <textarea name="recomendaciones" id="recomendaciones" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese las recomendaciones para el paciente" rows="4" cols="50"></textarea>
-
-                    <input type="hidden" name="id_paciente" value="<?php echo htmlspecialchars($citas['id_paciente']); ?>">
-                    <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($citas['id_cita']); ?>">
-                    
+                <form action="generar_pdf_receta.php" method="POST" target="_blank">
+                    <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($citas['id_cita']); ?>">    
                     <button type="submit" class="btn">
-                        <i class="fas fa-save"></i> Guardar
-                    </button>
-                    <button type="reset" class="btn">
-                        <i class="fas fa-undo"></i> Limpiar
-                    </button>
+                        <i class="fas fa-file-pdf"></i> Receta PDF</button>
                 </form>
-
         </div>
         <br>
         <footer class="footer">
