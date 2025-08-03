@@ -60,10 +60,10 @@ $idRol = $_SESSION['idRol'];
             <p> </p>
             <form class="form" action="insertar_medico.php" method="POST" onsubmit="return validateForm()">
                 <label for="id_rol">Rol del usuario:</label>
-                <select id="id_rol" name="id_rol" required>
+                <select id="id_rol" name="id_rol" required onchange="toggleCedula()">
                     <option value="" disabled selected>Seleccione un rol</option>
-                    <option value="2">Médico</option>
-                    <option value="3">Recepcionista</option>
+                    <option value="2">MÉDICO</option>
+                    <option value="3">RECEPCIONISTA</option>
                 </select>
                 <p></p>
 
@@ -80,12 +80,18 @@ $idRol = $_SESSION['idRol'];
                 <p></p>
 
                 <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo"  required placeholder="Ingrese correo electrónico" title="Ingrese un correo electrónico válido">
+                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" title="Ingrese un correo electrónico válido">
                 <p></p>
 
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono"  required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de teléfono válido de 10 dígitos">
+                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de teléfono válido de 10 dígitos">
                 <p></p>
+
+                <div id="cedula-container" style="display: none;">
+                <label for="cedula_profesional">Cédula Profesional:</label>
+                <input type="text" id="cedula_profesional" name="cedula_profesional" placeholder="Ingrese cédula profesional" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de cédula válido de 10 dígitos">
+                <p></p>
+                </div>
 
                 <label for="contrasena">Contraseña:</label>
                 <input type="password" id="contrasena" name="contrasena" required placeholder="Ingrese contraseña" minlength="6" title="La contraseña debe tener al menos 6 caracteres">
@@ -95,10 +101,10 @@ $idRol = $_SESSION['idRol'];
                 <input type="password" id="contrasena2" name="contrasena2" required placeholder="Confirma contraseña" minlength="6" title="La contraseña debe tener al menos 6 caracteres">
                 <p></p>
 
-                <button type="submit" class="button">Continuar</button>
-                <button type="reset" class="button">Limpiar Datos</button>
-                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
-                </form>
+                <button type="submit" class="btn"> <i class="fas fa-save"></i> Guardar</button>
+                <button type="reset" class="btn"> <i class="fas fa-eraser"></i> Limpiar Datos</button>
+                <button type="button" class="btn-logout" onclick="window.location.href='users.php';"><i class="fas fa-times"></i> Cancelar</button>
+            </form>
 
         </div>
 
@@ -112,6 +118,18 @@ $idRol = $_SESSION['idRol'];
     </div>
 
     <script src="js/menu.js"></script>
+    <script>
+        function toggleCedula() {
+            let select = document.getElementById("id_rol");
+            let cedulaContainer = document.getElementById("cedula-container");
+
+            if (select.value == "2") {
+                cedulaContainer.style.display = "block";
+            } else {
+                cedulaContainer.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -155,8 +155,9 @@ body.principal {
     transition: background 0.2s ease-in-out;
 }
 
+/* Estilo para el contenedor de tarjetas */
 .card-container {
-    display: flex;            /* Usa flexbox para los elementos hijos */
+    display: flex;            
     flex-wrap: wrap;          /* Permite que las tarjetas se envuelvan en nuevas filas cuando no caben */
     gap: 1rem;                /* Espacio entre las tarjetas */
     justify-content: center;  /* Centra las tarjetas horizontalmente */
@@ -239,7 +240,7 @@ table a{
      
     color: white;
     padding: 5px 10px;
-    background-color: var(--primary-color);  
+    background-color: var(--secondary-color);  
     text-decoration: none;
     font-weight: 500;
     border-radius: .5px; /* Bordes redondeados para los enlaces */
@@ -248,11 +249,13 @@ table a:hover {
     
     color: white;
     padding: 5px 10px;
-    background-color: var(--secondary-color);  
+    background-color: var(--primary-color);  
     text-decoration: none;
     font-weight: 500;
     border-radius: .5px; /* Bordes redondeados para los enlaces */
 }
+
+
 
 
 /* Estilo de las celdas para las imágenes */

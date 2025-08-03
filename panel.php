@@ -82,7 +82,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                         $url = 'perfil_dif.php';
                     } else {
                         // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'error.php';  // Puedes redirigir a una página de error o algo similar
+                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
                     }
                     ?>
 

@@ -104,14 +104,9 @@ mysqli_close($link);
                 <label for="contrasena2">Confirma la contraseña:</label>
                 <input type="password" id="contrasena2" name="contrasena2" placeholder="Confirma nueva contraseña (opcional)">
 
-                <button type="submit" class="button">Actualizar</button>
-                <button type="button" class="button" 
-            style="color: white; background: red;"
-            onmouseover="this.style.backgroundColor='#ac1a07'; this.style.color='white';" 
-            onmouseout="this.style.backgroundColor='red'; this.style.color='white';" onclick="window.location.href='delete_medical.php';">
-        Eliminar cuenta
-    </button>
-                <button type="button" class="button" onclick="window.location.href='panel.php';">Cancelar</button>
+                <button type="submit" class="btn" icon><i class="fas fa-save"></i> Actualizar</button>
+
+                <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"><i class="fas fa-times"></i> Cancelar</button>
             </form>
         </div>
 

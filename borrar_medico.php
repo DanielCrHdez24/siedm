@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Validar que el id_usuario no esté vacío
     if (empty($id_usuario)) {
         $_SESSION['mensaje_error'] = "Error: ID de usuario no válido.";
-        header("Location: perfil.php");
+        header("Location: panel.php");
         exit();
     }
 
@@ -25,12 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $link->begin_transaction();
 
     try {
-        // Eliminar al usuario
-        $sql_delete_usuario = "DELETE FROM usuarios WHERE id_usuario = ?";
+        // Desactivar al usuario
+        $sql_delete_usuario = "UPDATE usuarios SET estado = 'INACTIVO' WHERE id_usuario = ?";
         if ($stmt_usuario = $link->prepare($sql_delete_usuario)) {
             $stmt_usuario->bind_param("i", $id_usuario);
             if (!$stmt_usuario->execute()) {
-                throw new Exception("Error al eliminar usuario: " . $stmt_usuario->error);
+                throw new Exception("Error al desactivar usuario: " . $stmt_usuario->error);
             }
             $stmt_usuario->close();
         }
@@ -40,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Cerrar sesión y redirigir con mensaje
         
-        header("Location: panel.php");
+        header("Location: panel.php?mensaje=Usuario desactivado correctamente.");
+        
         exit();
     } catch (Exception $e) {
         $link->rollback();

@@ -6,7 +6,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit();
 }
 $idRol = $_SESSION['idRol'];
-$id_usuario = filter_input(INPUT_GET,'id_usuario',FILTER_VALIDATE_INT); // Utiliza esta variable para obtener los datos relacionados con el usuario
+$id_usuario = filter_input(INPUT_GET, 'id_usuario', FILTER_VALIDATE_INT); // Utiliza esta variable para obtener los datos relacionados con el usuario
 include 'conexion.php';
 
 // Recuperar los datos del médico para precargar en el formulario
@@ -46,7 +46,7 @@ mysqli_close($link);
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Confrimar eliminar cuenta</title>
+    <title>Confirmar desactivar cuenta</title>
 </head>
 
 <body class="principal">
@@ -79,8 +79,9 @@ mysqli_close($link);
         </header>
 
         <div class="container">
-        <h2 style="color: red; font-size: 24px; text-align: center;">¿Está seguro que quiere eliminar su cuenta?</h2>
-        <h3 style="color: red; font-size: 18px; text-align: center;">Se eliminará de forma permanente y no podrá recuperar la información ni ingresar al sistema.</h3>
+            <h2 style="color: red; font-size: 24px; text-align: center;">¿Está seguro que quiere desactivar la cuenta?</h2>
+            <h3 style="color: red; font-size: 18px; text-align: center;">Se desactivará y no podrá recuperar la información ni ingresar al sistema.</h3>
+            <br>
             <form class="form" action="borrar_medico.php" method="POST">
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
 
@@ -98,21 +99,16 @@ mysqli_close($link);
 
                 <label for="telefono">Teléfono:</label>
                 <input type="tel" id="telefono" name="telefono" value="<?php echo $telefono; ?>" required>
-
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese nueva contraseña (opcional)">
-
-                <label for="contrasena2">Confirma la contraseña:</label>
-                <input type="password" id="contrasena2" name="contrasena2" placeholder="Confirma nueva contraseña (opcional)">
-
+                <p></p>
                 
-                <button type="submit" class="button" 
-            style="color: white; background: red;"
-            onmouseover="this.style.backgroundColor='#ac1a07'; this.style.color='white';" 
-            onmouseout="this.style.backgroundColor='red'; this.style.color='white';">
-        Eliminar cuenta
-    </button>
-                <button type="button" class="button" onclick="window.location.href='panel.php';">Cancelar</button>
+
+                <button type="submit" class="btn"
+                    onmouseover="this.style.backgroundColor='red'; this.style.color='white';"
+                    onmouseout="this.style.backgroundColor='#009688'; this.style.color='white';">
+                    <i class="fas fa-trash-alt"></i>
+                    Eliminar cuenta
+                </button>
+                <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-times"></i> Cancelar</button>
             </form>
         </div>
 

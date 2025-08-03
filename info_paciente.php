@@ -157,9 +157,9 @@ mysqli_close($link);
                 <!-- Campo oculto para pasar el id_usuario -->
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
 
-                <button type="submit" class="btn">Guardar</button>
-                <button type="reset" class="btn">Limpiar Datos</button>
-                <button type="button" class="btn-logout" onclick="window.location.href='users.php';">Cancelar</button>
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Guardar</button>
+                <button type="reset" class="btn"><i class="fas fa-eraser"></i> Limpiar Datos</button>
+                <button type="button" class="btn-logout" onclick="window.location.href='users.php';"><i class="fas fa-times"></i> Cancelar</button>
             </form>
 
         </div>

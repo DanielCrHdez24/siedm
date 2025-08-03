@@ -18,8 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
     $busqueda = trim($_POST["buscar"]);
 
     // Consulta para buscar por ID, Nombre o correo
-    $sql = "SELECT id_usuario, nombre, correo FROM usuarios 
-            WHERE id_usuario LIKE ? OR nombre LIKE ? OR correo LIKE ?";
+    $sql = "SELECT id_usuario, nombre, correo 
+        FROM usuarios 
+        WHERE (id_usuario LIKE ? OR nombre LIKE ? OR correo LIKE ?)
+        AND id_rol <> 1";
     $stmt = $link->prepare($sql);
     $param = "%" . $busqueda . "%";
     $stmt->bind_param("sss", $param, $param, $param);
@@ -71,8 +73,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
-                <input type="text" name="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" placeholder="Buscar paciente...">
-                <button type="submit">Buscar</button>
+                <input type="text" id="inputBuscar" name="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar paciente...">
+                <button type="submit" class="btn"> <i class="fas fa-search"></i> Buscar</button>
+                <button type="button" class="btn"
+                    onclick="document.getElementById('inputBuscar').value='';">
+                    <i class="fas fa-eraser"></i> Borrar
+                </button>
+                <button type="button" class="btn-logout"
+                    onclick="window.location.href='users.php';">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
             </form>
 
             <!-- Resultados de búsqueda -->
@@ -96,8 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                         <a href="update_medical.php?id_usuario=<?php echo $fila['id_usuario']; ?>" class="btn-modificar">
                             <i class="fas fa-edit"></i> Modificar
                         </a>
-                        <a href="delete_medical.php?id_usuario=<?php echo $fila['id_usuario']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este paciente?');">
-                            <i class="fas fa-trash"></i> Eliminar
+                        <a href="delete_medical.php?id_usuario=<?php echo $fila['id_usuario']; ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de desea DESACTIVAR este usuario?');" style="background: red;">
+                            <i class="fas fa-trash"></i> Dar de baja
                         </a>
                     </td>
                 </tr>

@@ -71,8 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
-                <input type="text" name="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" placeholder="Buscar paciente...">
-                <button type="submit">Buscar</button>
+                <input type="text" name="buscar" id="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" placeholder="Buscar paciente...">
+                <button type="submit" class="btn"> <i class="fas fa-search"></i> Buscar</button>
+                <button type="button" class="btn" onclick="document.querySelector('input[name=buscar]').value = '';"> <i class="fas fa-eraser"></i> Limpiar</button>
+                <button type="button" class="btn-logout" onclick="window.location.href='users.php';"> <i class="fas fa-arrow-left"></i> Cancelar</button>
             </form>
 
             <!-- Resultados de búsqueda -->

@@ -124,9 +124,9 @@ if (isset($_GET['mensaje'])):
                 <label for="contrasena2">Confirma la contraseña:</label>
                 <input type="password" id="contrasena2" name="contrasena2" placeholder="Confirma nueva contraseña (opcional)">
 
-                <button type="submit" class="button">Actualizar</button>
-                <button type="reset" class="button">Limpiar Datos</button>
-                <button type="button" class="button" onclick="window.location.href='users.php';">Cancelar</button>
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Actualizar</button>
+
+                <button type="button" class="btn-logout" onclick="window.location.href='users.php';"> <i class="fas fa-times"></i> Cancelar</button>
             </form>
         </div>
 

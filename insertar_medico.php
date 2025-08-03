@@ -19,6 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasena = $_POST['contrasena'];
     $contrasena2 = $_POST['contrasena2'];
     $id_rol = $_POST['id_rol']; // hidden input en el form
+    $estado = 'ACTIVO'; // Estado activo por defecto
+    $cedula_profesional = trim($_POST['cedula']);
 
     // Validación básica
     if ($contrasena !== $contrasena2) {
@@ -36,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_registro = date('Y-m-d H:i:s');
 
     // Preparar la consulta SQL
-    $sql = 'INSERT INTO usuarios (nombre, primer_apellido, segundo_apellido, correo, telefono, contrasena, id_rol, fecha_registro) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    $sql = 'INSERT INTO usuarios (nombre, primer_apellido, segundo_apellido, correo, telefono, contrasena, id_rol, fecha_registro, cedula_profesional, estado) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
     if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, 'ssssssis', $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $contrasena_hash, $id_rol, $fecha_registro);
+        mysqli_stmt_bind_param($stmt, 'ssssssis', $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono, $contrasena_hash, $id_rol, $fecha_registro, $cedula_profesional, $estado);
 
         if (mysqli_stmt_execute($stmt)) {
             // Obtener el ID del usuario recién insertado

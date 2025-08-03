@@ -51,28 +51,28 @@ $idRol = $_SESSION['idRol'];
                     <i class="fa-solid fa-calendar-plus option-icon"></i>
                     <h3>Agendar Cita</h3>
                     <p>Programa una nueva consulta médica de forma rápida.</p>
-                    <a href="agendar_cita.php" class="btn">Agendar</a>
+                    <a href="agendar_cita.php" class="btn"><i class="fas fa-calendar-plus"></i> Agendar</a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-user-md option-icon"></i>
                     <h3>Atender Citas</h3>
                     <p>En esta sección se atienden las consultas médicas programadas.</p>
-                    <a href="atender_cita.php" class="btn">Atender</a>
+                    <a href="atender_cita.php" class="btn"><i class="fas fa-user-md"></i> Atender</a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-magnifying-glass option-icon"></i>
                     <h3>Consultar Citas</h3>
                     <p>Visualiza todas las citas que han sido programadas.</p>
-                    <a href="consultar_cita.php" class="btn">Consultar</a>
+                    <a href="consultar_cita.php" class="btn"><i class="fas fa-magnifying-glass"></i> Consultar</a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-calendar-xmark option-icon"></i>
                     <h3>Cancelar Cita</h3>
                     <p>Elimina una cita programada que ya no será atendida.</p>
-                    <a href="cancelar_cita.php" class="btn">Cancelar</a>
+                    <a href="cancelar_cita.php" class="btn-logout"><i class="fas fa-calendar-xmark"></i> Cancelar</a>
                 </div>
             </div>
         </div>

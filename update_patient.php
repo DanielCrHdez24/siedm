@@ -160,8 +160,8 @@ mysqli_close($link);
                 <input type="text" id="padecimientos" oninput="this.value.toUpperCase()" name="padecimientos" placeholder="Ingrese padecimientos crónicos (si aplica)" value="<?php echo htmlspecialchars($paciente['padecimientos']); ?>">
                 <p></p>
                 <div style="text-align: center;">
-                <button type="submit" class="btn">Actualizar</button> 
-                <button type="button" class="btn-logout" onclick="history.back();">Cancelar</button>
+                <button type="submit" class="btn"> <i class="fas fa-save"></i> Actualizar</button> 
+                <button type="button" class="btn-logout" onclick="history.back();"> <i class="fas fa-times"></i> Cancelar</button>
                 </div>
             </form>
         </div>

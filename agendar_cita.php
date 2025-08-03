@@ -82,9 +82,24 @@ if ($paciente_id_get !== null) {
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
-                <input type="text" name="buscar" oninput="this.value = this.value.toUpperCase()" value="<?= htmlspecialchars($busqueda); ?>" placeholder="Ej. CURP, Juan, 123">
-                <button type="submit" class="btn">Buscar</button>
-                <button type="button" class="btn" onclick="history.back();">Volver</button>
+                <input type="text" id="inputBuscar" name="buscar"
+                    oninput="this.value = this.value.toUpperCase()"
+                    value="<?= htmlspecialchars($busqueda); ?>"
+                    placeholder="Ej. CURP, Juan, 123">
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+
+                <button type="button" class="btn"
+                    onclick="document.getElementById('inputBuscar').value='';">
+                    <i class="fas fa-eraser"></i> Borrar
+                </button>
+
+                <button type="button" class="btn"
+                    onclick="window.location.href='citas.php';">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
             </form>
 
             <!-- Mostrar resultados -->
@@ -136,9 +151,9 @@ if ($paciente_id_get !== null) {
                                         <input type="text" name="motivo" required placeholder="Motivo">
                                     </td>
                                     <td style=" text-align: center;">
-                                        <form action="atender_cita.php" method="post">
+                                        <form action="atender_cita.php" method="post" style="display: inline; all: unset;">
                                             <input type="hidden" name="id_paciente" value="<?= $p['id_paciente'] ?>">
-                                            <button type="submit" class="btn">
+                                            <button type="submit" class="btn" style="margin: 0;">
                                                 <i class="fas fa-calendar-plus"></i> Agendar
                                             </button>
                                         </form>
@@ -151,10 +166,10 @@ if ($paciente_id_get !== null) {
             <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
                 <p class="alert-error">No se encontraron pacientes con esa búsqueda.</p>
             <?php endif; ?>
-       <br>
-        
-            
-        
+            <br>
+
+
+
         </div>
         <br>
         <footer class="footer">
@@ -164,9 +179,9 @@ if ($paciente_id_get !== null) {
             <p>Irma Rafael Soto - 18100213</p>
             <p>&copy; 2025 - SIEDM</p>
         </footer>
-    </div>
+        </div>
 
-    <script src="js/menu.js"></script>
+        <script src="js/menu.js"></script>
 </body>
 
 </html>

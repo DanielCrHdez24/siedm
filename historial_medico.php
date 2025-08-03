@@ -47,7 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
 
         // Aquí sigue igual...
         // Obtener citas, historial, documentos...
-        $sql_citas = "SELECT * FROM citas_medicas WHERE id_paciente = ? ORDER BY fecha_cita DESC, hora_cita DESC";
+        $sql_citas = "SELECT * FROM citas_medicas WHERE id_paciente = ? AND estado = 'PROCESADA' ORDER BY fecha_cita DESC, hora_cita DESC ";
+         // Asegúrate de que el estado sea 'PROCESADA' para las citas
+         // Si quieres incluir todas las citas, elimina la condición AND estado = 'PROCESADA'
         $stmt_citas = $link->prepare($sql_citas);
         $stmt_citas->bind_param("i", $paciente['id_paciente']);
         $stmt_citas->execute();
@@ -111,8 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
     </div>
 <?php endif; ?>
             <form method="POST" class="form">
-                <input type="text" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
-                <button type="submit">Buscar</button>
+                <input type="text" name="busqueda" id="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
+                <button type="submit" class="btn"> <i class="fas fa-search"></i> Buscar</button>
+                <button type="button" class="btn" onclick="document.querySelector('input[name=busqueda]').value = '';"> <i class="fas fa-eraser"></i> Limpiar</button>
+                <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-arrow-left"></i> Volver</button>
             </form>
 
             <?php if ($paciente): ?>
@@ -259,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                             <input type="file" name="archivo" accept=".pdf,.jpg,.jpeg,.png" required>
                         </td>
                         <td>
-                            <button type="submit">Subir</button>
+                            <button type="submit" class="btn" style="margin: 0;"><i class="fas fa-upload"></i> Subir</button>
                         </td>
                     </form>
                 </table>
@@ -267,8 +271,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
 
                <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
   <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-  <button type="submit" class="btn">Generar PDF</button>
-  <button type="button" class="btn-logout" onclick="history.back();">Volver</button>
+  <button type="submit" class="btn"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+  <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-arrow-left"></i> Volver</button>
 </form>
 
 

@@ -111,8 +111,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                 </div>
             <?php endif; ?>
             <form method="POST" class="form">
-                <input type="text" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
-                <button type="submit" class="btn">Buscar</button>
+                <input type="text" id="inputBuscar" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por nombre, CURP o ID" required>
+                <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
+                <button type="button" class="btn"
+                    onclick="document.getElementById('inputBuscar').value='';">
+                    <i class="fas fa-eraser"></i> Borrar
+                </button>
+
+                <button type="button" class="btn"
+                    onclick="window.location.href='citas.php';">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
             </form>
 
             <?php if ($paciente): ?>
@@ -214,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
 
                 <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
                     <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-                    <button type="button" class="btn-logout" onclick="history.back();">Volver</button>
+                    <button type="button" class="btn-logout" onclick="window.location.href='citas.php';"><i class="fas fa-arrow-left"></i> Volver</button>
                 </form>
 
 
