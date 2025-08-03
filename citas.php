@@ -71,7 +71,7 @@ $idRol = $_SESSION['idRol'];
                 <div class="card">
                     <i class="fa-solid fa-calendar-xmark option-icon"></i>
                     <h3>Cancelar Cita</h3>
-                    <p>Elimina una cita programada que ya no será atendida.</p>
+                    <p>Cancela o elimina una cita programada que ya no será atendida.</p>
                     <a href="cancelar_cita.php" class="btn-logout"><i class="fas fa-calendar-xmark"></i> Cancelar</a>
                 </div>
             </div>

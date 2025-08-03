@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Consultar Citas</title>
+    <title>Cancelar o Eliminar Citas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
@@ -116,10 +116,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                                             <a href="ver_cita.php?id_cita=<?= $cita['id_cita'] ?>">
                                             <i class="fas fa-eye"></i> Ver
                                         </a>
-                                        <?php else: ?>
+                                        <a href="eliminar_cita.php?id_cita=<?= $cita['id_cita'] ?>">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </a>
+                                        <?php elseif ($cita['estado'] === 'AGENDADA'): ?>
                                         <a href="procesar_cita.php?id_cita=<?= $cita['id_cita'] ?>">
                                             <i class="fas fa-edit"></i> Atender
                                         </a>
+                                        <a href="cancel_cita.php?id_cita=<?= $cita['id_cita'] ?>">
+                                            <i class="fas fa-times"></i> Cancelar
+                                        </a>
+                                        <a href="eliminar_cita.php?id_cita=<?= $cita['id_cita'] ?>" class="red-link">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </a>
+                                        <?php else: ?>
+                                            <span>No disponible</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

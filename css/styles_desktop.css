@@ -255,6 +255,16 @@ table a:hover {
     border-radius: .5px; /* Bordes redondeados para los enlaces */
 }
 
+table a.red-link {
+    background-color: red;
+    color: white;
+}
+
+/* Hover en rojo más oscuro */
+table a.red-link:hover {
+    background-color: darkred;
+    color: white;
+}
 
 
 
