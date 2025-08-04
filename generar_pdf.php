@@ -120,66 +120,78 @@ $html .= '
 if ($result_citas->num_rows > 0) {
     $html .= '<table cellpadding="2" cellspacing="0" border="0" width="100%">';
     while ($cita = $result_citas->fetch_assoc()) {
+        
+        $fecha_cita = !empty($cita['fecha_cita']) ? htmlspecialchars($cita['fecha_cita']) : 'No hay información';
+        $hora_cita = !empty($cita['hora_cita']) ? htmlspecialchars($cita['hora_cita']) : 'No hay información';
+        $motivo = !empty($cita['motivo']) ? htmlspecialchars($cita['motivo']) : 'No hay información';
+        $peso = !empty($cita['peso']) ? htmlspecialchars($cita['peso']) . ' KG' : 'No hay información';
+        $talla = !empty($cita['talla']) ? htmlspecialchars($cita['talla']) . ' M' : 'No hay información';
+        $temperatura = !empty($cita['temperatura']) ? htmlspecialchars($cita['temperatura']) . ' °C' : 'No hay información';
+        $diagnostico = !empty($cita['diagnostico']) ? htmlspecialchars($cita['diagnostico']) : 'No hay información';
+        $indicaciones = !empty($cita['indicaciones']) ? htmlspecialchars($cita['indicaciones']) : 'No hay información';
+        $recomendaciones = !empty($cita['recomendaciones']) ? htmlspecialchars($cita['recomendaciones']) : 'No hay información';
+        $medico = (!empty($cita['nombre']) || !empty($cita['primer_apellido']) || !empty($cita['segundo_apellido'])) ?
+            htmlspecialchars($cita['nombre'] . ' ' . $cita['primer_apellido'] . ' ' . $cita['segundo_apellido']) : 'No hay información';
+
         $html .= '
-       
-            <tr>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Fecha cita: </span><span class="valor">' . htmlspecialchars($cita['fecha_cita']) . '</span></div>
-                </td>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Hora cita: </span><span class="valor">' . htmlspecialchars($cita['hora_cita']) . '</span></div>
-                </td>
-                <td width="60%" style="vertical-align:top;">
-                    <div><span class="dato">Motivo: </span><span class="valor">' . htmlspecialchars($cita['motivo']) . '</span></div>
-                </td>
-            </tr>
-            <tr>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Peso: </span><span class="valor">' . htmlspecialchars($cita['peso']) . ' KG</span></div>
-                </td>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Talla: </span><span class="valor">' . htmlspecialchars($cita['talla']) . ' M</span></div>
-                </td>
-                <td width="20%" style="vertical-align:top;">
-                    <div><span class="dato">Temperatura: </span><span class="valor">' . htmlspecialchars($cita['temperatura']) . ' °C</span></div>
-                </td>
-                <td width="40%" style="vertical-align:top;">
-                    <div><span class="dato">Diagnostico: </span><span class="valor">' . htmlspecialchars($cita['diagnostico']) . '</span></div>
-                </td>
-            </tr>
-            <tr>
-                <td width="100%" style="vertical-align:top;">
-                    <div><span class="dato">Tratamiento: </span></div>
-                </td>
-            </tr>
-            <tr>
-                <td width="100%" style="vertical-align:top;">
-                    <span class="valor">' . htmlspecialchars($cita['indicaciones']) . '</span>
-                </td>
-            </tr>
-             <tr>
-                <td width="100%" style="vertical-align:top;">
-                    <div><span class="dato">Recomendaciones: </span></div>
-                </td>
-            </tr>
-            <tr>
-                <td width="100%" style="vertical-align:top;">
-                    <span class="valor">' . htmlspecialchars($cita['recomendaciones']) . '</span>
-                </td>
-            </tr>
-            <tr>
-                <td width="40%" style="vertical-align:top;">
-                    <div><span class="dato">Médico: </span><span class="valor">' . htmlspecialchars($cita['nombre'] . ' ' . $cita['primer_apellido'] . ' ' . $cita['segundo_apellido']) . '</span></div>
-                </td>
-            </tr>
-            <hr style="border:1px solid #125873; margin:10px 0;"><br>
-            ';
-    
+        <tr>
+            <td width="20%" style="vertical-align:top;">
+                <div><span class="dato">Fecha cita: </span><span class="valor">' . $fecha_cita . '</span></div>
+            </td>
+            <td width="20%" style="vertical-align:top;">
+                <div><span class="dato">Hora cita: </span><span class="valor">' . $hora_cita . '</span></div>
+            </td>
+            <td width="60%" style="vertical-align:top;">
+                <div><span class="dato">Motivo: </span><span class="valor">' . $motivo . '</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="20%" style="vertical-align:top;">
+                <div><span class="dato">Peso: </span><span class="valor">' . $peso . '</span></div>
+            </td>
+            <td width="20%" style="vertical-align:top;">
+                <div><span class="dato">Talla: </span><span class="valor">' . $talla . '</span></div>
+            </td>
+            <td width="20%" style="vertical-align:top;">
+                <div><span class="dato">Temperatura: </span><span class="valor">' . $temperatura . '</span></div>
+            </td>
+            <td width="40%" style="vertical-align:top;">
+                <div><span class="dato">Diagnóstico: </span><span class="valor">' . $diagnostico . '</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" style="vertical-align:top;">
+                <div><span class="dato">Tratamiento: </span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" style="vertical-align:top;">
+                <span class="valor">' . $indicaciones . '</span>
+            </td>
+        </tr>
+         <tr>
+            <td width="100%" style="vertical-align:top;">
+                <div><span class="dato">Recomendaciones: </span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" style="vertical-align:top;">
+                <span class="valor">' . $recomendaciones . '</span>
+            </td>
+        </tr>
+        <tr>
+            <td width="40%" style="vertical-align:top;">
+                <div><span class="dato">Médico: </span><span class="valor">' . $medico . '</span></div>
+            </td>
+        </tr>
+        <tr><td colspan="4"><hr style="border:1px solid #125873; margin:10px 0;"></td></tr>
+        ';
     }
     $html .= '</table>';
 } else {
     $html .= '<p>No hay citas médicas registradas.</p><br>';
 }
+
 
 
 
