@@ -67,14 +67,15 @@ $idRol = $_SESSION['idRol'];
                     <p>Programa una nueva consulta médica de forma rápida.</p>
                     <a href="agendar_cita.php" class="btn"><i class="fas fa-calendar-plus"></i> Agendar</a>
                 </div>
-
+                <?php if ($idRol == 1 || $idRol == 2): ?>    
                 <div class="card">
                     <i class="fa-solid fa-user-md option-icon"></i>
                     <h3>Atender Citas</h3>
                     <p>En esta sección se atienden las consultas médicas programadas.</p>
                     <a href="atender_cita.php" class="btn"><i class="fas fa-user-md"></i> Atender</a>
                 </div>
-
+                    <?php endif; ?>
+                    <?php if ($idRol == 1 || $idRol == 2 || $idRol == 3): ?>  
                 <div class="card">
                     <i class="fa-solid fa-magnifying-glass option-icon"></i>
                     <h3>Consultar Citas</h3>
@@ -88,6 +89,7 @@ $idRol = $_SESSION['idRol'];
                     <p>Cancela o elimina una cita programada que ya no será atendida.</p>
                     <a href="cancelar_cita.php" class="btn-logout"><i class="fas fa-calendar-xmark"></i> Cancelar</a>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
 

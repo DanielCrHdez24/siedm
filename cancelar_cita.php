@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                                         <a href="procesar_cita.php?id_cita=<?= $cita['id_cita'] ?>">
                                             <i class="fas fa-edit"></i> Atender
                                         </a>
-                                        <a href="procesar_cancel_cita.php?id_cita=<?= $cita['id_cita'] ?>">
+                                        <a href="cancel_cita.php?id_cita=<?= $cita['id_cita'] ?>">
                                             <i class="fas fa-times"></i> Cancelar
                                         </a>
                                         <a href="eliminar_cita.php?id_cita=<?= $cita['id_cita'] ?>" class="red-link">
