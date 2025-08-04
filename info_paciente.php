@@ -61,7 +61,7 @@ mysqli_close($link);
                 <a href="citas.php">Gestión de Citas</a>
                 <?php if ($idRol == 1 || $idRol == 2 || $idRol == 4): ?>
                     <!-- Menú para Admin, Médico o Paciente-->
-                    <a href="historial_medico.php">Historial Médico</a>
+                    <a href="consultar_historial.php">Historial Médico</a>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->

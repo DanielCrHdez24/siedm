@@ -53,7 +53,7 @@ $id_Usuario = $_SESSION['idUsuario'];
 
                 <a href="citas.php">Gestión de Citas</a>
                 <?php if ($idRol == 1 || $idRol == 2 || $idRol == 4): ?>
-                    <a href="historial_medico.php">Historial Médico</a>
+                    <a href="consultar_historial.php">Historial Médico</a>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <a href="configuración.php">Configuración</a>
