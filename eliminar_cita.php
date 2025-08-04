@@ -143,15 +143,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                     </table>
                 <br>
                 
-                <form method="POST" action="procesar_cancel_cita.php">
-                    <h3>Cancelar Cita</h3>
-                <p style="color: red;">¿Estás seguro de que deseas cancelar esta cita médica?</p>
-
+                <form method="POST" action="procesar_eliminar_cita.php">
+                    <h3>Eliminar Cita</h3>
+                <p style="color: red;">¿Estás seguro de que deseas eliminar esta cita médica?</p>
+                    Ya que no se podrá recuperar una vez eliminada.
+                    <br>
                     <input type="hidden" name="id_paciente" value="<?php echo htmlspecialchars($citas['id_paciente']); ?>">
                     <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($citas['id_cita']); ?>">
-                    
-                    <button type="submit" class="btn-logout" name="cancelar_cita">
-                        <i class="fas fa-trash"></i> Cancelar Cita
+
+                    <button type="submit" class="btn-logout" name="eliminar_cita">
+                        <i class="fas fa-trash"></i> Eliminar Cita
                     </button>
                     <button type="reset" class="btn">
                         <i class="fas fa-arrow-left"></i> Volver
