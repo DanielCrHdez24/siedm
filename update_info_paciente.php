@@ -112,6 +112,9 @@ $nombre_completo = htmlspecialchars($nombre . " " . $primer_apellido . " " . $se
                     <a href="configuración.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
+                <span style="font-size: 0.7em;">
+                    Usuario: <?php echo $_SESSION["nombreUsuario"]; ?>
+                </span>
             </nav>
         </header>
     <div class="container">

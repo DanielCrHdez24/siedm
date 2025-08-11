@@ -131,6 +131,9 @@ $link->close();
                             <a href="configuración.php">Configuración</a>
                         <?php endif; ?>
                         <a href="logout.php" class="logout-link">Cerrar sesión</a>
+                        <span style="font-size: 0.7em;">
+                    Usuario: <?php echo $_SESSION["nombreUsuario"]; ?>
+                </span>
                     </nav>
                     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 </header>

@@ -33,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Validando credenciales en la base de datos
     if (empty($correo_err) && empty($password_err)) {
-        $sql = "SELECT id_usuario, nombre, contrasena, id_rol FROM usuarios WHERE correo = ?";
-        
+        $sql = "SELECT id_usuario, nombre, primer_apellido, contrasena, id_rol FROM usuarios WHERE correo = ?";
+
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "s", $correo);
 
@@ -42,13 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mysqli_stmt_store_result($stmt);
 
                 if (mysqli_stmt_num_rows($stmt) === 1) {
-                    mysqli_stmt_bind_result($stmt, $idUsuario, $nombreUsuario, $clave, $idRol);
-                    
+                    mysqli_stmt_bind_result($stmt, $idUsuario, $nombreUsuario, $primerApellido, $clave, $idRol);
+
                     if (mysqli_stmt_fetch($stmt)) {
                         if (password_verify($password, $clave)) {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["idUsuario"] = $idUsuario;
-                            $_SESSION["nombreUsuario"] = $nombreUsuario;
+                            $_SESSION["nombreUsuario"] = $nombreUsuario." ".$primerApellido;
                             $_SESSION["idRol"] = $idRol;
 
                             // Cerrar consulta y redirigir

@@ -35,20 +35,20 @@ $id_Usuario = $_SESSION['idUsuario'];
                 <a href="panel.php">Dashboard</a>
 
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
+                // Verifica el rol y redirige a la página correspondiente
+                if ($idRol == 4) {
+                    // Si el rol es 4, manda a perfil.php
+                    $url = 'perfil.php';
+                } elseif ($idRol == 2 || $idRol == 3) {
+                    // Si el rol es 2 o 3, manda a perfil_dif.php
+                    $url = 'perfil_dif.php';
+                } else {
+                    // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
+                    $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                }
+                ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
                     <a href="users.php">Gestión de Usuarios</a>
@@ -63,7 +63,12 @@ $id_Usuario = $_SESSION['idUsuario'];
                     <!-- Menú para Admin o Médico-->
                     <a href="configuración.php">Configuración</a>
                 <?php endif; ?>
+
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
+
+                <span style="font-size: 0.7em; color: var(--secondary-color);">
+                    Usuario: <?php echo $_SESSION["nombreUsuario"]; ?>
+                </span>
             </nav>
             <!-- Botón para abrir el menú móvil -->
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>

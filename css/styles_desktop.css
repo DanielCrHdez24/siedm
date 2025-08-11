@@ -63,14 +63,14 @@ body.principal {
 .navbar {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.4rem;
 }
 
 .navbar a {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     color: var(--primary-color);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 350;
 }
 
 .navbar a:hover {
@@ -83,9 +83,9 @@ body.principal {
 /* Estilo para el enlace "Cerrar sesión" */
 .navbar a.logout-link {
     color: red;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 350;
 }
 
 .navbar a.logout-link:hover {
