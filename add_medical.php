@@ -71,6 +71,11 @@ $idRol = $_SESSION['idRol'];
             <p>
                 Ingrese los datos solicitados en los campos.
             </p>
+            <?php if (isset($_GET['error'])): ?>
+                <div class="alert-error">
+                    <?php echo htmlspecialchars($_GET['error']); ?>
+                </div>
+                <?php endif; ?>
             <p> </p>
             <form class="form" action="insertar_medico.php" method="POST" onsubmit="return validateForm()">
                 <label for="id_rol">Rol del usuario:</label>

@@ -157,8 +157,16 @@ $link->close();
                                 <td><?php echo htmlspecialchars($usuario['telefono']); ?></td>
                             </tr>
                             <tr>
+                                <?php if ($idRol == 2): ?>
+                                <th>Cédula Profesional</th>
+                                <td><?php echo htmlspecialchars($usuario['cedula_profesional'] ?? 'Sin información'); ?></td>
+                                <th>Especialidad</th>
+                                <td><?php echo htmlspecialchars($usuario['especialidad'] ?? 'Sin información'); ?></td>
+                                <?php endif; ?>
                                 <th>Fecha de Registro</th>
                                 <td><?php echo htmlspecialchars($usuario['fecha_registro']); ?></td>
+
+                                
                             </tr>
                         </tbody>
                     </table>
