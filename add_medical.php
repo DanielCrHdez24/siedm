@@ -105,6 +105,11 @@ $idRol = $_SESSION['idRol'];
                 <label for="cedula_profesional">Cédula Profesional:</label>
                 <input type="text" id="cedula_profesional" name="cedula_profesional" placeholder="Ingrese cédula profesional" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de cédula válido de 10 dígitos">
                 <p></p>
+
+                <label for="especialidad">Especialidad:</label>
+                <input type="text" id="especialidad" name="especialidad" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese la especialidad" title="Ingrese la especialidad.">
+                <p></p>
+
                 </div>
 
                 <label for="contrasena">Contraseña:</label>
