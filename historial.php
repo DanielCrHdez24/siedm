@@ -55,11 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
         $stmt_citas->execute();
         $citas = $stmt_citas->get_result();
 
-        $sql_historial = "SELECT * FROM historial_medico WHERE id_paciente = ? ORDER BY fecha_consulta DESC";
-        $stmt_historial = $link->prepare($sql_historial);
-        $stmt_historial->bind_param("i", $paciente['id_paciente']);
-        $stmt_historial->execute();
-        $historial_result = $stmt_historial->get_result();
 
         $sql_docs = "SELECT * FROM documentos_digitalizados WHERE id_paciente = ?";
         $stmt_docs = $link->prepare($sql_docs);
