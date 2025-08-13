@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
             <?php if ($paciente): ?>
                 <h3>Datos del Paciente</h3>
                 
-                 <table class="table" style="font-size:80%;">
+                <table class="table" style="font-size:80%;">
                         <tbody>
                             <tr>
 
@@ -286,10 +286,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                 </table>
                 <br>
 
-               <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
-  <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-  <button type="submit" class="btn"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
-  <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-arrow-left"></i> Volver</button>
+            <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
+<input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
+<button type="submit" class="btn"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+<button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-arrow-left"></i> Volver</button>
 </form>
 
 
