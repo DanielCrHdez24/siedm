@@ -274,6 +274,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                 <option value="EXÁMEN DE SANGRE">EXÁMEN DE SANGRE</option>
                                 <option value="RADIOGRAFÍA">RADIOGRAFÍA</option>
                                 <option value="ELECTROCARDIOGRAMA">ELECTROCARDIOGRAMA</option>
+                                <option value="TOMOGRAFÍA">TOMOGRAFÍA</option>
+                                <option value="RESONANCIA MAGNÉTICA">RESONANCIA MAGNÉTICA</option>
+                                <option value="MASTOGRAFÍA">MASTOGRAFÍA</option>
                             </select>
                         </td>
                         <td>
