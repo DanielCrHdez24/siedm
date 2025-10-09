@@ -67,7 +67,7 @@ body.principal {
 }
 
 .navbar a {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 350;
@@ -83,7 +83,7 @@ body.principal {
 /* Estilo para el enlace "Cerrar sesión" */
 .navbar a.logout-link {
     color: red;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-decoration: none;
     font-weight: 350;
 }

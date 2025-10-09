@@ -111,7 +111,7 @@ $idRol = $_SESSION['idRol'];
 
                 <div id="cedula-container" style="display: none;">
                 <label for="cedula_profesional">Cédula Profesional:</label>
-                <input type="text" id="cedula_profesional" name="cedula_profesional" placeholder="Ingrese cédula profesional" pattern="[0-9]{10}" maxlength="10" title="Ingrese un número de cédula válido de 10 dígitos">
+                <input type="text" id="cedula_profesional" name="cedula_profesional" placeholder="Ingrese cédula profesional" pattern="[0-9]{8,}" maxlength="12" title="Ingrese un número de cédula válido de 9 a 12 dígitos">
                 <p></p>
 
                 <label for="especialidad">Especialidad:</label>

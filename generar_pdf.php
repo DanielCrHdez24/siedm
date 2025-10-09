@@ -20,7 +20,7 @@ if (!$paciente) {
 }
 
 // Consulta citas
-$stmt = $link->prepare("SELECT c.*, u.nombre, u.primer_apellido, u.segundo_apellido FROM citas_medicas AS c INNER JOIN usuarios AS u ON c.id_usuario = u.id_usuario WHERE c.id_paciente = ? ORDER BY c.fecha_cita DESC");
+$stmt = $link->prepare("SELECT c.*, u.nombre, u.primer_apellido, u.segundo_apellido FROM citas_medicas AS c INNER JOIN usuarios AS u ON c.id_usuario = u.id_usuario WHERE c.id_paciente = ? AND c.estado ='PROCESADA' ORDER BY c.fecha_cita DESC");
 $stmt->bind_param("i", $id_paciente);
 $stmt->execute();
 $result_citas = $stmt->get_result();

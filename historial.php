@@ -196,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                 <th>Motivo</th>
                                 <th>Diagnóstico</th>
                                 <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -206,6 +207,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                     <td><?= htmlspecialchars($cita['motivo']) ?></td>
                                     <td><?= htmlspecialchars($cita['diagnostico'] ?? 'NO ATENDIDA') ?></td>
                                     <td><?= htmlspecialchars($cita['estado']) ?></td>
+                                    <td>
+                                        <a href="ver_cita.php?id_cita=<?= $cita['id_cita'] ?>">
+                                            <i class="fas fa-eye"></i> Ver
+                                        </a>
+                                    
+                                    </td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -224,6 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                 <th>Tipo de Documento</th>
                                 <th>Nombre del Archivo</th>
                                 <th>Fecha de Subida</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
