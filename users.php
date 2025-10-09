@@ -132,7 +132,7 @@ if (isset($_GET['mensaje'])):
                         <a href="rud_patient.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
-               
+                
                 <div class="card">
                     <div class="option-icon-logout">
                         <i class="bi bi-box-arrow-left"></i>

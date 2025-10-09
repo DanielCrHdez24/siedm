@@ -31,18 +31,14 @@ $idRol = $_SESSION['idRol'];
                 <?php
                     // Verifica el rol y redirige a la página correspondiente
                     if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
                         $url = 'perfil.php';
                     } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
                         $url = 'perfil_dif.php';
                     } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                        $url = 'perfil_dif.php';
                     }
-                    ?>
-
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                ?>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <a href="users.php">Gestión de Usuarios</a>
                 <?php endif; ?>
@@ -70,6 +66,7 @@ $idRol = $_SESSION['idRol'];
                     <p>Programa una nueva consulta médica de forma rápida.</p>
                     <a href="agendar_cita.php" class="btn"><i class="fas fa-calendar-plus"></i> Agendar</a>
                 </div>
+
                 <?php if ($idRol == 1 || $idRol == 2): ?>    
                 <div class="card">
                     <i class="fa-solid fa-user-md option-icon"></i>
@@ -77,8 +74,9 @@ $idRol = $_SESSION['idRol'];
                     <p>En esta sección se atienden las consultas médicas programadas.</p>
                     <a href="atender_cita.php" class="btn"><i class="fas fa-user-md"></i> Atender</a>
                 </div>
-                    <?php endif; ?>
-                    <?php if ($idRol == 1 || $idRol == 2 || $idRol == 3): ?>  
+                <?php endif; ?>
+
+                <?php if ($idRol == 1 || $idRol == 2 || $idRol == 3): ?>  
                 <div class="card">
                     <i class="fa-solid fa-magnifying-glass option-icon"></i>
                     <h3>Consultar Citas</h3>
@@ -91,6 +89,14 @@ $idRol = $_SESSION['idRol'];
                     <h3>Cancelar Cita</h3>
                     <p>Cancela o elimina una cita programada que ya no será atendida.</p>
                     <a href="cancelar_cita.php" class="btn-logout"><i class="fas fa-calendar-xmark"></i> Cancelar</a>
+                </div>
+
+                <!-- ✅ NUEVA TARJETA PARA RECOMENDACIONES -->
+                <div class="card">
+                    <i class="fa-solid fa-star option-icon"></i>
+                    <h3>Recomendaciones</h3>
+                    <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
+                    <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
                 </div>
                 <?php endif; ?>
             </div>
