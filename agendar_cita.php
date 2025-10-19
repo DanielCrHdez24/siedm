@@ -48,7 +48,7 @@ if ($paciente_id_get !== null) {
 </head>
 
 <body class="principal">
-    < class="wrapper">
+    <div class="wrapper">
         <header class="header">
             <a href="#" class="logo">
                 <img src="./images/logo.png" alt="Logo SIEDM" width="150px" />
@@ -184,10 +184,8 @@ if ($paciente_id_get !== null) {
                 <p class="alert-error">No se encontraron pacientes con esa búsqueda.</p>
             <?php endif; ?>
             <br>
-
-
-
         </div>
+
         <br>
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
@@ -196,9 +194,8 @@ if ($paciente_id_get !== null) {
             <p>Irma Rafael Soto - 18100213</p>
             <p>&copy; 2025 - SIEDM</p>
         </footer>
-        </div>
-
-        <script src="js/menu.js"></script>
+    </div>
+    <script src="js/menu.js"></script>
 </body>
 
 </html>
