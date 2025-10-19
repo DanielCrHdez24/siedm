@@ -146,6 +146,15 @@ $id_Usuario = $_SESSION['idUsuario'];
                         <a href="Configuración.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
+                <!-- NUEVA TARJETA PARA RECOMENDACIONES -->
+                <?php if ($idRol == 1 || $idRol == 4): ?>
+                <div class="card">
+                    <i class="fa-solid fa-star option-icon"></i>
+                    <h3>Recomendaciones</h3>
+                    <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
+                    <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
+                </div>
+                <?php endif; ?>
                 <div class="card">
                     <div class="option-icon-logout">
                         <i class="bi bi-box-arrow-left"></i>
@@ -156,13 +165,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                 </div>
             </div>
         </div>
-<!-- NUEVA TARJETA PARA RECOMENDACIONES -->
-                <div class="card">
-                    <i class="fa-solid fa-star option-icon"></i>
-                    <h3>Recomendaciones</h3>
-                    <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
-                    <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
-                </div>
+
             </div>
         </div>
         <footer class="footer">
