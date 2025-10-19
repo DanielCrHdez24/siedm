@@ -31,14 +31,18 @@ $idRol = $_SESSION['idRol'];
                 <?php
                     // Verifica el rol y redirige a la página correspondiente
                     if ($idRol == 4) {
+                        // Si el rol es 4, manda a perfil.php
                         $url = 'perfil.php';
                     } elseif ($idRol == 2 || $idRol == 3) {
+                        // Si el rol es 2 o 3, manda a perfil_dif.php
                         $url = 'perfil_dif.php';
                     } else {
-                        $url = 'perfil_dif.php';
+                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
+                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
                     }
-                ?>
-                <a href="<?php echo $url; ?>">Mi Perfil</a>
+                    ?>
+
+                    <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <a href="users.php">Gestión de Usuarios</a>
                 <?php endif; ?>
@@ -50,9 +54,6 @@ $idRol = $_SESSION['idRol'];
                     <a href="configuración.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
-                <span style="font-size: 0.7em;">
-                    Usuario: <?php echo $_SESSION["nombreUsuario"]; ?>
-                </span>
             </nav>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </header>
@@ -66,7 +67,6 @@ $idRol = $_SESSION['idRol'];
                     <p>Programa una nueva consulta médica de forma rápida.</p>
                     <a href="agendar_cita.php" class="btn"><i class="fas fa-calendar-plus"></i> Agendar</a>
                 </div>
-
                 <?php if ($idRol == 1 || $idRol == 2): ?>    
                 <div class="card">
                     <i class="fa-solid fa-user-md option-icon"></i>
@@ -74,9 +74,8 @@ $idRol = $_SESSION['idRol'];
                     <p>En esta sección se atienden las consultas médicas programadas.</p>
                     <a href="atender_cita.php" class="btn"><i class="fas fa-user-md"></i> Atender</a>
                 </div>
-                <?php endif; ?>
-
-                <?php if ($idRol == 1 || $idRol == 2 || $idRol == 3): ?>  
+                    <?php endif; ?>
+                    <?php if ($idRol == 1 || $idRol == 2 || $idRol == 3): ?>  
                 <div class="card">
                     <i class="fa-solid fa-magnifying-glass option-icon"></i>
                     <h3>Consultar Citas</h3>
@@ -90,7 +89,10 @@ $idRol = $_SESSION['idRol'];
                     <p>Cancela o elimina una cita programada que ya no será atendida.</p>
                     <a href="cancelar_cita.php" class="btn-logout"><i class="fas fa-calendar-xmark"></i> Cancelar</a>
                 </div>
-                
+                <?php endif; ?>
+            </div>
+        </div>
+
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
