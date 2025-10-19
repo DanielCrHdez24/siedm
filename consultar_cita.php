@@ -101,8 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </form>
-
-           
+            
                 <h3>Citas Médicas</h3>
                 <?php if ($citas->num_rows > 0): ?>
                     <table class="table" style="font-size:80%;">
