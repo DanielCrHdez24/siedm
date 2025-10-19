@@ -163,7 +163,6 @@ $id_Usuario = $_SESSION['idUsuario'];
                     <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
                     <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
                 </div>
-                <?php endif; ?>
             </div>
         </div>
         <footer class="footer">
