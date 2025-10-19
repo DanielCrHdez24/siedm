@@ -156,7 +156,16 @@ $id_Usuario = $_SESSION['idUsuario'];
                 </div>
             </div>
         </div>
-
+<!-- NUEVA TARJETA PARA RECOMENDACIONES -->
+                <div class="card">
+                    <i class="fa-solid fa-star option-icon"></i>
+                    <h3>Recomendaciones</h3>
+                    <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
+                    <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
