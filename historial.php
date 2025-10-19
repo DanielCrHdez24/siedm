@@ -45,17 +45,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
     if ($resultado->num_rows > 0) {
         $paciente = $resultado->fetch_assoc();
 
-        // Aquí sigue igual...
-        // Obtener citas, historial, documentos...
-        $sql_citas = "SELECT * FROM citas_medicas WHERE id_paciente = ? AND estado = 'PROCESADA' ORDER BY fecha_cita DESC, hora_cita DESC ";
-         // Asegúrate de que el estado sea 'PROCESADA' para las citas
-         // Si quieres incluir todas las citas, elimina la condición AND estado = 'PROCESADA'
+        // 🔹 Obtener id_historial del paciente
+        $sql_historial = "SELECT id_historial FROM historial_medico WHERE id_paciente = ? LIMIT 1";
+        $stmt_historial = $link->prepare($sql_historial);
+        $stmt_historial->bind_param("i", $paciente['id_paciente']);
+        $stmt_historial->execute();
+        $resultado_historial = $stmt_historial->get_result();
+
+        if ($resultado_historial->num_rows > 0) {
+            $historial = $resultado_historial->fetch_assoc();
+            $id_historial = $historial['id_historial'];
+        } else {
+            $id_historial = null;
+        }
+
+        // 🔹 Obtener citas del paciente
+        $sql_citas = "SELECT * FROM citas_medicas WHERE id_paciente = ? AND estado = 'PROCESADA' ORDER BY fecha_cita DESC, hora_cita DESC";
         $stmt_citas = $link->prepare($sql_citas);
         $stmt_citas->bind_param("i", $paciente['id_paciente']);
         $stmt_citas->execute();
         $citas = $stmt_citas->get_result();
 
-
+        // 🔹 Obtener documentos digitalizados
         $sql_docs = "SELECT * FROM documentos_digitalizados WHERE id_paciente = ?";
         $stmt_docs = $link->prepare($sql_docs);
         $stmt_docs->bind_param("i", $paciente['id_paciente']);
@@ -85,20 +96,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
+                // Verifica el rol y redirige a la página correspondiente
+                if ($idRol == 4) {
+                    // Si el rol es 4, manda a perfil.php
+                    $url = 'perfil.php';
+                } elseif ($idRol == 2 || $idRol == 3) {
+                    // Si el rol es 2 o 3, manda a perfil_dif.php
+                    $url = 'perfil_dif.php';
+                } else {
+                    // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
+                    $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                }
+                ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <a href="users.php">Gestión de Usuarios</a>
                 <?php endif; ?>
@@ -118,74 +129,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
         </header>
 
         <div class="container">
-            <h2>Historial Médico del Paciente</h2>
+            <h2>Historial Médico <?php echo htmlspecialchars(" No. " . $paciente['curp']) . " - " . $id_historial; ?> </h2>
             <?php if (isset($_GET['mensaje'])): ?>
-    <div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border-radius: 5px;">
-        <?= htmlspecialchars($_GET['mensaje']) ?>
-    </div>
-<?php endif; ?>
+                <div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                    <?= htmlspecialchars($_GET['mensaje']) ?>
+                </div>
+            <?php endif; ?>
 
             <?php if ($paciente): ?>
                 <h3>Datos del Paciente</h3>
-                
-                 <table class="table" style="font-size:80%;">
-                        <tbody>
-                            <tr>
 
-                                <!-- Aquí la imagen ocupa toda una columna -->
-                                <td rowspan="7" style="text-align: center; vertical-align: middle;">
+                <table class="table" style="font-size:80%;">
+                    <tbody>
+                        <tr>
 
-        <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
+                            <!-- Aquí la imagen ocupa toda una columna -->
+                            <td rowspan="7" style="text-align: center; vertical-align: middle;">
+                                                                
+                                <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
 
-    </td>
-                            </tr>
+                            </td>
+                        </tr>
 
 
-                            <tr>
-                                <!--<th>Clave de Expediente</th>
-                                <td><?php #echo htmlspecialchars($paciente['clave_expediente']); ?></td>-->
-                                <th>Nombre</th>
-                                <td><?php echo htmlspecialchars($paciente['nombre']) . " " . htmlspecialchars($paciente['primer_apellido']) . " " . htmlspecialchars($paciente['segundo_apellido']); ?></td>
-                                <th>CURP</th>
-                                <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
-                                <th>Edad</th>
-                                <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
-                                
-                            </tr>
-                            <tr>
-                                <th>Teléfono</th>
-                                <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
-                                <th>Fecha de Nacimiento</th>
-                                <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
-                                <th>Sexo</th>
-                                <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
-                                
-                            </tr>
-                            <tr>
-                                <th>E-mail</th>
-                                <td><?php echo htmlspecialchars($paciente['correo']); ?></td>
-                                <th>Derechohabiencia</th>
-                                <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
-                                <th>Tipo de Sangre</th>
-                                <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
-                            </tr>
-                            <tr>
-                                <th>Dirección</th>
-                                <td colspan="3"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
-                                <th>Religión</th>
-                                <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
-                            </tr>
-                            <tr>
-                                <th>Ocupación</th>
-                                <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
-                                <th>Alergias</th>
-                                <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
-                                <th>Padecimientos Crónicos</th>
-                                <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
+                        <tr>
+                            <!--<th>Clave de Expediente</th>
+                                <td><?php #echo htmlspecialchars($paciente['clave_expediente']); 
+                                    ?></td>-->
+                            <th>Nombre</th>
+                            <td><?php echo htmlspecialchars($paciente['nombre']) . " " . htmlspecialchars($paciente['primer_apellido']) . " " . htmlspecialchars($paciente['segundo_apellido']); ?></td>
+                            <th>CURP</th>
+                            <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
+                            <th>Edad</th>
+                            <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
+
+                        </tr>
+                        <tr>
+                            <th>Teléfono</th>
+                            <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
+                            <th>Fecha de Nacimiento</th>
+                            <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
+                            <th>Sexo</th>
+                            <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
+
+                        </tr>
+                        <tr>
+                            <th>E-mail</th>
+                            <td><?php echo htmlspecialchars($paciente['correo']); ?></td>
+                            <th>Derechohabiencia</th>
+                            <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
+                            <th>Tipo de Sangre</th>
+                            <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Dirección</th>
+                            <td colspan="3"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
+                            <th>Religión</th>
+                            <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Ocupación</th>
+                            <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
+                            <th>Alergias</th>
+                            <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
+                            <th>Padecimientos Crónicos</th>
+                            <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
                 <h3>Citas Médicas</h3>
                 <?php if ($citas->num_rows > 0): ?>
                     <table class="table" style="font-size:80%;">
@@ -211,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                         <a href="ver_cita.php?id_cita=<?= $cita['id_cita'] ?>">
                                             <i class="fas fa-eye"></i> Ver
                                         </a>
-                                    
+
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -231,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                 <th>Tipo de Documento</th>
                                 <th>Nombre del Archivo</th>
                                 <th>Fecha de Subida</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -283,11 +295,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                 </table>
                 <br>
 
-               <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
-  <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-  <button type="submit" class="btn"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
-  <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-arrow-left"></i> Volver</button>
-</form>
+                <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
+                    <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
+                    <button type="submit" class="btn"> <i class="fas fa-file-pdf"></i> Generar PDF</button>
+                    <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-arrow-left"></i> Volver</button>
+                </form>
 
 
             <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>

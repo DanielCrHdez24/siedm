@@ -19,6 +19,16 @@ if (!$paciente) {
     die("<script>alert('Paciente no encontrado.'); window.close();</script>");
 }
 
+// 🔹 Consultar el ID del historial médico del paciente
+$stmt_historial = $link->prepare("SELECT id_historial FROM historial_medico WHERE id_paciente = ? LIMIT 1");
+$stmt_historial->bind_param("i", $id_paciente);
+$stmt_historial->execute();
+$result_historial = $stmt_historial->get_result();
+$historial = $result_historial->fetch_assoc();
+
+$id_historial = $historial ? $historial['id_historial'] : 'Sin historial registrado';
+
+
 // Consulta citas
 $stmt = $link->prepare("SELECT c.*, u.nombre, u.primer_apellido, u.segundo_apellido FROM citas_medicas AS c INNER JOIN usuarios AS u ON c.id_usuario = u.id_usuario WHERE c.id_paciente = ? AND c.estado ='PROCESADA' ORDER BY c.fecha_cita DESC");
 $stmt->bind_param("i", $id_paciente);
@@ -35,15 +45,17 @@ $result_documentos = $stmt->get_result();
 
 // Crear PDF
 $pdf = new TCPDF();
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
 $pdf->AddPage();
-$pdf->SetFont('helvetica', '', 8);
-$pdf->SetMargins(10, 10, 10);
+$pdf->SetFont('helvetica', '', 7);
+$pdf->SetMargins(8, 8, 8, true);
 
 $html = '
 <table class="table" style="font-size:100%;">
     <tr>
         <td style="width:20%; vertical-align:middle;">
-            <img src="./images/logo.jpg" alt="Logo" style="width:80px; height:auto;">
+            <img src="./images/logo.jpg" alt="Logo" style="width:60px; height:auto;">
         </td>
 
         <td style="width:50%; text-align:center; vertical-align:middle;">
@@ -51,6 +63,7 @@ $html = '
         </td>
         <td style="width:30%; text-align:right; vertical-align:middle;">
             <h5>Fecha de creación: ' . date('d/m/Y') . '</h5>
+            <h5>ID Historial: ' . htmlspecialchars($paciente['curp']) . " - " . $id_historial . '</h5>
         </td>
     </tr>
 </table>';
@@ -60,22 +73,23 @@ $html .= '
         background-color: #009682;
         color: white;
         font-weight: bold;
-        padding: 5px;
-        font-size: 10pt;
-        margin-top: 10px;
+        padding: 4px;
+        font-size: 9pt;
+        margin-top: 9px;
     }
     .dato { font-weight: bold; color: #333; }
     .valor { color: #555; }
 </style>
-
+<br>
 <div class="seccion-titulo">Datos del Paciente</div>
 
 <table cellpadding="2" cellspacing="0" border="0" width="100%">
     <tr>
-        <td width="15%" style="text-align:center; vertical-align:top;">
-            <img src="' . htmlspecialchars($paciente['foto']) . '" width="70" height="70" alt="Foto del Paciente"
+        <td width="15%" style="text-align:center; vertical-align:middle;">
+            <img src="' . htmlspecialchars($paciente['foto']) . '" width="60" height="60" alt="Foto del Paciente"
                  style="border:1px solid #ccc; border-radius:5px;">
         </td>
+        
         <td width="30%" style="vertical-align:top;">
             <div><span class="dato">Nombre: </span><span class="valor">' . htmlspecialchars($paciente['nombre']) . ' ' . htmlspecialchars($paciente['primer_apellido']) . ' ' . htmlspecialchars($paciente['segundo_apellido']) . '</span></div>
             <div><span class="dato">Sexo: </span><span class="valor">' . htmlspecialchars($paciente['sexo']) . '</span></div>
@@ -180,11 +194,11 @@ if ($result_citas->num_rows > 0) {
             </td>
         </tr>
         <tr>
-            <td width="40%" style="vertical-align:top;">
+            <td width="100%" style="vertical-align:top;">
                 <div><span class="dato">Médico: </span><span class="valor">' . $medico . '</span></div>
             </td>
         </tr>
-        <tr><td colspan="4"><hr style="border:1px solid #125873; margin:10px 0;"></td></tr>
+        <tr><td></td></tr>
         ';
     }
     $html .= '</table>';

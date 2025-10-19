@@ -6,7 +6,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
+
 $idRol = $_SESSION['idRol'];
+
 // Incluir la conexión a la base de datos
 include 'conexion.php';
 
@@ -38,10 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Recoger datos del formulario y sanitizar
-
+    // Recoger datos del formulario
     $nombre           = trim($_POST['nombre']);
-    $primer_apellido = trim($_POST['primer_apellido']);
+    $primer_apellido  = trim($_POST['primer_apellido']);
     $segundo_apellido = trim($_POST['segundo_apellido']);
     $correo           = trim($_POST['correo']);
     $telefono         = trim($_POST['telefono']);
@@ -65,20 +66,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_check->store_result();
 
     if ($stmt_check->num_rows > 0) {
-        // Si ya existe, redirigir con mensaje de error
         $stmt_check->close();
         $link->close();
-         echo "<script>
-            alert('⚠️ La CURP - $curp  ya está registrada.');
+        echo "<script>
+            alert('⚠️ La CURP - $curp ya está registrada.');
             history.back();
           </script>";
         exit();
     }
     $stmt_check->close();
 
-    // Preparar la consulta SQL
+    // Insertar paciente
     $sql = "INSERT INTO pacientes (foto, nombre, primer_apellido, segundo_apellido, correo, telefono, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, NOW())";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
     if ($stmt = $link->prepare($sql)) {
         $stmt->bind_param(
@@ -105,10 +105,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             $id_paciente = $stmt->insert_id;
             $stmt->close();
+
+            // 🔹 Crear automáticamente un historial médico vacío vinculado al paciente
+            $sql_historial = "INSERT INTO historial_medico (id_paciente, fecha_creacion) VALUES (?, NOW())";
+            $stmt_historial = $link->prepare($sql_historial);
+            $stmt_historial->bind_param("i", $id_paciente);
+            $stmt_historial->execute();
+            $stmt_historial->close();
+
             $link->close();
 
-            // Redirigir correctamente a paciente.php
-            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Información+de+paciente+agregada+correctamente!');
+            // Redirigir correctamente
+            header('Location: paciente.php?id_paciente=' . $id_paciente . '&mensaje=Paciente+e+historial+creados+correctamente');
             exit();
         } else {
             die("Error al agregar el expediente: " . $stmt->error);
@@ -118,5 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Cerrar la conexión
+// Cerrar conexión
 $link->close();
+?>
