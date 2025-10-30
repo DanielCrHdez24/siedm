@@ -23,12 +23,16 @@
 .wrapper {
     display: flex;
     flex-direction: column; 
-    min-height: 100vh; 
+    flex: 1; 
+    /* NO: min-height: 100vh; */
 }
 
 body.principal {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh;
+    margin: 0;
     width: 100%;
-    height: 100%;
     background: var(--light-color);
     color: #333;
     font-size: 1rem;
@@ -95,11 +99,10 @@ body.principal {
 
 /* Contenedor principal */
 .container {
-    flex: 1; /* Hace que el contenedor ocupe el espacio restante */
-    padding-top: 120px; /* Evita que se oculte debajo del header */
+    flex: 1; 
+    padding-top: 120px; 
     padding-left: 2%;
     padding-right: 2%;
-    
 }
 
 .btn{
