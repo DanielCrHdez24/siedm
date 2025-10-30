@@ -198,7 +198,7 @@ if ($result_citas->num_rows > 0) {
                 <div><span class="dato">Médico: </span><span class="valor">' . $medico . '</span></div>
             </td>
         </tr>
-        <tr><td></td></tr>
+        <tr><td><hr style="border: 1px solid #125873; margin: 10px 0;"></td></tr>
         ';
     }
     $html .= '</table>';
