@@ -87,9 +87,6 @@ mysqli_close($link);
                 <label for="foto">Foto del Paciente:</label>
                 <input type="file" id="foto" name="foto" accept="image/*" required>
 
-                <!--<label for="clave_expediente">Clave de Expediente:</label>-->
-                <!--<input type="text" id="clave_expediente" name="clave_expediente" required placeholder="Ingrese clave de expediente">-->
-
                 <label for="nombre">Nombre de Paciente:</label>
                 <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
                 <p></p>
@@ -103,7 +100,7 @@ mysqli_close($link);
                 <p></p>
 
                 <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico">
+                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" style="text-transform: lowercase;">
                 <p></p>
 
                 <label for="telefono">Teléfono:</label>
