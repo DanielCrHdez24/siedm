@@ -14,7 +14,7 @@ include 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Lista de campos requeridos
-    $required_fields = ['nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'telefono', 'curp', 'edad', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion'];
+    $required_fields = ['nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'telefono', 'curp', 'sexo', 'fecha_nacimiento', 'derechohabiencia', 'direccion', 'tipo_sangre', 'ocupacion'];
 
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
@@ -46,8 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $segundo_apellido = trim($_POST['segundo_apellido']);
     $correo           = trim($_POST['correo']);
     $telefono         = trim($_POST['telefono']);
+    $telefono_emergencias = trim($_POST['telefono_emergencias'] ?? '');
     $curp             = trim($_POST['curp']);
-    $edad             = (int) $_POST['edad'];
     $sexo             = trim($_POST['sexo']);
     $fecha_nacimiento = trim($_POST['fecha_nacimiento']);
     $derechohabiencia = trim($_POST['derechohabiencia']);
@@ -57,6 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ocupacion        = trim($_POST['ocupacion']);
     $alergias         = trim($_POST['alergias'] ?? '');
     $padecimientos    = trim($_POST['padecimientos'] ?? '');
+    $estado_civil    = trim($_POST['estado_civil'] ?? '');
+    $nom_emergencia   = trim($_POST['nom_emergencia'] ?? '');
+    $parentesco       = trim($_POST['parentesco'] ?? '');
+
+    
 
     // Verificar si la CURP ya existe
     $sql_check = "SELECT curp FROM pacientes WHERE curp = ?";
@@ -77,36 +82,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_check->close();
 
     // Insertar paciente
-    $sql = "INSERT INTO pacientes (foto, nombre, primer_apellido, segundo_apellido, correo, telefono, curp, edad, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, fecha_registro) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    $sql = "INSERT INTO pacientes (foto, nombre, primer_apellido, segundo_apellido, correo, telefono, telefono_emergencias, curp, sexo, fecha_nacimiento, derechohabiencia, direccion, tipo_sangre, religion, ocupacion, alergias, padecimientos, estado_civil, nom_emergencia, parentesco, fecha_registro) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
     if ($stmt = $link->prepare($sql)) {
         $stmt->bind_param(
-            "sssssssisssssssss",
-            $fotoPath,
-            $nombre,
-            $primer_apellido,
-            $segundo_apellido,
-            $correo,
-            $telefono,
-            $curp,
-            $edad,
-            $sexo,
-            $fecha_nacimiento,
-            $derechohabiencia,
-            $direccion,
-            $tipo_sangre,
-            $religion,
-            $ocupacion,
-            $alergias,
-            $padecimientos
-        );
+    "ssssssssssssssssssss",
+    $fotoPath,
+    $nombre,
+    $primer_apellido,
+    $segundo_apellido,
+    $correo,
+    $telefono,
+    $telefono_emergencias,
+    $curp,
+    $sexo,
+    $fecha_nacimiento,
+    $derechohabiencia,
+    $direccion,
+    $tipo_sangre,
+    $religion,
+    $ocupacion,
+    $alergias,
+    $padecimientos,
+    $estado_civil,
+    $nom_emergencia,
+    $parentesco
+);
+
 
         if ($stmt->execute()) {
             $id_paciente = $stmt->insert_id;
             $stmt->close();
 
-            // 🔹 Crear automáticamente un historial médico vacío vinculado al paciente
+            // Crear automáticamente un historial médico vacío vinculado al paciente
             $sql_historial = "INSERT INTO historial_medico (id_paciente, fecha_creacion) VALUES (?, NOW())";
             $stmt_historial = $link->prepare($sql_historial);
             $stmt_historial->bind_param("i", $id_paciente);

@@ -80,14 +80,16 @@ mysqli_close($link);
             <h1>Agregar paciente.</h1>
             <p>Ingresa los datos del paciente para iniciar el nuevo expediente.</p>
 
-
+            
             <!-- Formulario para agregar expediente -->
             <form action="insertar_info_paciente.php" method="POST" enctype="multipart/form-data">
-
+                
+                <h3>1. Identificación del paciente.</h3>
+                <br>
                 <label for="foto">Foto del Paciente:</label>
                 <input type="file" id="foto" name="foto" accept="image/*" required>
 
-                <label for="nombre">Nombre de Paciente:</label>
+                <label for="nombre">Nombre completo:</label>
                 <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
                 <p></p>
 
@@ -99,15 +101,20 @@ mysqli_close($link);
                 <input type="text" id="segundo_apellido" name="segundo_apellido" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese Segundo Apellido" pattern="[A-Za-z\s]+" title="El segundo apellido solo puede contener letras y espacios.">
                 <p></p>
 
-                <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" style="text-transform: lowercase;">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
                 <p></p>
 
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
-                <p></p>    
-                <label for="curp">CURP:</label>
 
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Masculino">MASCULINO</option>
+                    <option value="Femenino">FEMENINO</option>
+                    <option value="Otro">OTRO</option>
+                </select>
+
+                <label for="curp">CURP:</label>
                 <input type="text" id="curp" name="curp" 
                         maxlength="18"
                         required 
@@ -115,21 +122,47 @@ mysqli_close($link);
                         placeholder="Ej. GARC800101HDFLRS09"
                         style="text-transform: uppercase;"
                         title="Debe tener 18 caracteres en mayúsculas con formato válido.">
+                <p></p>
 
-
-                <label for="edad">Edad:</label>
-                <input type="number" id="edad" name="edad" required min="0" max="120" placeholder="Ingrese la edad">
-
-                <label for="sexo">Sexo:</label>
-                <select id="sexo" name="sexo" required>
+                <label for="estado_civil">Estado Civil:</label>
+                <select id="estado_civil" name="estado_civil" required>
                     <option value="">Seleccione una opción</option>
-                    <option value="Masculino">MASCULINO</option>
-                    <option value="Femenino">FEMENINO</option>
+                    <option value="Soltero(a)">SOLTERO(A)</option>
+                    <option value="Casado(a)">CASADO(A)</option>
+                    <option value="Divorciado(a)">DIVORCIADO(A)</option>
+                    <option value="Viudo(a)">VIUDO(A)</option>
+                    <option value="Unión Libre">UNIÓN LIBRE</option>
                 </select>
+                <p></p>
+                 <label for="religion">Religión:</label>
+                <input type="text" id="religion" name="religion" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese religión (opcional)">
+                    <p></p>
 
-                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                <label for="ocupacion">Ocupación:</label>
+                <input type="text" id="ocupacion" name="ocupacion" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese ocupación">
+                <p></p>
+                <br>
 
+                <h3>2. Información de contacto</h3>
+                <br>
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
+                <p></p> 
+                
+                
+
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" style="text-transform: lowercase;">
+                <p></p>
+
+                <label for="direccion">Domicilio:</label>
+                <input type="text" id="direccion" name="direccion" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese la dirección completa">
+                    <p></p>
+                    <br>
+               
+
+                <h3>3. Datos administrativos.</h3>
+                    <br>
                 <label for="derechohabiencia">Derechohabiencia:</label>
                 <select id="derechohabiencia" name="derechohabiencia" required>
                     <option value="">Seleccione una opción</option>
@@ -139,10 +172,34 @@ mysqli_close($link);
                     <option value="Privado">Privado</option>
                     <option value="Otro">Otro</option>
                 </select>
+                <p></p>
+                <br>
 
-                <label for="direccion">Domicilio:</label>
-                <input type="text" id="direccion" name="direccion" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese la dirección completa">
+               <h3>4. Contacto de emergencia.</h3>
+                <br>
 
+                <label for="nom_emergencia">Nombre completo:</label>
+                <input type="text" id="nom_emergencia" name="nom_emergencia" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese nombre de contacto de emergencia" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
+                <p></p>
+
+                <label for="parentesco">Parentesco:</label>
+                <select id="parentesco" name="parentesco">
+                    <option value="">Seleccione una opción</option>
+                    <option value="Padre/Madre">PADRE/MADRE</option>
+                    <option value="Hermano(a)">HERMANO(A)</option>
+                    <option value="Esposo(a)">ESPOSO(A)</option>
+                    <option value="Hijo(a)">HIJO(A)</option>
+                    <option value="Amigo(a)">AMIGO(A)</option>
+                    <option value="Otro">OTRO</option>
+                </select>
+                <p></p>
+
+                    <label for="telefono_emergencias">Teléfono emergencias:</label>
+                <input type="tel" id="telefono_emergencias" name="telefono_emergencias" placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos.">
+                <p></p> 
+                <br>
+
+                <h3>5. Información médica básica.</h3>
                 <label for="tipo_sangre">Tipo de Sangre:</label>
                 <select id="tipo_sangre" name="tipo_sangre" required>
                     <option value="">Seleccione una opción</option>
@@ -156,11 +213,7 @@ mysqli_close($link);
                     <option value="O-">O-</option>
                 </select>
 
-                <label for="religion">Religión:</label>
-                <input type="text" id="religion" name="religion" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese religión (opcional)">
-
-                <label for="ocupacion">Ocupación:</label>
-                <input type="text" id="ocupacion" name="ocupacion" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese ocupación">
+               
 
                 <label for="alergias">Alergias:</label>
                 <input type="text" id="alergias" name="alergias" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese alergias (si aplica)">
