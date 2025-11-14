@@ -89,7 +89,7 @@ mysqli_close($link);
                 <label for="foto">Foto del Paciente:</label>
                 <input type="file" id="foto" name="foto" accept="image/*" required>
 
-                <label for="nombre">Nombre completo:</label>
+                <label for="nombre">Nombre de paciente:</label>
                 <input type="text" id="nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios.">
                 <p></p>
 
@@ -127,11 +127,11 @@ mysqli_close($link);
                 <label for="estado_civil">Estado Civil:</label>
                 <select id="estado_civil" name="estado_civil" required>
                     <option value="">Seleccione una opción</option>
-                    <option value="Soltero(a)">SOLTERO(A)</option>
-                    <option value="Casado(a)">CASADO(A)</option>
-                    <option value="Divorciado(a)">DIVORCIADO(A)</option>
-                    <option value="Viudo(a)">VIUDO(A)</option>
-                    <option value="Unión Libre">UNIÓN LIBRE</option>
+                    <option value="SOLTERO(A)">SOLTERO(A)</option>
+                    <option value="CASADO(A)">CASADO(A)</option>
+                    <option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+                    <option value="VIUDO(A)">VIUDO(A)</option>
+                    <option value="UNIÓN LIBRE">UNIÓN LIBRE</option>
                 </select>
                 <p></p>
                  <label for="religion">Religión:</label>
@@ -185,12 +185,12 @@ mysqli_close($link);
                 <label for="parentesco">Parentesco:</label>
                 <select id="parentesco" name="parentesco">
                     <option value="">Seleccione una opción</option>
-                    <option value="Padre/Madre">PADRE/MADRE</option>
-                    <option value="Hermano(a)">HERMANO(A)</option>
-                    <option value="Esposo(a)">ESPOSO(A)</option>
-                    <option value="Hijo(a)">HIJO(A)</option>
-                    <option value="Amigo(a)">AMIGO(A)</option>
-                    <option value="Otro">OTRO</option>
+                    <option value="PADRE/MADRE">PADRE/MADRE</option>
+                    <option value="HERMANO(A)">HERMANO(A)</option>
+                    <option value="ESPOSO(A)">ESPOSO(A)</option>
+                    <option value="HIJO(A)">HIJO(A)</option>
+                    <option value="AMIGO(A)">AMIGO(A)</option>
+                    <option value="OTRO">OTRO</option>
                 </select>
                 <p></p>
 
@@ -200,6 +200,7 @@ mysqli_close($link);
                 <br>
 
                 <h3>5. Información médica básica.</h3>
+                <br>
                 <label for="tipo_sangre">Tipo de Sangre:</label>
                 <select id="tipo_sangre" name="tipo_sangre" required>
                     <option value="">Seleccione una opción</option>

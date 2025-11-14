@@ -13,7 +13,6 @@ $id_paciente = filter_input(INPUT_GET, 'id_paciente', FILTER_VALIDATE_INT);
 
 if (!$id_paciente) {
     die("ID de paciente no válido o no proporcionado.");
-    
 }
 
 // Consulta de datos del paciente junto con el id_usuario
@@ -27,7 +26,7 @@ if ($stmt = $link->prepare($sql)) {
         $paciente = $resultado->fetch_assoc(); // Obtener el id_usuario del paciente
 
         // Ahora buscamos los datos del usuario
-        
+
     } else {
         die("Paciente no encontrado.");
     }
@@ -106,20 +105,20 @@ $link->close();
                     <nav class="navbar">
                         <a href="panel.php">Dashboard</a>
                         <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
+                        // Verifica el rol y redirige a la página correspondiente
+                        if ($idRol == 4) {
+                            // Si el rol es 4, manda a perfil.php
+                            $url = 'perfil.php';
+                        } elseif ($idRol == 2 || $idRol == 3) {
+                            // Si el rol es 2 o 3, manda a perfil_dif.php
+                            $url = 'perfil_dif.php';
+                        } else {
+                            // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
+                            $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                        }
+                        ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                        <a href="<?php echo $url; ?>">Mi Perfil</a>
                         <?php if ($idRol == 1 || $idRol == 2): ?>
                             <a href="users.php">Gestión de Usuarios</a>
                         <?php endif; ?>
@@ -132,8 +131,8 @@ $link->close();
                         <?php endif; ?>
                         <a href="logout.php" class="logout-link">Cerrar sesión</a>
                         <span style="font-size: 0.7em;">
-                    Usuario: <?php echo $_SESSION["nombreUsuario"]; ?>
-                </span>
+                            Usuario: <?php echo $_SESSION["nombreUsuario"]; ?>
+                        </span>
                     </nav>
                     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 </header>
@@ -157,31 +156,39 @@ $link->close();
                                 <!-- Aquí la imagen ocupa toda una columna -->
                                 <td rowspan="7" style="text-align: center; vertical-align: middle;">
 
-        <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
+                                    <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto;">
 
-    </td>
+                                </td>
                             </tr>
 
 
                             <tr>
                                 <!--<th>Clave de Expediente</th>
-                                <td><?php #echo htmlspecialchars($paciente['clave_expediente']); ?></td>-->
+                                <td><?php #echo htmlspecialchars($paciente['clave_expediente']); 
+                                    ?></td>-->
                                 <th>Nombre</th>
                                 <td><?php echo htmlspecialchars($paciente['nombre']) . " " . htmlspecialchars($paciente['primer_apellido']) . " " . htmlspecialchars($paciente['segundo_apellido']); ?></td>
                                 <th>CURP</th>
                                 <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
-                                <th>Edad</th>
-                                <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
-                                
+                                <th>Fecha de Nacimiento</th>
+                                <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
+
                             </tr>
                             <tr>
                                 <th>Teléfono</th>
                                 <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
-                                <th>Fecha de Nacimiento</th>
-                                <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
+                                <th>Edad</th>
+                                <td>
+                                    <?php
+                                    $fecha_nac = new DateTime($paciente['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS
+                                </td>
                                 <th>Sexo</th>
                                 <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
-                                
+
                             </tr>
                             <tr>
                                 <th>E-mail</th>
@@ -211,25 +218,25 @@ $link->close();
                     <h2 class="text-center">Opciones del Paciente</h2>
 
                     <div class="options-container">
-    <div class="add-option">
-        <a href="agendar_cita.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-calendar-plus"></i> Agendar una cita</a>
-    </div>
+                        <div class="add-option">
+                            <a href="agendar_cita.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-calendar-plus"></i> Agendar una cita</a>
+                        </div>
 
-    <div class="add-option">
-        <a href="update_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar paciente</a>
-    </div>
+                        <div class="add-option">
+                            <a href="update_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-user-edit"></i> Modificar paciente</a>
+                        </div>
 
-    <div class="add-option">
-        <a href="delete_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este paciente?');"><i class="fa-solid fa-user-times"></i> Eliminar paciente</a>
-    </div>
+                        <div class="add-option">
+                            <a href="delete_patient.php?id_paciente=<?php echo $paciente['id_paciente']; ?>" onclick="return confirm('¿Estás seguro de eliminar a este paciente?');"><i class="fa-solid fa-user-times"></i> Eliminar paciente</a>
+                        </div>
 
-    <div class="add-option">
-        <a href="historial_medico.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-file-medical-alt"></i> Ver historial médico</a>
-    </div>
-    <div class="add-option">
-        <a href="panel.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a>
-    </div>
-</div>
+                        <div class="add-option">
+                            <a href="historial_medico.php?id_paciente=<?php echo $paciente['id_paciente']; ?>"><i class="fa-solid fa-file-medical-alt"></i> Ver historial médico</a>
+                        </div>
+                        <div class="add-option">
+                            <a href="panel.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a>
+                        </div>
+                    </div>
                 </div>
 
                 <footer class="footer">

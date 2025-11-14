@@ -101,13 +101,15 @@ mysqli_close($link);
                 <!-- Campo oculto para enviar el id_paciente -->
                 <input type="hidden" name="id_paciente" value="<?php echo ($id_paciente); ?>">
 
+                    <h3>1. Identificación del paciente.</h3>
+                <br>
 
                 <label for="foto">Foto del Paciente:</label>
                 <img src="<?php echo htmlspecialchars($paciente['foto']); ?>" style="display: block; margin: 0 auto; width: 150px; height: auto; border-radius: .5px;" alt="Foto del Paciente">
                 <br>
                 <input type="file" id="foto" name="foto" accept="image/*">
                 
-                <label for="nombre">Nombre de Paciente:</label>
+                <label for="nombre">Nombre de paciente:</label>
                 <input type="text" id="nombre" name="nombre" oninput="this.value.toUpperCase()" required placeholder="Ingrese el nombre de paciente" value="<?php echo htmlspecialchars($paciente['nombre']); ?>">
 
                 <label for="primer_apellido">Primer apellido:</label>
@@ -116,27 +118,58 @@ mysqli_close($link);
                 <label for="segundo_apellido">Segundo Apellido:</label>
                 <input type="text" id="segundo_apellido" name="segundo_apellido" oninput="this.value.toUpperCase()" required placeholder="Ingrese Segundo Apellido" value="<?php echo htmlspecialchars($paciente['segundo_apellido']); ?>">
 
-                <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" value="<?php echo htmlspecialchars($paciente['correo']); ?>">
-
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" value="<?php echo htmlspecialchars($paciente['telefono']); ?>">
-                
-                <label for="curp">CURP:</label>
-                <input type="text" id="curp" name="curp" oninput="this.value.toUpperCase()" required placeholder="Ingrese CURP" value="<?php echo htmlspecialchars($paciente['curp']); ?>">
-
-                <label for="edad">Edad:</label>
-                <input type="number" id="edad" name="edad" required min="0" max="120" placeholder="Ingrese la edad" value="<?php echo htmlspecialchars($paciente['edad']); ?>">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required value="<?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?>">
 
                 <label for="sexo">Sexo:</label>
                 <select id="sexo" name="sexo" required>
                     <option value="">Seleccione una opción</option>
                     <option value="Masculino" <?php echo ($paciente['sexo'] == 'MASCULINO') ? 'selected' : ''; ?>>MASCULINO</option>
                     <option value="Femenino" <?php echo ($paciente['sexo'] == 'FEMENINO') ? 'selected' : ''; ?>>FEMENINO</option>
+                    <option value="Otro" <?php echo ($paciente['sexo'] == 'OTRO') ? 'selected' : ''; ?>>OTRO</option>
                 </select>
 
-                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required value="<?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?>">
+                <label for="curp">CURP:</label>
+                <input type="text" id="curp" name="curp" oninput="this.value.toUpperCase()" required placeholder="Ingrese CURP" value="<?php echo htmlspecialchars($paciente['curp']); ?>">
+
+
+                <label for="estado_civil">Estado Civil:</label>
+                <select id="estado_civil" name="estado_civil" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="SOLTERO(A)"<?php echo ($paciente['estado_civil'] == 'SOLTERO(A)') ? 'selected' : ''; ?>>SOLTERO(A)</option>
+                    <option value="CASADO(A)"<?php echo ($paciente['estado_civil'] == 'CASADO(A)') ? 'selected' : ''; ?>>CASADO(A)</option>
+                    <option value="DIVORCIADO(A)" <?php echo ($paciente['estado_civil'] == 'DIVORCIADO(A)') ? 'selected' : ''; ?>>DIVORCIADO(A)</option>
+                    <option value="VIUDO(A)" <?php echo ($paciente['estado_civil'] == 'VIUDO(A)') ? 'selected' : ''; ?>>VIUDO(A)</option>
+                    <option value="UNIÓN LIBRE" <?php echo ($paciente['estado_civil'] == 'UNIÓN LIBRE') ? 'selected' : ''; ?>>UNIÓN LIBRE</option>
+                </select>
+
+                <label for="religion">Religión:</label>
+                <input type="text" id="religion" oninput="this.value.toUpperCase()" name="religion" placeholder="Ingrese religión (opcional)" value="<?php echo htmlspecialchars($paciente['religion']); ?>">
+
+                <label for="ocupacion">Ocupación:</label>
+                <input type="text" id="ocupacion" oninput="this.value.toUpperCase()" name="ocupacion" required placeholder="Ingrese ocupación" value="<?php echo htmlspecialchars($paciente['ocupacion']); ?>">
+ <p></p>
+                <br>
+
+                <h3>2. Información de contacto</h3>
+                <br>
+                
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" value="<?php echo htmlspecialchars($paciente['telefono']); ?>">
+                
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="correo" name="correo" required placeholder="Ingrese correo electrónico" value="<?php echo htmlspecialchars($paciente['correo']); ?>">
+
+                <label for="direccion">Domicilio:</label>
+                <input type="text" id="direccion" name="direccion" required placeholder="Ingrese la dirección completa" value="<?php echo htmlspecialchars($paciente['direccion']); ?>">
+
+                <p></p>
+                    <br>
+               
+
+                <h3>3. Datos administrativos.</h3>
+                    <br>
+                                   
 
                 <label for="derechohabiencia">Derechohabiencia:</label>
                 <select id="derechohabiencia" name="derechohabiencia" required >
@@ -148,9 +181,33 @@ mysqli_close($link);
                     <option value="Otro" <?php echo ($paciente['derechohabiencia'] == 'Otro') ? 'selected' : ''; ?>>Otro</option>
                 </select>
 
-                <label for="direccion">Domicilio:</label>
-                <input type="text" id="direccion" name="direccion" required placeholder="Ingrese la dirección completa" value="<?php echo htmlspecialchars($paciente['direccion']); ?>">
+                  <p></p>
+                <br>
 
+               <h3>4. Contacto de emergencia.</h3>
+                <br>
+                <label for="nom_emergencia">Nombre completo:</label>
+                <input type="text" id="nom_emergencia" name="nom_emergencia" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese nombre de contacto de emergencia" pattern="[A-Za-z\s]+" title="El nombre solo puede contener letras y espacios." value="<?php echo htmlspecialchars($paciente['nom_emergencia']); ?>">
+                
+                <label for="parentesco">Parentesco:</label>
+                <select id="parentesco" name="parentesco">
+                    <option value="">Seleccione una opción</option>
+                    <option value="PADRE/MADRE"<?php echo ($paciente['parentesco'] == 'PADRE/MADRE') ? 'selected' : ''; ?>>PADRE/MADRE</option>
+                    <option value="HERMANO(A)"<?php echo ($paciente['parentesco'] == 'HERMANO(A)') ? 'selected' : ''; ?>>HERMANO(A)</option>
+                    <option value="ESPOSO(A)"<?php echo ($paciente['parentesco'] == 'ESPOSO(A)') ? 'selected' : ''; ?>>ESPOSO(A)</option>
+                    <option value="HIJO(A)"<?php echo ($paciente['parentesco'] == 'HIJO(A)') ? 'selected' : ''; ?>>HIJO(A)</option>
+                    <option value="AMIGO(A)"<?php echo ($paciente['parentesco'] == 'AMIGO(A)') ? 'selected' : ''; ?>>AMIGO(A)</option>
+                    <option value="OTRO"<?php echo ($paciente['parentesco'] == 'OTRO') ? 'selected' : ''; ?>>OTRO</option>
+                </select>
+                
+                 <label for="telefono_emergencias">Teléfono emergencias:</label>
+                <input type="tel" id="telefono_emergencias" name="telefono_emergencias" placeholder="Ingrese teléfono de contacto" pattern="[0-9]{10}" maxlength="10" title="El teléfono debe tener exactamente 10 dígitos." value="<?php echo htmlspecialchars($paciente['telefono_emergencias']); ?>">
+                
+                <p></p> 
+                <br>
+
+                <h3>5. Información médica básica.</h3>
+                <br>
                 <label for="tipo_sangre">Tipo de Sangre:</label>
                 <select id="tipo_sangre" name="tipo_sangre" required>
                     <option value="">Seleccione una opción</option>
@@ -164,12 +221,7 @@ mysqli_close($link);
                     <option value="O-" <?php echo ($paciente['tipo_sangre'] == 'O-') ? 'selected' : ''; ?>>O-</option>
                 </select>
 
-                <label for="religion">Religión:</label>
-                <input type="text" id="religion" oninput="this.value.toUpperCase()" name="religion" placeholder="Ingrese religión (opcional)" value="<?php echo htmlspecialchars($paciente['religion']); ?>">
-
-                <label for="ocupacion">Ocupación:</label>
-                <input type="text" id="ocupacion" oninput="this.value.toUpperCase()" name="ocupacion" required placeholder="Ingrese ocupación" value="<?php echo htmlspecialchars($paciente['ocupacion']); ?>">
-
+                
                 <label for="alergias">Alergias:</label>
                 <input type="text" id="alergias" oninput="this.value.toUpperCase()" name="alergias" placeholder="Ingrese alergias (si aplica)" value="<?php echo htmlspecialchars($paciente['alergias']); ?>">
 
