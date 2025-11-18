@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $padecimientos = trim($_POST['padecimientos']);
     $estado_civil = $_POST['estado_civil'];
     $nom_emergencia = trim($_POST['nom_emergencia']);
+    $parentesco= $_POST['parentesco'];
     $fecha_actualizacion = date("Y-m-d H:i:s");
 
 
@@ -72,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 padecimientos = ?,
                 estado_civil = ?,
                 nom_emergencia = ?,
+                parentesco = ?,
                 fecha_actualizacion = ?";
 
     // Si se subió una nueva foto, actualizarla también
@@ -84,23 +86,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt = mysqli_prepare($link, $sql)) {
         if ($foto_ruta !== null) {
     // ✔ CON FOTO
-    mysqli_stmt_bind_param($stmt, "sssssssssssssssssssisi",
+    mysqli_stmt_bind_param($stmt, "ssssssssssssssssssssisi",
         $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono,
         $telefono_emergencias, $curp, $sexo, $fecha_nacimiento,
         $derechohabiencia, $direccion, $tipo_sangre, $religion,
         $ocupacion, $alergias, $padecimientos, $estado_civil,
-        $nom_emergencia, $fecha_actualizacion,
+        $nom_emergencia, $parentesco, $fecha_actualizacion,
         $foto_ruta,
         $id_paciente
     );
 } else {
     // ✔ SIN FOTO
-    mysqli_stmt_bind_param($stmt, "sssssssssssssssssssi",
+    mysqli_stmt_bind_param($stmt, "ssssssssssssssssssssi",
         $nombre, $primer_apellido, $segundo_apellido, $correo, $telefono,
         $telefono_emergencias, $curp, $sexo, $fecha_nacimiento,
         $derechohabiencia, $direccion, $tipo_sangre, $religion,
         $ocupacion, $alergias, $padecimientos, $estado_civil,
-        $nom_emergencia, $fecha_actualizacion, $id_paciente
+        $nom_emergencia, $parentesco, $fecha_actualizacion, $id_paciente
     );
 }
 
