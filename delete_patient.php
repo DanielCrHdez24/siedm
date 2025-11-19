@@ -125,7 +125,12 @@ $link->close();
                                 <th>CURP</th>
                                 <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
                                 <th>Edad</th>
-                                <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
+                                <td> <?php
+                                    $fecha_nac = new DateTime($paciente['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS</td>
                                 
                             </tr>
                             <tr>

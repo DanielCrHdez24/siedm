@@ -19,6 +19,11 @@ if (!$paciente) {
     die("<script>alert('Paciente no encontrado.'); window.close();</script>");
 }
 
+
+$fecha_nac = new DateTime($paciente['fecha_nacimiento']);       
+$hoy = new DateTime();
+$edad = $hoy->diff($fecha_nac)->y;
+
 // 🔹 Consultar el ID del historial médico del paciente
 $stmt_historial = $link->prepare("SELECT id_historial FROM historial_medico WHERE id_paciente = ? LIMIT 1");
 $stmt_historial->bind_param("i", $id_paciente);
@@ -64,6 +69,7 @@ $html = '
         <td style="width:30%; text-align:right; vertical-align:middle;">
             <h5>Fecha de creación: ' . date('d/m/Y') . '</h5>
             <h5>ID Historial: ' . htmlspecialchars($paciente['curp']) . " - " . $id_historial . '</h5>
+            <h5>Fecha de Registro: ' . htmlspecialchars($paciente['fecha_registro']) . '</h5>
         </td>
     </tr>
 </table>';
@@ -90,42 +96,57 @@ $html .= '
                  style="border:1px solid #ccc; border-radius:5px;">
         </td>
         
-        <td width="30%" style="vertical-align:top;">
+        <td width="40%" style="vertical-align:top;">
             <div><span class="dato">Nombre: </span><span class="valor">' . htmlspecialchars($paciente['nombre']) . ' ' . htmlspecialchars($paciente['primer_apellido']) . ' ' . htmlspecialchars($paciente['segundo_apellido']) . '</span></div>
             <div><span class="dato">Sexo: </span><span class="valor">' . htmlspecialchars($paciente['sexo']) . '</span></div>
+            <div><span class="dato">Religión: </span><span class="valor">' . htmlspecialchars($paciente['religion']) . '</span></div>
+            <div><span class="dato">Correo: </span><span class="valor">' . htmlspecialchars($paciente['correo']) . '</span></div>
+        </td>
+        <td width="25%" style="vertical-align:top;">
+            <div><span class="dato">Fecha de Nacimiento: </span><span class="valor">' . htmlspecialchars($paciente['fecha_nacimiento']) . '</span></div>
+            <div><span class="dato">CURP: </span><span class="valor">' . htmlspecialchars($paciente['curp']) . '</span></div>
+            <div><span class="dato">Ocupación: </span><span class="valor">' . htmlspecialchars($paciente['ocupacion']) . '</span></div>
+            <div><span class="dato">Derechohabiencia: </span><span class="valor">' . htmlspecialchars($paciente['derechohabiencia']) . '</span></div>    
+        </td>
+        <td width="35%" style="vertical-align:top;">
+            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($edad) . ' AÑOS</span></div>
+            <div><span class="dato">Estado civil: </span><span class="valor">' . htmlspecialchars($paciente['estado_civil']) . '</span></div>
             <div><span class="dato">Teléfono: </span><span class="valor">' . htmlspecialchars($paciente['telefono']) . '</span></div>
         </td>
-        <td width="25%" style="vertical-align:top;">
-            <div><span class="dato">CURP: </span><span class="valor">' . htmlspecialchars($paciente['curp']) . '</span></div>
-            <div><span class="dato">Fecha de Nacimiento: </span><span class="valor">' . htmlspecialchars($paciente['fecha_nacimiento']) . '</span></div>
-            <div><span class="dato">Derechohabiencia: </span><span class="valor">' . htmlspecialchars($paciente['derechohabiencia']) . '</span></div>
+    </tr>
+    <tr>
+        <td width="55%" style="vertical-align:top;">
+            
+            <div><span class="dato">Dirección: </span><span class="valor">' . htmlspecialchars($paciente['direccion']) . '</span></div>     
+           
         </td>
-        <td width="30%" style="vertical-align:top;">
-            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($paciente['edad']) . ' años</span></div>
-            <div><span class="dato">Correo: </span><span class="valor">' . htmlspecialchars($paciente['correo']) . '</span></div>
-            <div><span class="dato">Religión: </span><span class="valor">' . htmlspecialchars($paciente['religion']) . '</span></div>
+        
+        <td width="40%" style="vertical-align:top;">
+            
+            <div><span class="dato">Parentesco: </span><span class="valor">' . htmlspecialchars($paciente['parentesco']) . '</span></div>
+             
         </td>
     </tr>
     <tr>
-        <td width="70%" style="vertical-align:top;">
-            <div><span class="dato">Dirección: </span><span class="valor">' . htmlspecialchars($paciente['direccion']) . '</span></div>
+        <td width="25%" style="vertical-align:top;">
+            <div><span class="dato">Grupo Sanguíneo: </span><span class="valor">' . htmlspecialchars($paciente['tipo_sangre']) . '</span></div>
         </td>
         <td width="30%" style="vertical-align:top;">
-            <div><span class="dato">Tipo de Sangre: </span><span class="valor">' . htmlspecialchars($paciente['tipo_sangre']) . '</span></div>
-        </td>
-    </tr>
-    <tr>
-        <td width="20%" style="vertical-align:top;">
-            <div><span class="dato">Ocupación: </span><span class="valor">' . htmlspecialchars($paciente['ocupacion']) . '</span></div>
-        </td>
-        <td width="25%" style="vertical-align:top;">
             <div><span class="dato">Alergias: </span><span class="valor">' . htmlspecialchars($paciente['alergias']) . '</span></div>
         </td>
         <td width="25%" style="vertical-align:top;">
-            <div><span class="dato">Padecimientos Crónicos: </span><span class="valor">' . htmlspecialchars($paciente['padecimientos']) . '</span></div>
+        <div><span class="dato">Contacto de Emergencia: </span><span class="valor">' . htmlspecialchars($paciente['nom_emergencia']) . '</span></div>    
+        
+        </td>
+    </tr>
+    <tr>
+
+        <td width="55%" style="vertical-align:top;">
+        <div><span class="dato">Padecimientos Crónicos: </span><span class="valor">' . htmlspecialchars($paciente['padecimientos']) . '</span></div>
         </td>
         <td width="30%" style="vertical-align:top;">
-            <div><span class="dato">Fecha de Registro: </span><span class="valor">' . htmlspecialchars($paciente['fecha_registro']) . '</span></div>
+        <div><span class="dato">Teléfono de Emergencia: </span><span class="valor">' . htmlspecialchars($paciente['telefono_emergencias']) . '</span></div>
+            
         </td>
     </tr>
 </table>

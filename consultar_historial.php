@@ -121,7 +121,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                                 <tr>
                                     <td><?= htmlspecialchars($paciente['nombre']. ' ' . $paciente['primer_apellido'] . ' ' . $paciente['segundo_apellido']) ?></td>
                                     <td><?= htmlspecialchars($paciente['curp']) ?></td>
-                                    <td><?= htmlspecialchars($paciente['edad']) ?></td>
+                                    <td> <?php
+                                    $fecha_nac = new DateTime($paciente['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS</td>
                                     <td><?= htmlspecialchars($paciente['sexo']) ?></td>
                                     <td><?= htmlspecialchars($paciente['fecha_nacimiento']) ?></td>
                                     <td><?= htmlspecialchars($paciente['derechohabiencia']) ?></td>
