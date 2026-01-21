@@ -32,6 +32,11 @@ $stmt->execute();
 $result_usuarios = $stmt->get_result();
 $paciente = $result_usuarios->fetch_assoc();
 
+$fecha_nac = new DateTime($paciente['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+
 //Consulta médico
 $stmt = $link->prepare("SELECT * FROM usuarios WHERE id_usuario = ?");
 $stmt->bind_param("i", $id_usuario);
@@ -89,7 +94,7 @@ $html .= '
             
         </td>
         <td width="15%" style="vertical-align:top;">
-            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($paciente['edad']) . ' años</span></div>  
+            <div><span class="dato">Edad: </span><span class="valor">' . htmlspecialchars($edad) . ' AÑOS</span></div>  
         </td>
         <td width="15%" style="vertical-align:top;">
             <div><span class="dato">Tipo de Sangre: </span><span class="valor">' . htmlspecialchars($paciente['tipo_sangre']) . '</span></div>
