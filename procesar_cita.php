@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
         <div class="container">
             <h2>Cita Médica</h2>
           
-                <h3>Datos del Paciente</h3>
+                <h3>1. Datos del Paciente</h3>
 
                 <table class="table" style="font-size:80%;">
                     <tbody>
@@ -102,50 +102,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
 
 
                         <tr>
-                            
                             <th>Nombre</th>
                             <td><?php echo htmlspecialchars($citas['nombre']) . " " . htmlspecialchars($citas['primer_apellido']) . " " . htmlspecialchars($citas['segundo_apellido']); ?></td>
-                            <th>CURP</th>
-                            <td><?php echo htmlspecialchars($citas['curp']); ?></td>
-                            <th>Edad</th>
-                            <td><?php echo htmlspecialchars($citas['edad']); ?></td>
-
-                        </tr>
-                        <tr>
-                            <th>Teléfono</th>
-                            <td><?php echo htmlspecialchars($citas['telefono']); ?></td>
                             <th>Fecha de Nacimiento</th>
                             <td><?php echo htmlspecialchars($citas['fecha_nacimiento']); ?></td>
+
+                            <th>Edad</th>
+                            <td> <?php
+                                    $fecha_nac = new DateTime($citas['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS</td>
                             <th>Sexo</th>
                             <td><?php echo htmlspecialchars($citas['sexo']); ?></td>
 
                         </tr>
                         <tr>
-                            <th>E-mail</th>
-                            <td><?php echo htmlspecialchars($citas['correo']); ?></td>
-                            <th>Derechohabiencia</th>
-                            <td><?php echo htmlspecialchars($citas['derechohabiencia']); ?></td>
-                            <th>Tipo de Sangre</th>
-                            <td><?php echo htmlspecialchars($citas['tipo_sangre']); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Dirección</th>
-                            <td colspan="3"><?php echo htmlspecialchars($citas['direccion']); ?></td>
+
+                            <th>CURP</th>
+                            <td><?php echo htmlspecialchars($citas['curp']); ?></td>
+                            <th>Estado Civil</th>
+                            <td><?php echo htmlspecialchars($citas['estado_civil']); ?></td>
                             <th>Religión</th>
                             <td><?php echo htmlspecialchars($citas['religion']); ?></td>
-                        </tr>
-                        <tr>
                             <th>Ocupación</th>
                             <td><?php echo htmlspecialchars($citas['ocupacion']); ?></td>
+
+                        </tr>
+                        <tr>
+                            <th>Teléfono</th>
+                            <td><?php echo htmlspecialchars($citas['telefono']); ?></td>
+                            <th>E-mail</th>
+                            <td><?php echo htmlspecialchars($citas['correo']); ?></td>
+                            <th>Dirección</th>
+                            <td colspan="3"><?php echo htmlspecialchars($citas['direccion']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Derechohabiencia</th>
+                            <td><?php echo htmlspecialchars($citas['derechohabiencia']); ?></td>
+                            <th>Contacto emergencia</th>
+                            <td><?php echo htmlspecialchars($citas['nom_emergencia']); ?></td>
+                            <th>Parentesco</th>
+                            <td><?php echo htmlspecialchars($citas['parentesco']); ?></td>
+                            <th>Teléfono emergencias</th>
+                            <td><?php echo htmlspecialchars($citas['telefono_emergencias']); ?></td>
+
+
+                        </tr>
+                        <tr>
+                            <th>Tipo de Sangre</th>
+                            <td><?php echo htmlspecialchars($citas['tipo_sangre']); ?></td>
                             <th>Alergias</th>
                             <td><?php echo htmlspecialchars($citas['alergias']); ?></td>
                             <th>Padecimientos Crónicos</th>
-                            <td><?php echo htmlspecialchars($citas['padecimientos']); ?></td>
+                            <td colspan="3"><?php echo htmlspecialchars($citas['padecimientos']); ?></td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <h3>Detalles de la Cita</h3>
+                <h3>2. Detalles de la Cita</h3>
                 <table class="table" style="font-size:80%;">
                     <tbody>
                         <tr>
@@ -159,15 +175,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                     </tbody>
                     </table>
                 <br>
-                <h3>Llenar datos para la cita</h3>
+                <h3>3. Signos vitales</h3>
                 <form method="POST" action="guardar_cita.php">
                     
+                     <label for="presion_arterial">Presión arterial:</label>
+                    <input type="text" name="presion_arterial" id="presion_arterial" required placeholder="Ingrese la presión arterial Ej. 120/80 mmHg" pattern="^\d+\/\d+$" title="La presión arterial debe ser un número válido en formato sistólica/diastólica.">
+                
+                    <label for="frecuencia_cardiaca">Frecuencia cardíaca:</label>
+                    <input type="text" name="frecuencia_cardiaca" id="frecuencia_cardiaca" required placeholder="Ingrese la frecuencia cardíaca en LATIDOS POR MINUTO Ej. 70 LPM" pattern="^\d+(\.\d{1,2})?$" title="La frecuencia cardíaca debe ser un número válido con hasta dos decimales.">
+
+                    <label for="frecuencia_respiratoria">Frecuencia respiratoria:</label>
+                    <input type="text" name="frecuencia_respiratoria" id="frecuencia_respiratoria" required placeholder="Ingrese la frecuencia respiratoria en RESPIRACIONES POR MINUTO Ej. 16 RPM" pattern="^\d+(\.\d{1,2})?$" title="La frecuencia respiratoria debe ser un número válido con hasta dos decimales.">
+
+                    <label for="saturacion_oxigeno">Saturación de oxigeno:</label>
+                    <input type="text" name="saturacion_oxigeno" id="saturacion_oxigeno" required placeholder="Ingrese la saturación de oxígeno en PORCENTAJE Ej. 98%" pattern="^\d+(\.\d{1,2})?$" title="La saturación de oxígeno debe ser un número válido con hasta dos decimales.">
+
                     <label for="peso">Peso:</label>
                     <input type="text" name="peso" id="peso" required placeholder="Ingrese el peso en KILOGRAMOS Ej. 50.45 KG" pattern="^\d+(\.\d{1,2})?$" title="El peso debe ser un número válido con hasta dos decimales.">
 
                     <label for="talla">Talla:</label>
                     <input type="text" name="talla" id="talla" required placeholder="Ingrese la talla en METROS Ej. 1.75 M" pattern="^\d+(\.\d{1,2})?$" title="La talla debe ser un número válido con hasta dos decimales.">
                    
+                    <label for="imc">IMC:</label>
+                    <input type="text" name="imc" id="imc" readonly placeholder="El IMC se calcula automáticamente" >
+
                     <label for="temperatura">Temperatura:</label>
                     <input type="text" name="temperatura" id="temperatura" required placeholder="Ingrese la temperatura en CELSIUS Ej. 36.5 °C" pattern="^\d+(\.\d{1,2})?$" title="La temperatura debe ser un número válido con hasta dos decimales.">
 
@@ -202,6 +233,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
         </footer>
     </div>
     <script src="js/menu.js"></script>
+    <script>
+function calcularIMC() {
+    let peso = parseFloat(document.getElementById("peso").value);
+    let talla = parseFloat(document.getElementById("talla").value);
+
+    if (peso > 0 && talla > 0) {
+        let imc = peso / (talla * talla);
+        document.getElementById("imc").value = imc.toFixed(2);
+    }
+}
+
+// Ejecutar cada vez que se cambian los valores
+document.getElementById("peso").addEventListener("input", calcularIMC);
+document.getElementById("talla").addEventListener("input", calcularIMC);
+</script>
 </body>
 
 </html>

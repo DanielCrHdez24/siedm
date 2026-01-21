@@ -53,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
         $stmt_citas->execute();
         $citas = $stmt_citas->get_result();
 
+        $fecha_nac = new DateTime($paciente['fecha_nacimiento']);       
+$hoy = new DateTime();
+$edad = $hoy->diff($fecha_nac)->y;
 
         $sql_docs = "SELECT * FROM documentos_digitalizados WHERE id_paciente = ?";
         $stmt_docs = $link->prepare($sql_docs);
@@ -137,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
             </form>
 
             <?php if ($paciente): ?>
-                <h3>Datos del Paciente</h3>
+                <h3>1. Datos del Paciente</h3>
 
                 <table class="table" style="font-size:80%;">
                     <tbody>
@@ -153,52 +156,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
 
 
                         <tr>
-                            <!--<th>Clave de Expediente</th>
-                                <td><?php #echo htmlspecialchars($paciente['clave_expediente']); 
-                                    ?></td>-->
                             <th>Nombre</th>
                             <td><?php echo htmlspecialchars($paciente['nombre']) . " " . htmlspecialchars($paciente['primer_apellido']) . " " . htmlspecialchars($paciente['segundo_apellido']); ?></td>
-                            <th>CURP</th>
-                            <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
-                            <th>Edad</th>
-                            <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
-
-                        </tr>
-                        <tr>
-                            <th>Teléfono</th>
-                            <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
                             <th>Fecha de Nacimiento</th>
                             <td><?php echo htmlspecialchars($paciente['fecha_nacimiento']); ?></td>
+
+                            <th>Edad</th>
+                            <td> <?php
+                                    $fecha_nac = new DateTime($paciente['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS</td>
                             <th>Sexo</th>
                             <td><?php echo htmlspecialchars($paciente['sexo']); ?></td>
 
                         </tr>
                         <tr>
-                            <th>E-mail</th>
-                            <td><?php echo htmlspecialchars($paciente['correo']); ?></td>
-                            <th>Derechohabiencia</th>
-                            <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
-                            <th>Tipo de Sangre</th>
-                            <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Dirección</th>
-                            <td colspan="3"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
+
+                            <th>CURP</th>
+                            <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
+                            <th>Estado Civil</th>
+                            <td><?php echo htmlspecialchars($paciente['estado_civil']); ?></td>
                             <th>Religión</th>
                             <td><?php echo htmlspecialchars($paciente['religion']); ?></td>
-                        </tr>
-                        <tr>
                             <th>Ocupación</th>
                             <td><?php echo htmlspecialchars($paciente['ocupacion']); ?></td>
+
+                        </tr>
+                        <tr>
+                            <th>Teléfono</th>
+                            <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
+                            <th>E-mail</th>
+                            <td><?php echo htmlspecialchars($paciente['correo']); ?></td>
+                            <th>Dirección</th>
+                            <td colspan="3"><?php echo htmlspecialchars($paciente['direccion']); ?></td>
+
+                        </tr>
+                        <tr>
+                            <th>Derechohabiencia</th>
+                            <td><?php echo htmlspecialchars($paciente['derechohabiencia']); ?></td>
+                            <th>Contacto emergencia</th>
+                            <td><?php echo htmlspecialchars($paciente['nom_emergencia']); ?></td>
+                            <th>Parentesco</th>
+                            <td><?php echo htmlspecialchars($paciente['parentesco']); ?></td>
+
+                            <th>Teléfono emergencias</th>
+                            <td><?php echo htmlspecialchars($paciente['telefono_emergencias']); ?></td>
+
+
+                        </tr>
+                        <tr>
+                            <th>Tipo de Sangre</th>
+                            <td><?php echo htmlspecialchars($paciente['tipo_sangre']); ?></td>
                             <th>Alergias</th>
                             <td><?php echo htmlspecialchars($paciente['alergias']); ?></td>
                             <th>Padecimientos Crónicos</th>
-                            <td><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
+                            <td colspan="3"><?php echo htmlspecialchars($paciente['padecimientos']); ?></td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <h3>Citas Médicas</h3>
+                <h3>2. Citas Médicas</h3>
                 <?php if ($citas->num_rows > 0): ?>
                     <table class="table" style="font-size:80%;">
                         <thead>

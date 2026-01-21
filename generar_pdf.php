@@ -87,7 +87,7 @@ $html .= '
     .valor { color: #555; }
 </style>
 <br>
-<div class="seccion-titulo">Datos del Paciente</div>
+<div class="seccion-titulo">1. Datos del Paciente</div>
 
 <table cellpadding="2" cellspacing="0" border="0" width="100%">
     <tr>
@@ -151,7 +151,7 @@ $html .= '
     </tr>
 </table>
 <br>
-<div class="seccion-titulo">Citas Médicas</div>';
+<div class="seccion-titulo">2. Citas Médicas</div>';
 if ($result_citas->num_rows > 0) {
     $html .= '<table cellpadding="2" cellspacing="0" border="0" width="100%">';
     while ($cita = $result_citas->fetch_assoc()) {

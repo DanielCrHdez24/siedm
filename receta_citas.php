@@ -108,7 +108,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                             <th>CURP</th>
                             <td><?php echo htmlspecialchars($citas['curp']); ?></td>
                             <th>Edad</th>
-                            <td><?php echo htmlspecialchars($citas['edad']); ?></td>
+                            <td> <?php
+                                    $fecha_nac = new DateTime($citas['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS</td>
 
                         </tr>
                         <tr>

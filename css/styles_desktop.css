@@ -216,7 +216,8 @@ table {
     border-collapse: collapse; /* Para que las celdas estén juntas */
     margin-top: 20px; /* Espacio superior */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    border-radius: 8px;
+    border-radius: 8px; /* Bordes redondeados en la parte superior */
+    overflow: hidden; /* Para que los bordes redondeados funcionen */
 }
 
 table th, table td {

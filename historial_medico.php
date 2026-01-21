@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
         $stmt_citas->execute();
         $citas = $stmt_citas->get_result();
 
-        $sql_historial = "SELECT * FROM historial_medico WHERE id_paciente = ? ORDER BY fecha_consulta DESC";
+        $sql_historial = "SELECT * FROM historial_medico WHERE id_paciente = ? ORDER BY fecha_creacion DESC";
         $stmt_historial = $link->prepare($sql_historial);
         $stmt_historial->bind_param("i", $paciente['id_paciente']);
         $stmt_historial->execute();
@@ -160,7 +160,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $paciente_id_get !== null) {
                                 <th>CURP</th>
                                 <td><?php echo htmlspecialchars($paciente['curp']); ?></td>
                                 <th>Edad</th>
-                                <td><?php echo htmlspecialchars($paciente['edad']); ?></td>
+                            <td> <?php
+                                    $fecha_nac = new DateTime($paciente['fecha_nacimiento']);
+                                    $hoy = new DateTime();
+                                    $edad = $hoy->diff($fecha_nac)->y;
+                                    echo $edad;
+                                    ?> AÑOS</td>
                                 
                             </tr>
                             <tr>
