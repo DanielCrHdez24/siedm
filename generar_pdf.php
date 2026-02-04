@@ -20,7 +20,7 @@ if (!$paciente) {
 }
 
 
-$fecha_nac = new DateTime($paciente['fecha_nacimiento']);       
+$fecha_nac = new DateTime($paciente['fecha_nacimiento']);
 $hoy = new DateTime();
 $edad = $hoy->diff($fecha_nac)->y;
 
@@ -35,7 +35,7 @@ $id_historial = $historial ? $historial['id_historial'] : 'Sin historial registr
 
 
 // Consulta citas
-$stmt = $link->prepare("SELECT c.*, u.nombre, u.primer_apellido, u.segundo_apellido FROM citas_medicas AS c INNER JOIN usuarios AS u ON c.id_usuario = u.id_usuario WHERE c.id_paciente = ? AND c.estado ='PROCESADA' ORDER BY c.fecha_cita DESC");
+$stmt = $link->prepare("SELECT c.*, u.nombre, u.primer_apellido, u.segundo_apellido, u.cedula_profesional FROM citas_medicas AS c INNER JOIN usuarios AS u ON c.id_usuario = u.id_usuario WHERE c.id_paciente = ? AND c.estado ='PROCESADA' ORDER BY c.fecha_cita DESC");
 $stmt->bind_param("i", $id_paciente);
 $stmt->execute();
 $result_citas = $stmt->get_result();
@@ -155,11 +155,15 @@ $html .= '
 if ($result_citas->num_rows > 0) {
     $html .= '<table cellpadding="2" cellspacing="0" border="0" width="100%">';
     while ($cita = $result_citas->fetch_assoc()) {
-        
+        $presion_arterial = !empty($cita['presion_arterial']) ? htmlspecialchars($cita['presion_arterial']) : 'No hay información';
+        $frecuencia_cardiaca = !empty($cita['frecuencia_cardiaca']) ? htmlspecialchars($cita['frecuencia_cardiaca']) . ' bpm' : 'No hay información';
+        $frecuencia_respiratoria = !empty($cita['frecuencia_respiratoria']) ? htmlspecialchars($cita['frecuencia_respiratoria']) . ' rpm' : 'No hay información';
+        $saturacion_oxigeno = !empty($cita['saturacion_oxigeno']) ? htmlspecialchars($cita['saturacion_oxigeno']) . ' %' : 'No hay información';
         $fecha_cita = !empty($cita['fecha_cita']) ? htmlspecialchars($cita['fecha_cita']) : 'No hay información';
         $hora_cita = !empty($cita['hora_cita']) ? htmlspecialchars($cita['hora_cita']) : 'No hay información';
         $motivo = !empty($cita['motivo']) ? htmlspecialchars($cita['motivo']) : 'No hay información';
         $peso = !empty($cita['peso']) ? htmlspecialchars($cita['peso']) . ' KG' : 'No hay información';
+        $imc = !empty($cita['imc']) ? htmlspecialchars($cita['imc']) : 'No hay información';
         $talla = !empty($cita['talla']) ? htmlspecialchars($cita['talla']) . ' M' : 'No hay información';
         $temperatura = !empty($cita['temperatura']) ? htmlspecialchars($cita['temperatura']) . ' °C' : 'No hay información';
         $diagnostico = !empty($cita['diagnostico']) ? htmlspecialchars($cita['diagnostico']) : 'No hay información';
@@ -167,6 +171,7 @@ if ($result_citas->num_rows > 0) {
         $recomendaciones = !empty($cita['recomendaciones']) ? htmlspecialchars($cita['recomendaciones']) : 'No hay información';
         $medico = (!empty($cita['nombre']) || !empty($cita['primer_apellido']) || !empty($cita['segundo_apellido'])) ?
             htmlspecialchars($cita['nombre'] . ' ' . $cita['primer_apellido'] . ' ' . $cita['segundo_apellido']) : 'No hay información';
+        $cedula_profesional = !empty($cita['cedula_profesional']) ? htmlspecialchars($cita['cedula_profesional']) : 'No hay información';
 
         $html .= '
         <tr>
@@ -181,17 +186,42 @@ if ($result_citas->num_rows > 0) {
             </td>
         </tr>
         <tr>
-            <td width="20%" style="vertical-align:top;">
+            <td width="25%" style="vertical-align:top;">
+                <div><span class="dato">Presión arterial: </span><span class="valor">' . $presion_arterial . '</span></div>
+            </td>
+            <td width="25%" style="vertical-align:top;">
+                <div><span class="dato">Frecuencia cardiaca: </span><span class="valor">' . $frecuencia_cardiaca . '</span></div>
+            </td>
+            <td width="25%" style="vertical-align:top;">
+                <div><span class="dato">Frecuencia respiratoria: </span><span class="valor">' . $frecuencia_respiratoria . '</span></div>
+            </td>
+            <td width="25%" style="vertical-align:top;">
+                <div><span class="dato">Saturación de oxígeno: </span><span class="valor">' . $saturacion_oxigeno . '</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%" style="vertical-align:top;">
                 <div><span class="dato">Peso: </span><span class="valor">' . $peso . '</span></div>
             </td>
-            <td width="20%" style="vertical-align:top;">
+            <td width="25%" style="vertical-align:top;">
                 <div><span class="dato">Talla: </span><span class="valor">' . $talla . '</span></div>
             </td>
-            <td width="20%" style="vertical-align:top;">
+            
+            <td width="25%" style="vertical-align:top;">
+                <div><span class="dato">IMC: </span><span class="valor">' . $imc . '</span></div>
+            </td>
+            <td width="25%" style="vertical-align:top;">
                 <div><span class="dato">Temperatura: </span><span class="valor">' . $temperatura . '</span></div>
             </td>
-            <td width="40%" style="vertical-align:top;">
-                <div><span class="dato">Diagnóstico: </span><span class="valor">' . $diagnostico . '</span></div>
+        </tr>
+        <tr>
+            <td width="100%" style="vertical-align:top;">
+                <div><span class="dato">Diagnóstico: </span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" style="vertical-align:top;">
+                <span class="valor">' . $diagnostico . '</span>
             </td>
         </tr>
         <tr>
@@ -215,11 +245,15 @@ if ($result_citas->num_rows > 0) {
             </td>
         </tr>
         <tr>
-            <td width="100%" style="vertical-align:top;">
+            <td width="50%" style="vertical-align:top;">
                 <div><span class="dato">Médico: </span><span class="valor">' . $medico . '</span></div>
             </td>
+            <td width="50%" style="vertical-align:top;">
+                <div><span class="dato">Cédula profesional: </span><span class="valor">' . $cedula_profesional . '</span></div>
+            </td>
         </tr>
-        <tr><td><hr style="border: 1px solid #125873; margin: 10px 0;"></td></tr>
+        <br>
+        <tr><td width="100%"><hr style="border: 1px solid #125873; margin: 10px 0;"></td></tr>
         ';
     }
     $html .= '</table>';

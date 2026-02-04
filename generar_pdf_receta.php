@@ -157,7 +157,7 @@ $html .= '
                     <div><span class="dato">Diagnóstico: </span></div>
                 </td>
             </tr>
-            
+            <br>
              <tr>
                 <td width="100%" style="vertical-align:top;">
                     <span class="valor">' . htmlspecialchars($cita['diagnostico']) . '</span>
@@ -169,6 +169,7 @@ $html .= '
                     <div><span class="dato">Tratamiento: </span></div>
                 </td>
             </tr>
+            <br>
             <tr>
                 <td width="100%" style="vertical-align:top;">
                     <span class="valor">' . htmlspecialchars($cita['indicaciones']) . '</span>
@@ -180,6 +181,7 @@ $html .= '
                     <div><span class="dato">Recomendaciones: </span></div>
                 </td>
             </tr>
+            <br>
             <tr>
                 <td width="100%" style="vertical-align:top;">
                     <span class="valor">' . htmlspecialchars($cita['recomendaciones']) . '</span>
