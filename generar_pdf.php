@@ -48,13 +48,23 @@ $stmt->bind_param("i", $id_paciente);
 $stmt->execute();
 $result_documentos = $stmt->get_result();
 
+class MYPDF extends TCPDF {
+    public function Footer() {
+        $this->SetY(-15);
+        $this->SetFont('helvetica', '', 7);
+        $this->Cell(0, 7, 'SIEDM - Página '.$this->getAliasNumPage().' de '.$this->getAliasNbPages(), 0, false, 'C');
+
+    }
+}
+
 // Crear PDF
-$pdf = new TCPDF();
+$pdf = new MYPDF();
 $pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false);
+$pdf->setPrintFooter(true);
 $pdf->AddPage();
 $pdf->SetFont('helvetica', '', 7);
 $pdf->SetMargins(8, 8, 8, true);
+$pdf->SetAutoPageBreak(TRUE, 15);
 
 $html = '
 <table class="table" style="font-size:100%;">
