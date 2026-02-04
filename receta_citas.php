@@ -154,6 +154,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                 <table class="table" style="font-size:80%;">
                     <tbody>
                         <tr>
+                            <th>Presión arterial:</th>
+                            <td><?php echo htmlspecialchars($citas['presion_arterial']); ?></td>
+                            <th>Talla</th>
+                            <td><?php echo htmlspecialchars($citas['talla']); ?> cm</td>
+                            <th>Temperatura</th>
+                            <td><?php echo htmlspecialchars($citas['temperatura']); ?> °C</td>
+                        </tr>
+                        <tr>
                             <th>Peso</th>
                             <td><?php echo htmlspecialchars($citas['peso']); ?> kg</td>
                             <th>Talla</th>
