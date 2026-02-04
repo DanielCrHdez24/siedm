@@ -156,16 +156,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                         <tr>
                             <th>Presión arterial:</th>
                             <td><?php echo htmlspecialchars($citas['presion_arterial']); ?></td>
-                            <th>Talla</th>
-                            <td><?php echo htmlspecialchars($citas['talla']); ?> cm</td>
-                            <th>Temperatura</th>
-                            <td><?php echo htmlspecialchars($citas['temperatura']); ?> °C</td>
+                            <th>Frecuencia cardiaca:</th>
+                            <td><?php echo htmlspecialchars($citas['frecuencia_cardiaca']); ?> bpm</td>
+                            <th>Frecuencia respiratoria:</th>
+                            <td><?php echo htmlspecialchars($citas['frecuencia_respiratoria']); ?> rpm</td>
                         </tr>
-                        <tr>
+                         <tr>
+                            <th>Saturación de oxigeno:</th>
+                            <td><?php echo htmlspecialchars($citas['saturacion_oxigeno']); ?> %</td>
                             <th>Peso</th>
                             <td><?php echo htmlspecialchars($citas['peso']); ?> kg</td>
                             <th>Talla</th>
                             <td><?php echo htmlspecialchars($citas['talla']); ?> cm</td>
+                        </tr>
+                        <tr>
+                            <th>IMC</th>
+                            <td><?php echo htmlspecialchars($citas['imc']); ?></td>
                             <th>Temperatura</th>
                             <td><?php echo htmlspecialchars($citas['temperatura']); ?> °C</td>
                         </tr>
