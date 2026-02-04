@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     mysqli_stmt_bind_result($stmt, $idUsuario, $nombreUsuario, $primerApellido, $clave, $idRol);
 
                     if (mysqli_stmt_fetch($stmt)) {
-                        if (password_verify($password, $clave)) {
+                        if ($clave !== null && password_verify($password, $clave)) {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["idUsuario"] = $idUsuario;
                             $_SESSION["nombreUsuario"] = $nombreUsuario." ".$primerApellido;

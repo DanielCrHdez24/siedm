@@ -143,7 +143,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                         </div>
                         <h3>Configuración</h3>
                         <p>Backup y restauración.</p>
-                        <a href="Configuración.php" class="btn">Ir</a>
+                        <a href="configuración.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
                 <!-- NUEVA TARJETA PARA RECOMENDACIONES -->
