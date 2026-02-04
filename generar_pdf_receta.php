@@ -112,30 +112,58 @@ $html .= '
 $html .= '
        
             <tr>
-                <td width="35%" style="vertical-align:top;">
+                <td width="30%" style="vertical-align:top;">
                     <div><span class="dato">Fecha cita: </span><span class="valor">' . htmlspecialchars($cita['fecha_atnc']) . '</span></div>
                 </td>
                 
-                <td width="65%" style="vertical-align:top;">
+                <td width="70%" style="vertical-align:top;">
                     <div><span class="dato">Motivo: </span><span class="valor">' . htmlspecialchars($cita['motivo']) . '</span></div>
                 </td>
             </tr>
             <tr>
-                <td width="20%" style="vertical-align:top;">
+                <td width="30%" style="vertical-align:top;">
+                    <div><span class="dato">Presión arterial: </span><span class="valor">' . htmlspecialchars($cita['presion_arterial']) . '</span></div>
+                </td>
+                
+                <td width="35%" style="vertical-align:top;">
+                    <div><span class="dato">Frecuencia cardiaca: </span><span class="valor">' . htmlspecialchars($cita['frecuencia_cardiaca']) . ' bpm</span></div>
+                </td>
+                <td width="35%" style="vertical-align:top;">
+                    <div><span class="dato">Frecuencia respiratoria: </span><span class="valor">' . htmlspecialchars($cita['frecuencia_respiratoria']) . ' rpm</span></div>
+                </td>
+            </tr>
+            <tr>
+            <td width="30%" style="vertical-align:top;">
+                    <div><span class="dato">Saturación de oxígeno: </span><span class="valor">' . htmlspecialchars($cita['saturacion_oxigeno']) . '%</span></div>
+                </td>
+                <td width="15%" style="vertical-align:top;">
                     <div><span class="dato">Peso: </span><span class="valor">' . htmlspecialchars($cita['peso']) . ' KG</span></div>
                 </td>
-                <td width="20%" style="vertical-align:top;">
+                <td width="15%" style="vertical-align:top;">
                     <div><span class="dato">Talla: </span><span class="valor">' . htmlspecialchars($cita['talla']) . ' M</span></div>
+                </td>
+                <td width="20%" style="vertical-align:top;">
+                    <div><span class="dato">IMC: </span><span class="valor">' . htmlspecialchars($cita['imc']) . '</span></div>
                 </td>
                 <td width="20%" style="vertical-align:top;">
                     <div><span class="dato">Temperatura: </span><span class="valor">' . htmlspecialchars($cita['temperatura']) . ' °C</span></div>
                 </td>
                 
+                
             </tr>
+<br>
             <tr>
                 <td width="100%" style="vertical-align:top;">
                     <div><span class="dato">Diagnóstico: </span></div>
                 </td>
+            </tr>
+            
+             <tr>
+                <td width="100%" style="vertical-align:top;">
+                    <span class="valor">' . htmlspecialchars($cita['diagnostico']) . '</span>
+                </td>
+            </tr>
+            <br>
             <tr>
                 <td width="100%" style="vertical-align:top;">
                     <div><span class="dato">Tratamiento: </span></div>
@@ -146,6 +174,7 @@ $html .= '
                     <span class="valor">' . htmlspecialchars($cita['indicaciones']) . '</span>
                 </td>
             </tr>
+            <br>
              <tr>
                 <td width="100%" style="vertical-align:top;">
                     <div><span class="dato">Recomendaciones: </span></div>
@@ -156,6 +185,7 @@ $html .= '
                     <span class="valor">' . htmlspecialchars($cita['recomendaciones']) . '</span>
                 </td>
             </tr>
+            <br><br>
             <tr>
                 <td width="40%" style="vertical-align:top;">
                     <div><span class="dato">Médico: </span><span class="valor">' . htmlspecialchars($medico['nombre'] . ' ' . $medico['primer_apellido'] . ' ' . $medico['segundo_apellido']) . '</span></div>
@@ -165,7 +195,7 @@ $html .= '
                     <div><span class="dato">Cédula profesional: </span><span class="valor">' . htmlspecialchars($medico['cedula_profesional']) . '</span></div>
                 </td>
                 <td width="30%" style="vertical-align:top;">
-                    <div><span class="dato">Firma:</span></div>
+                    <div><span class="dato">Firma: _________________________</span></div>
                 </td>
             </tr>
             <br>
