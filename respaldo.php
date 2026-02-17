@@ -17,7 +17,7 @@ include 'conexion.php';
 
 <head>
     <meta charset="UTF-8">
-    <title>Configuración</title>
+    <title>Respaldo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
@@ -62,33 +62,21 @@ include 'conexion.php';
             </nav>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </header>
-                    
+
         <div class="container">
-            <h2>Configuración</h2>
-            <div class="card-container">
-               
-<div class="card">
-                    <div class="option-icon">
-                        <i class="bi bi-database"></i>
-                    </div>
-                    <h3>Realizar respaldo</h3>
-                    <p>Realizar copia de seguridad de los datos del sistema.</p>
-                    <a href="respaldo.php" class="btn">Realizar Respaldo</a>
-                </div>
-
-                <div class="card">
-                    <div class="option-icon">
-                        <i class="bi bi-arrow-repeat"></i>
-                    </div>
-                    <h3>Restaurar respaldo</h3>
-                    <p>Restaurar datos del sistema desde una copia de seguridad.</p>
-                    <a href="restaurar.php" class="btn">Restaurar Respaldo</a>
-                </div>
-                
-                <br>
-                
-
-        </div>
+            <?php
+if (isset($_GET['ok'])) {
+    echo '<div class="alert alert-success">Respaldo generado correctamente.</div>';
+}
+?>
+            <h2>Respaldo de Base de Datos</h2>
+            
+            <form action="backup.php" method="post" target="_blank" onsubmit="mostrarMensaje()">
+                <p>Realiza una copia de seguridad de la base de datos para proteger tus datos importantes.</p>
+                <input type="hidden" name="action" value="backup">
+                <button type="submit" class="btn btn-primary">Realizar Respaldo</button>
+                <button type="button" class="btn-logout" onclick="window.location.href='configuración.php';"><i class="fas fa-arrow-left"></i> Regresar</button>
+            </form>
         </div>
         <br>
         <footer class="footer">
@@ -100,6 +88,18 @@ include 'conexion.php';
         </footer>
     </div>
     <script src="js/menu.js"></script>
+    <script>
+function mostrarMensaje() {
+    setTimeout(function() {
+        const contenedor = document.querySelector(".container");
+        const alerta = document.createElement("div");
+        alerta.className = "alert alert-success";
+        alerta.innerHTML = "Respaldo generado exitosamente. Busca en tu carpeta de descargas el archivo SQL con el respaldo de la base de datos.";
+        contenedor.prepend(alerta);
+    }, 500);
+}
+</script>
+
 </body>
 
 </html>
