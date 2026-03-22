@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                             <td><?php echo htmlspecialchars($citas['fecha_cita']); ?></td>
                             <th>Hora de la Cita</th>
                             <td><?php echo htmlspecialchars($citas['hora_cita']); ?></td>
-                             <th>Motivo de la cita</th>
+                            <th>Motivo de la cita</th>
                             <td><?php echo htmlspecialchars($citas['motivo']); ?></td>
                         </tr>
                     </tbody>
@@ -178,29 +178,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                 <h3>3. Signos vitales</h3>
                 <form method="POST" action="guardar_cita.php">
                     
-                     <label for="presion_arterial">Presión arterial:</label>
-                    <input type="text" name="presion_arterial" id="presion_arterial" required placeholder="Ingrese la presión arterial Ej. 120/80 mmHg" pattern="^\d+\/\d+$" title="La presión arterial debe ser un número válido en formato sistólica/diastólica.">
-                
+                    <label for="presion_arterial">Presión arterial:</label>
+                    <input type="text" name="presion_arterial" id="presion_arterial" required placeholder="Ingrese la presión arterial Ej. 120/80" pattern="^\d+\/\d+$" title="La presión arterial debe ser un número válido en formato sistólica/diastólica.">
+
                     <label for="frecuencia_cardiaca">Frecuencia cardíaca:</label>
-                    <input type="text" name="frecuencia_cardiaca" id="frecuencia_cardiaca" required placeholder="Ingrese la frecuencia cardíaca en LATIDOS POR MINUTO Ej. 70 LPM" pattern="^\d+(\.\d{1,2})?$" title="La frecuencia cardíaca debe ser un número válido con hasta dos decimales.">
+                    <input type="text" name="frecuencia_cardiaca" id="frecuencia_cardiaca" required placeholder="Ingrese la frecuencia cardíaca en LATIDOS POR MINUTO Ej. 70" pattern="^\d+(\.\d{1,2})?$" title="La frecuencia cardíaca debe ser un número válido con hasta dos decimales.">
 
                     <label for="frecuencia_respiratoria">Frecuencia respiratoria:</label>
-                    <input type="text" name="frecuencia_respiratoria" id="frecuencia_respiratoria" required placeholder="Ingrese la frecuencia respiratoria en RESPIRACIONES POR MINUTO Ej. 16 RPM" pattern="^\d+(\.\d{1,2})?$" title="La frecuencia respiratoria debe ser un número válido con hasta dos decimales.">
+                    <input type="text" name="frecuencia_respiratoria" id="frecuencia_respiratoria" required placeholder="Ingrese la frecuencia respiratoria en RESPIRACIONES POR MINUTO Ej. 16" pattern="^\d+(\.\d{1,2})?$" title="La frecuencia respiratoria debe ser un número válido con hasta dos decimales.">
 
                     <label for="saturacion_oxigeno">Saturación de oxigeno:</label>
-                    <input type="text" name="saturacion_oxigeno" id="saturacion_oxigeno" required placeholder="Ingrese la saturación de oxígeno en PORCENTAJE Ej. 98%" pattern="^\d+(\.\d{1,2})?$" title="La saturación de oxígeno debe ser un número válido con hasta dos decimales.">
+                    <input type="text" name="saturacion_oxigeno" id="saturacion_oxigeno" required placeholder="Ingrese la saturación de oxígeno en PORCENTAJE Ej. 98" pattern="^\d+(\.\d{1,2})?$" title="La saturación de oxígeno debe ser un número válido con hasta dos decimales.">
 
                     <label for="peso">Peso:</label>
-                    <input type="text" name="peso" id="peso" required placeholder="Ingrese el peso en KILOGRAMOS Ej. 50.45 KG" pattern="^\d+(\.\d{1,2})?$" title="El peso debe ser un número válido con hasta dos decimales.">
+                    <input type="text" name="peso" id="peso" required placeholder="Ingrese el peso en KILOGRAMOS Ej. 50.45" pattern="^\d+(\.\d{1,2})?$" title="El peso debe ser un número válido con hasta dos decimales.">
 
                     <label for="talla">Talla:</label>
-                    <input type="text" name="talla" id="talla" required placeholder="Ingrese la talla en METROS Ej. 1.75 M" pattern="^\d+(\.\d{1,2})?$" title="La talla debe ser un número válido con hasta dos decimales.">
-                   
+                    <input type="text" name="talla" id="talla" required placeholder="Ingrese la talla en METROS Ej. 1.75" pattern="^\d+(\.\d{1,2})?$" title="La talla debe ser un número válido con hasta dos decimales.">
+
                     <label for="imc">IMC:</label>
                     <input type="text" name="imc" id="imc" readonly placeholder="El IMC se calcula automáticamente" >
 
                     <label for="temperatura">Temperatura:</label>
-                    <input type="text" name="temperatura" id="temperatura" required placeholder="Ingrese la temperatura en CELSIUS Ej. 36.5 °C" pattern="^\d+(\.\d{1,2})?$" title="La temperatura debe ser un número válido con hasta dos decimales.">
+                    <input type="text" name="temperatura" id="temperatura" required placeholder="Ingrese la temperatura en CELSIUS Ej. 36.5" pattern="^\d+(\.\d{1,2})?$" title="La temperatura debe ser un número válido con hasta dos decimales.">
 
                     <label for="diagnostico">Diagnostico:</label>
                     <textarea name="diagnostico" id="diagnostico" oninput="this.value = this.value.toUpperCase()" required placeholder="Ingrese el diagnóstico del paciente" rows="4" cols="50"></textarea>
