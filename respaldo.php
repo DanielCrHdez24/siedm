@@ -72,7 +72,7 @@ if (isset($_GET['ok'])) {
             <h2>Respaldo de Base de Datos</h2>
             
             <form action="backup.php" method="post" target="_blank" onsubmit="mostrarMensaje()">
-                <p>Realiza una copia de seguridad de la base de datos para proteger tus datos importantes.</p>
+                <p>Realiza una copia de seguridad de la base de datos para proteger la base de datos.</p>
                 <input type="hidden" name="action" value="backup">
                 <button type="submit" class="btn btn-primary">Realizar Respaldo</button>
                 <button type="button" class="btn-logout" onclick="window.location.href='configuración.php';"><i class="fas fa-arrow-left"></i> Regresar</button>
@@ -94,7 +94,7 @@ function mostrarMensaje() {
         const contenedor = document.querySelector(".container");
         const alerta = document.createElement("div");
         alerta.className = "alert alert-success";
-        alerta.innerHTML = "Respaldo generado exitosamente. Busca en tu carpeta de descargas el archivo SQL con el respaldo de la base de datos.";
+        alerta.innerHTML = "Respaldo generado exitosamente. Busca en tu carpeta de \"Dsescargas\" el archivo SQL con el respaldo de la base de datos.";
         contenedor.prepend(alerta);
     }, 500);
 }
