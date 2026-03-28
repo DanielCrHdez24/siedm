@@ -25,8 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt = $link->prepare($sql)) {
         $stmt->bind_param("issssi", 
             $id_paciente, $fecha_cita, $hora_cita, $motivo, $estado, $id_usuario);
+        
             
+
         if ($stmt->execute()) {
+            
             $stmt->close();
             $link->close();
 

@@ -121,9 +121,9 @@ mysqli_close($link);
 
                 <button type="submit" class="btn"
                     onmouseover="this.style.backgroundColor='red'; this.style.color='white';"
-                    onmouseout="this.style.backgroundColor='#009688'; this.style.color='white';">
+                    onmouseout="this.style.backgroundColor='#125873'; this.style.color='white';">
                     <i class="fas fa-trash-alt"></i>
-                    Eliminar cuenta
+                    Desactivar cuenta
                 </button>
                 <button type="button" class="btn-logout" onclick="window.location.href='panel.php';"> <i class="fas fa-times"></i> Cancelar</button>
             </form>

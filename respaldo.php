@@ -94,7 +94,7 @@ function mostrarMensaje() {
         const contenedor = document.querySelector(".container");
         const alerta = document.createElement("div");
         alerta.className = "alert alert-success";
-        alerta.innerHTML = "Respaldo generado exitosamente. Busca en tu carpeta de \"Dsescargas\" el archivo SQL con el respaldo de la base de datos.";
+        alerta.innerHTML = "Respaldo generado exitosamente. Busca en tu carpeta de \"Descargas\" el archivo SQL con el respaldo de la base de datos.";
         contenedor.prepend(alerta);
     }, 500);
 }
