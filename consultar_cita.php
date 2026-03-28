@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
         $citas = $stmt->get_result();
         $stmt->close();
     }
-}else{
+} else {
     $citas = $link->query("SELECT * FROM citas_medicas WHERE 1=0"); 
 }
 ?>
@@ -49,20 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
                     if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
                         $url = 'perfil.php';
                     } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
                         $url = 'perfil_dif.php';
                     } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                        $url = 'perfil_dif.php';
                     }
-                    ?>
+                ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <a href="users.php">Gestión de Usuarios</a>
                 <?php endif; ?>
@@ -91,71 +87,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
             <form method="POST" class="form">
                 <input type="text" id="inputBuscar" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por Fecha Ej: 2023-01-30 (YYYY-MM-DD)" required>
                 <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
-                <button type="button" class="btn"
-                    onclick="document.getElementById('inputBuscar').value='';">
+                <button type="button" class="btn" onclick="document.getElementById('inputBuscar').value='';">
                     <i class="fas fa-eraser"></i> Borrar
                 </button>
-
-                <button type="button" class="btn"
-                    onclick="window.location.href='citas.php';">
+                <button type="button" class="btn" onclick="window.location.href='citas.php';">
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </form>
             
-                <h3>Citas Médicas</h3>
-                <?php if ($citas->num_rows > 0): ?>
-                    <table class="table" style="font-size:80%;">
-                        <thead>
+            <h3>Citas Médicas</h3>
+            <?php if ($citas && $citas->num_rows > 0): ?>
+                <table class="table" style="font-size:80%;">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Paciente</th>
+                            <th>CURP</th>
+                            <th>Motivo</th>
+                            <th>Diagnóstico</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($cita = $citas->fetch_assoc()): ?>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th>Paciente</th>
-                                <th>CURP</th>
-                                <th>Motivo</th>
-                                <th>Diagnóstico</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($cita = $citas->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
-                                    <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
-                                    <td><?= htmlspecialchars($cita['nombre']. ' ' . $cita['primer_apellido'] . ' ' . $cita['segundo_apellido']) ?></td>
-                                    <td><?= htmlspecialchars($cita['curp']) ?></td>
-                                    <td><?= htmlspecialchars($cita['motivo']) ?></td>
-                                    <td><?= htmlspecialchars($cita['diagnostico'] ?? 'NO ATENDIDA') ?></td>
-                                    <td><?= htmlspecialchars($cita['estado']) ?></td>
-                                    <td>
+                                <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
+                                <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
+                                <td><?= htmlspecialchars($cita['nombre']. ' ' . $cita['primer_apellido'] . ' ' . $cita['segundo_apellido']) ?></td>
+                                <td><?= htmlspecialchars($cita['curp']) ?></td>
+                                <td><?= htmlspecialchars($cita['motivo']) ?></td>
+                                <td><?= htmlspecialchars($cita['diagnostico'] ?? 'NO ATENDIDA') ?></td>
+                                <td><?= htmlspecialchars($cita['estado']) ?></td>
+                                <td>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
                                         <?php if ($cita['estado'] === 'PROCESADA'): ?>
-                                            <a href="ver_cita.php?id_cita=<?= $cita['id_cita'] ?>">
-                                            <i class="fas fa-eye"></i> Ver
-                                        </a>
+                                            <a href="ver_cita.php?id_cita=<?= $cita['id_cita'] ?>" title="Ver Cita">
+                                                <i class="fas fa-eye"></i> Ver
+                                            </a>
+                                            <form action="generar_pdf.php" method="post" target="_blank" style="margin:0;">
+                                                <input type="hidden" name="id_paciente" value="<?= $cita['id_paciente'] ?>">
+                                                <button type="submit" style="background:none; border:none; color:#d9534f; cursor:pointer; padding:0;">
+                                                    <i class="fas fa-file-pdf" title="Descargar PDF"></i>
+                                                </button>
+                                            </form>
                                         <?php else: ?>
-                                        <a href="procesar_cita.php?id_cita=<?= $cita['id_cita'] ?>">
-                                            <i class="fas fa-edit"></i> Atender
-                                        </a>
+                                            <a href="procesar_cita.php?id_cita=<?= $cita['id_cita'] ?>" title="Atender Cita">
+                                                <i class="fas fa-edit"></i> Atender
+                                            </a>
                                         <?php endif; ?>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p>No hay citas registradas en esa fecha.</p>
-                <?php endif; ?>
-                <br>
-
-                <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
-                    <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-                    <button type="button" class="btn-logout" onclick="window.location.href='citas.php';"><i class="fas fa-arrow-left"></i> Volver</button>
-                </form>
-                    
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No hay citas registradas en esa fecha.</p>
+            <?php endif; ?>
+            
             <br>
-
+            <div style="text-align: center;">
+                <button type="button" class="btn" onclick="window.location.href='citas.php';">
+                    <i class="fas fa-arrow-left"></i> Volver a Citas
+                </button>
+            </div>
+            <br>
         </div>
-        <br>
+
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
@@ -166,5 +166,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
     </div>
     <script src="js/menu.js"></script>
 </body>
-
 </html>

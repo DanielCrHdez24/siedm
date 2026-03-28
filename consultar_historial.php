@@ -12,8 +12,7 @@ $busqueda = $_POST['busqueda'] ?? '';
 $pacientes = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
-        $sql = "SELECT * 
-                FROM pacientes 
+        $sql = "SELECT * FROM pacientes 
                 WHERE nombre LIKE ? OR primer_apellido LIKE ? OR segundo_apellido LIKE ? OR curp LIKE ?
                 ORDER BY curp ASC";
         $stmt = $link->prepare($sql);
@@ -23,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
         $pacientes = $stmt->get_result();
         $stmt->close();
     
-}else{
+} else {
+    // Inicializamos como un resultado vacío para evitar errores de objeto
     $pacientes = $link->query("SELECT * FROM pacientes WHERE 1=0"); 
 }
 ?>
@@ -47,20 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
                     if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
                         $url = 'perfil.php';
                     } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
                         $url = 'perfil_dif.php';
                     } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                        $url = 'perfil_dif.php';
                     }
-                    ?>
+                ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <a href="users.php">Gestión de Usuarios</a>
                 <?php endif; ?>
@@ -86,74 +82,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                     <?= htmlspecialchars($_GET['mensaje']) ?>
                 </div>
             <?php endif; ?>
+
             <form method="POST" class="form">
-                <input type="text" id="inputBuscar" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por Fecha CURP, Nombre o Apellido" required>
+                <input type="text" id="inputBuscar" name="busqueda" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar por CURP, Nombre o Apellido" required>
                 <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
-                <button type="button" class="btn"
-                    onclick="document.getElementById('inputBuscar').value='';">
+                <button type="button" class="btn" onclick="document.getElementById('inputBuscar').value='';">
                     <i class="fas fa-eraser"></i> Borrar
                 </button>
-
-                <button type="button" class="btn"
-                    onclick="window.location.href='panel.php';">
+                <button type="button" class="btn" onclick="window.location.href='panel.php';">
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </form>
 
-           
-                <h3>Pacientes</h3>
-                <?php if ($pacientes->num_rows > 0): ?>
-                    <table class="table" style="font-size:80%;">
-                        <thead>
+            <h3>Pacientes encontrados</h3>
+            <?php if ($pacientes && $pacientes->num_rows > 0): ?>
+                <table class="table" style="font-size:80%;">
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>CURP</th>
+                            <th>Edad</th>
+                            <th>Sexo</th>
+                            <th>Fecha Nac.</th>
+                            <th>Derechohabiencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($paciente = $pacientes->fetch_assoc()): ?>
                             <tr>
-                                
-                                <th>Paciente</th>
-                                <th>CURP</th>
-                                <th>Edad</th>
-                                <th>Sexo</th>
-                                <th>Fecha Nac.</th>
-                                <th>Derechohabiencia</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($paciente = $pacientes->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($paciente['nombre']. ' ' . $paciente['primer_apellido'] . ' ' . $paciente['segundo_apellido']) ?></td>
-                                    <td><?= htmlspecialchars($paciente['curp']) ?></td>
-                                    <td> <?php
+                                <td><?= htmlspecialchars($paciente['nombre']. ' ' . $paciente['primer_apellido'] . ' ' . $paciente['segundo_apellido']) ?></td>
+                                <td><?= htmlspecialchars($paciente['curp']) ?></td>
+                                <td> 
+                                    <?php
                                     $fecha_nac = new DateTime($paciente['fecha_nacimiento']);
                                     $hoy = new DateTime();
                                     $edad = $hoy->diff($fecha_nac)->y;
                                     echo $edad;
-                                    ?> AÑOS</td>
-                                    <td><?= htmlspecialchars($paciente['sexo']) ?></td>
-                                    <td><?= htmlspecialchars($paciente['fecha_nacimiento']) ?></td>
-                                    <td><?= htmlspecialchars($paciente['derechohabiencia']) ?></td>
-                                    <td>
-                                        <a href="historial.php?id_paciente=<?= $paciente['id_paciente'] ?>">
+                                    ?> AÑOS
+                                </td>
+                                <td><?= htmlspecialchars($paciente['sexo']) ?></td>
+                                <td><?= htmlspecialchars($paciente['fecha_nacimiento']) ?></td>
+                                <td><?= htmlspecialchars($paciente['derechohabiencia']) ?></td>
+                                <td>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <a href="historial.php?id_paciente=<?= $paciente['id_paciente'] ?>" title="Ver Historial">
                                             <i class="fas fa-eye"></i> Ver
                                         </a>
-                                    
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p>No hay pacientes registrados con esos criterios.</p>
-                <?php endif; ?>
-                <br>
+                                        
+                                        <form action="generar_pdf.php" method="post" target="_blank" style="margin:0;">
+                                            <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
+                                            <button type="submit" style="background:none; border:none; color:#d9534f; cursor:pointer; padding:0;">
+                                                <i class="fas fa-file-pdf"></i> PDF
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No hay pacientes registrados con esos criterios.</p>
+            <?php endif; ?>
 
-                <form action="generar_pdf.php" method="post" target="_blank" style="text-align: center;">
-                    <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-                    <button type="button" class="btn-logout" onclick="window.location.href='citas.php';"><i class="fas fa-arrow-left"></i> Volver</button>
-                </form>
-                    
+            <br>
+            <div style="text-align: center;">
+                <button type="button" class="btn-logout" onclick="window.location.href='citas.php';">
+                    <i class="fas fa-arrow-left"></i> Ir a Citas
+                </button>
+            </div>
             <br>
 
         </div>
-        <br>
         <footer class="footer">
             <p>Daniel Cruz Hernández - 22300104</p>
             <p>Nicolás Misael López Cruz - 22300149</p>
@@ -164,5 +165,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
     </div>
     <script src="js/menu.js"></script>
 </body>
-
 </html>
