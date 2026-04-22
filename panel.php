@@ -26,7 +26,7 @@ $id_Usuario = $_SESSION['idUsuario'];
 </head>
 
 <body class="principal">
-    <div class="wrapper"> <!-- Wrapper para agrupar todo -->
+    <div class="wrapper"> 
         <header class="header">
             <a href="#" class="logo">
                 <img src="./images/logo.png" alt="Logo SIEDM" width="150px" />
@@ -43,8 +43,8 @@ $id_Usuario = $_SESSION['idUsuario'];
                     // Si el rol es 2 o 3, manda a perfil_dif.php
                     $url = 'perfil_dif.php';
                 } else {
-                    // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                    $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                    // Si no es ninguno de los roles especificados manda a perfil_dif.php
+                    $url = 'perfil_dif.php'; 
                 }
                 ?>
 
@@ -61,7 +61,7 @@ $id_Usuario = $_SESSION['idUsuario'];
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
 
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
@@ -101,8 +101,8 @@ $id_Usuario = $_SESSION['idUsuario'];
                         // Si el rol es 2 o 3, manda a perfil_dif.php
                         $url = 'perfil_dif.php';
                     } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                        // Si no es ninguno de los roles especificados, manda a perfil_dif.php
+                        $url = 'perfil_dif.php'; 
                     }
                     ?>
 
@@ -146,14 +146,14 @@ $id_Usuario = $_SESSION['idUsuario'];
                         <a href="configuración.php" class="btn">Ir</a>
                     </div>
                 <?php endif; ?>
-                <!-- NUEVA TARJETA PARA RECOMENDACIONES -->
+               
                 <?php if ($idRol == 1 || $idRol == 4): ?>
-                <div class="card">
-                    <i class="fa-solid fa-star option-icon"></i>
-                    <h3>Recomendaciones</h3>
-                    <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
-                    <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
-                </div>
+                    <div class="card">
+                        <i class="fa-solid fa-star option-icon"></i>
+                        <h3>Recomendaciones</h3>
+                        <p>Evalúa el desempeño de los médico y ayúdanos a mejorar el servicio.</p>
+                        <a href="recomendacion.php" class="btn"><i class="fas fa-star"></i> Evaluar</a>
+                    </div>
                 <?php endif; ?>
                 <div class="card">
                     <div class="option-icon-logout">
@@ -166,15 +166,15 @@ $id_Usuario = $_SESSION['idUsuario'];
             </div>
         </div>
 
-            </div>
-        </div>
-        <footer class="footer">
-            <p>Daniel Cruz Hernández - 22300104</p>
-            <p>Nicolás Misael López Cruz - 22300149</p>
-            <p>Karen Elizabeth Patlán Villareal - 22300138</p>
-            <p>Irma Rafael Soto - 18100213</p>
-            <p>&copy; 2025 - SIEDM</p>
-        </footer>
+    </div>
+    </div>
+    <footer class="footer">
+        <p>Daniel Cruz Hernández - 22300104</p>
+        <p>Nicolás Misael López Cruz - 22300149</p>
+        <p>Karen Elizabeth Patlán Villareal - 22300138</p>
+        <p>Irma Rafael Soto - 18100213</p>
+        <p>&copy; 2025 - SIEDM</p>
+    </footer>
     </div>
 
     <script src="js/menu.js"></script>

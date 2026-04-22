@@ -57,7 +57,7 @@ body.principal {
 
 /* Logo */
 .header .logo {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: var(--primary-color);
     transition: opacity 0.3s ease-in-out;
@@ -67,14 +67,14 @@ body.principal {
 .navbar {
     display: flex;
     align-items: center;
-    gap: 1.4rem;
+    gap: 1.2rem;
 }
 
 .navbar a {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--primary-color);
     text-decoration: none;
-    font-weight: 350;
+    font-weight: 600;
 }
 
 .navbar a:hover {
@@ -87,9 +87,9 @@ body.principal {
 /* Estilo para el enlace "Cerrar sesión" */
 .navbar a.logout-link {
     color: red;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-decoration: none;
-    font-weight: 350;
+    font-weight: 600;
 }
 
 .navbar a.logout-link:hover {

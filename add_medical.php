@@ -1,13 +1,20 @@
 <?php
 session_start();
 
-// Verifica si el usuario ha iniciado sesión
+//Verificamos la sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
 
+//Obtenemos el rol
 $idRol = $_SESSION['idRol'];
+
+//Validamos el rol
+if ($idRol != 1) {
+    header("location: panel.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,7 +31,7 @@ $idRol = $_SESSION['idRol'];
 </head>
 
 <body class="principal">
-    <div class="wrapper"> <!-- Wrapper para agrupar todo -->
+    <div class="wrapper">
         <header class="header">
             <a href="#" class="logo">
                 <img src="./images/logo.png" alt="Logo SIEDM" width="150px" />
@@ -32,20 +39,20 @@ $idRol = $_SESSION['idRol'];
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
+                // Verifica el rol y redirige a la página correspondiente
+                if ($idRol == 4) {
+                    // Si el rol es 4, manda a perfil.php
+                    $url = 'perfil.php';
+                } elseif ($idRol == 2 || $idRol == 3) {
+                    // Si el rol es 2 o 3, manda a perfil_dif.php
+                    $url = 'perfil_dif.php';
+                } else {
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                    $url = 'perfil_dif.php';
+                }
+                ?>
+
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
                     <a href="users.php">Gestión de Usuarios</a>
@@ -58,7 +65,7 @@ $idRol = $_SESSION['idRol'];
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
                 <span style="font-size: 0.7em;">
@@ -78,7 +85,7 @@ $idRol = $_SESSION['idRol'];
                 <div class="alert-error">
                     <?php echo htmlspecialchars($_GET['error']); ?>
                 </div>
-                <?php endif; ?>
+            <?php endif; ?>
             <p> </p>
             <form class="form" action="insertar_medico.php" method="POST" onsubmit="return validateForm()">
                 <label for="id_rol">Rol del usuario:</label>
@@ -110,13 +117,13 @@ $idRol = $_SESSION['idRol'];
                 <p></p>
 
                 <div id="cedula-container" style="display: none;">
-                <label for="cedula_profesional">Cédula Profesional:</label>
-                <input type="text" id="cedula_profesional" name="cedula_profesional" placeholder="Ingrese cédula profesional" pattern="[0-9]{8,}" maxlength="12" title="Ingrese un número de cédula válido de 9 a 12 dígitos">
-                <p></p>
+                    <label for="cedula_profesional">Cédula Profesional:</label>
+                    <input type="text" id="cedula_profesional" name="cedula_profesional" placeholder="Ingrese cédula profesional" pattern="[0-9]{8,}" maxlength="12" title="Ingrese un número de cédula válido de 9 a 12 dígitos">
+                    <p></p>
 
-                <label for="especialidad">Especialidad:</label>
-                <input type="text" id="especialidad" name="especialidad" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese la especialidad" title="Ingrese la especialidad.">
-                <p></p>
+                    <label for="especialidad">Especialidad:</label>
+                    <input type="text" id="especialidad" name="especialidad" oninput="this.value = this.value.toUpperCase()" placeholder="Ingrese la especialidad" title="Ingrese la especialidad.">
+                    <p></p>
 
                 </div>
 
@@ -155,6 +162,18 @@ $idRol = $_SESSION['idRol'];
             } else {
                 cedulaContainer.style.display = "none";
             }
+        }
+    </script>
+    <script>
+        function validateForm() {
+            let pass1 = document.getElementById("contrasena").value;
+            let pass2 = document.getElementById("contrasena2").value;
+
+            if (pass1 !== pass2) {
+                alert("Las contraseñas no coinciden");
+                return false;
+            }
+            return true;
         }
     </script>
 </body>

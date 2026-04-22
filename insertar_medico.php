@@ -9,7 +9,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 $idRol = $_SESSION['idRol'];
 
-// Conexión a la base de datos
+if ($idRol != 1) {
+    header("location: panel.php");
+    exit();
+}
+
+
 include 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

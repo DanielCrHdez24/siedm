@@ -1,13 +1,20 @@
 <?php
 session_start();
 
-// Verifica si el usuario ha iniciado sesión
+//Verificamos la sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: index.php");
     exit();
 }
 
+//Obtenemos el rol
 $idRol = $_SESSION['idRol'];
+
+//Validamos el rol
+if ($idRol != 1 && $idRol != 2) {
+    header("location: panel.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,7 +31,7 @@ $idRol = $_SESSION['idRol'];
 </head>
 
 <body class="principal">
-    <div class="wrapper"> <!-- Wrapper para agrupar todo -->
+    <div class="wrapper"> 
         <header class="header">
             <a href="#" class="logo">
                 <img src="./images/logo.png" alt="Logo SIEDM" width="150px" />
@@ -41,7 +48,7 @@ $idRol = $_SESSION['idRol'];
                         $url = 'perfil_dif.php';
                     } else {
                         // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                        $url = 'perfil_dif.php';  
                     }
                     ?>
 
@@ -58,7 +65,7 @@ $idRol = $_SESSION['idRol'];
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
                 <span style="font-size: 0.7em;">

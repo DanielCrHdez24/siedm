@@ -20,14 +20,14 @@ require "code-login.php";
       <h1 class="title">Iniciar sesión</h1>
       <p></p>
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <!-- Grupo Input Correo -->
+
         <div class="input-group mb-3">
           <span class="input-group-text"><i class="bi bi-person"></i></span>
           <input class="form-control" type="email" name="correo" placeholder="Correo electrónico" required>
         </div>
-        <span class="msg-error"><?php echo isset($usuario_err) ? htmlspecialchars($usuario_err) : ''; ?></span>
+        <span class="msg-error"><?php echo isset($correo_err) ? htmlspecialchars($correo_err) : ''; ?></span>
 
-        <!-- Grupo Input Contraseña -->
+
         <div class="input-group mb-3">
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
           <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
