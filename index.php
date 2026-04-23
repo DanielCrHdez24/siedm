@@ -31,7 +31,8 @@ require "code-login.php";
 
         <div class="input-group mb-3">
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
-          <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
+          <input id="password" class="form-control" type="password" name="password" placeholder="Contraseña" required>
+          <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;"><i id="eyeIcon" class="bi bi-eye"></i></span>
         </div>
         <span class="msg-error"><?php echo isset($password_err) ? htmlspecialchars($password_err) : ''; ?></span>
 
@@ -47,6 +48,22 @@ require "code-login.php";
       <p class="text-slogan">"Por un historial médico sin papeles y donde la salud se encuentra con la innovación."</p>
     </div>
   </div>
+  <script>
+    function togglePassword() {
+      const password = document.getElementById("password");
+      const icon = document.getElementById("eyeIcon");
+
+      if (password.type === "password") {
+        password.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+      } else {
+        password.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+      }
+    }
+  </script>
 </body>
 
 </html>
