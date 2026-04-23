@@ -27,6 +27,7 @@ if ($idRol != 1) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <title>Agregar Médico</title>
 </head>
 

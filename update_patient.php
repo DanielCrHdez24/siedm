@@ -46,6 +46,7 @@ mysqli_close($link);
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <title>Modificar Paciente</title>
 </head>
 
@@ -84,7 +85,7 @@ mysqli_close($link);
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
                 <span style="font-size: 0.7em;">

@@ -93,6 +93,7 @@ $link->close();
                 crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
             <link rel="stylesheet" href="css/styles_desktop.css">
+            <link rel="icon" href="images/favicon.png" type="image/x-icon">
             <title>Información del paciente</title>
         </head>
 
@@ -127,7 +128,7 @@ $link->close();
                             <a href="consultar_historial.php">Historial Médico</a>
                         <?php endif; ?>
                         <?php if ($idRol == 1 || $idRol == 2): ?>
-                            <a href="configuración.php">Configuración</a>
+                            <a href="configuracion.php">Configuración</a>
                         <?php endif; ?>
                         <a href="logout.php" class="logout-link">Cerrar sesión</a>
                         <span style="font-size: 0.7em;">

@@ -6,11 +6,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit();
 }
 $idRol = $_SESSION['idRol'];
+if ($idRol != 1) {
+    header("location: panel.php");
+    exit();
+}
+
 $id_usuario = filter_input(INPUT_GET, 'id_usuario', FILTER_VALIDATE_INT); // Utiliza esta variable para obtener los datos relacionados con el usuario
-include 'conexion.php';
+require_once 'conexion.php';
 
 // Recuperar los datos del médico para precargar en el formulario
-$sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+$sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND id_rol IN (2,3)"; // Asegura que solo se puedan editar médicos o recepcionistas
 if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_stmt_bind_param($stmt, "i", $id_usuario);
     mysqli_stmt_execute($stmt);
@@ -24,12 +29,14 @@ if ($stmt = mysqli_prepare($link, $sql)) {
         $telefono = $row['telefono'];
         // Nota: No cargamos la contraseña por razones de seguridad
     } else {
-        die("Error: No se encontró el usuario.");
+        header("location: rud_medical.php?error=Usuario+no+encontrado");
+        exit();
     }
 
     mysqli_stmt_close($stmt);
 } else {
-    die("Error en la consulta de usuario: " . mysqli_error($link));
+    header("location: rud_medical.php?error=Error+en+la+consulta");
+    exit();
 }
 
 mysqli_close($link);
@@ -46,6 +53,8 @@ mysqli_close($link);
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar desactivar cuenta</title>
 </head>
 
@@ -58,20 +67,20 @@ mysqli_close($link);
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
+                // Verifica el rol y redirige a la página correspondiente
+                if ($idRol == 4) {
+                    // Si el rol es 4, manda a perfil.php
+                    $url = 'perfil.php';
+                } elseif ($idRol == 2 || $idRol == 3) {
+                    // Si el rol es 2 o 3, manda a perfil_dif.php
+                    $url = 'perfil_dif.php';
+                } else {
+                    // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
+                    $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                }
+                ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
                     <a href="users.php">Gestión de Usuarios</a>
@@ -84,7 +93,7 @@ mysqli_close($link);
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
                 <span style="font-size: 0.7em;">
@@ -97,27 +106,27 @@ mysqli_close($link);
 
         <div class="container">
             <h2 style="color: red; font-size: 24px; text-align: center;">¿Está seguro que quiere desactivar la cuenta?</h2>
-            <h3 style="color: red; font-size: 18px; text-align: center;">Se desactivará y no podrá recuperar la información ni ingresar al sistema.</h3>
+            <h3 style="color: red; font-size: 18px; text-align: center;">El usuario será desactivado y no podrá acceder al sistema.</h3>
             <br>
             <form class="form" action="borrar_medico.php" method="POST">
-                <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
+                <input style="display: none;" type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($id_usuario); ?>" readonly>
 
-                <label for="nombre">Nombre del Médico:</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" required>
+                <label for="nombre">Nombre del Médico o Recepcionista:</label>
+                <input style="color: #696969;" type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" required readonly>
 
                 <label for="primer_apellido">Primer Apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" value="<?php echo $primer_apellido; ?>" required>
+                <input style="color: #696969" type="text" id="primer_apellido" name="primer_apellido" value="<?php echo htmlspecialchars($primer_apellido); ?>" required readonly>
 
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" value="<?php echo $segundo_apellido; ?>" required>
+                <input style="color: #696969;" type="text" id="segundo_apellido" name="segundo_apellido" value="<?php echo htmlspecialchars($segundo_apellido); ?>" required readonly>
 
                 <label for="correo">Correo Electrónico:</label>
-                <input type="email" id="correo" name="correo" value="<?php echo $correo; ?>" required>
+                <input style="color: #696969;" type="email" id="correo" name="correo" value="<?php echo htmlspecialchars($correo); ?>" required readonly>
 
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" value="<?php echo $telefono; ?>" required>
+                <input style="color: #696969;" type="tel" id="telefono" name="telefono" value="<?php echo htmlspecialchars($telefono); ?>" required readonly>
                 <p></p>
-                
+
 
                 <button type="submit" class="btn"
                     onmouseover="this.style.backgroundColor='red'; this.style.color='white';"

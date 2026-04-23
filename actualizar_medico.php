@@ -7,12 +7,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit();
 }
 
+$idRol = $_SESSION['idRol'];
+if ($idRol != 1) {
+    header("location: panel.php");
+    exit();
+}
 // Conexión a la base de datos
-include 'conexion.php';
+require_once 'conexion.php';
 
 // Verifica si la solicitud es POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_usuario = $_POST['id_usuario']; 
+    $id_usuario = $_POST['id_usuario'];
     $nombre = trim($_POST['nombre']);
     $primer_apellido = trim($_POST['primer_apellido']);
     $segundo_apellido = trim($_POST['segundo_apellido']);
@@ -23,30 +28,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validación: Verificar que las contraseñas coincidan
     if (!empty($contrasena) && $contrasena !== $contrasena2) {
-        echo "Las contraseñas no coinciden.";
+        header("location: update_medical.php?id_usuario=$id_usuario&error=Las+contraseñas+no+coinciden");
         exit();
     }
 
     // Validación del correo electrónico
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        echo "Correo electrónico inválido.";
+        header("location: update_medical.php?id_usuario=$id_usuario&error=Correo+electrónico+inválido");
         exit();
     }
 
     // Consultar el ID del usuario asociado al paciente
-    $sql_usuario = "SELECT id_usuario FROM usuarios WHERE id_usuario = ?";
+    $sql_usuario = "SELECT id_usuario FROM usuarios WHERE id_usuario = ? AND id_rol IN (2,3)";
     if ($stmt_usuario = mysqli_prepare($link, $sql_usuario)) {
         mysqli_stmt_bind_param($stmt_usuario, "i", $id_usuario);
         mysqli_stmt_execute($stmt_usuario);
-        mysqli_stmt_bind_result($stmt_usuario, $id_usuario);
+        mysqli_stmt_bind_result($stmt_usuario, $id_encontrado);
 
         if (!mysqli_stmt_fetch($stmt_usuario)) {
-            echo "Error: No se encontró el médico.";
+            header("location: update_medical.php?id_usuario=$id_usuario&error=ID+inválido");
             exit();
         }
         mysqli_stmt_close($stmt_usuario);
     } else {
-        echo "Error en la consulta de médico: " . mysqli_error($link);
+        header("location: update_medical.php?id_usuario=$id_usuario&error=Error+al+consultar+usuario");
         exit();
     }
 
@@ -73,16 +78,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_stmt_execute($stmt)) {
             if ($_SESSION['idRol'] == 1) {
-                // Redirigir a perfil.php si el rol es 4
+               
                 header('Location: medico.php?id_usuario=' . $id_usuario . '&mensaje=Información+de+usuario+actualizada+correctamente!');
-                
             } else {
                 // Redirigir a paciente.php para otros roles
                 header('Location: panel.php?id_usuario=' . $id_usuario . '&mensaje=Mi+información+fue+actualizada+correctamente!');
             }
             exit();
         } else {
-            echo "Error al actualizar paciente: " . mysqli_error($link);
+            echo "Error al actualizar usuario: " . mysqli_error($link);
         }
 
         mysqli_stmt_close($stmt);
@@ -94,4 +98,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 mysqli_close($link);
-?>

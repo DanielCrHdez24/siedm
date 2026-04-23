@@ -27,6 +27,7 @@ if ($idRol != 1 && $idRol != 2) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <title>Dashboard</title>
 </head>
 
@@ -114,7 +115,7 @@ if (isset($_GET['mensaje'])):
                         <div class="option-icon">
                             <i class="fa-solid fa-user-pen"></i>
                         </div>
-                        <h3>Modificar Médico o recepcionista</h3>
+                        <h3>Modificar Médico o Recepcionista</h3>
                         <p>Busca, modifica o elimina usuarios.</p>
                         <a href="rud_medical.php" class="btn">Ir</a>
                     </div>

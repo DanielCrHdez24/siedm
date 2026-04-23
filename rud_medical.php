@@ -8,6 +8,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 $idRol = $_SESSION['idRol'];
+
+if ($idRol != 1) {
+    header("location: panel.php");
+    exit();
+}
 require_once "conexion.php"; // Conexión a la base de datos
 
 // Inicializa variables
@@ -17,14 +22,14 @@ $resultados = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
     $busqueda = trim($_POST["buscar"]);
 
-    // Consulta para buscar por ID, Nombre o correo
-    $sql = "SELECT id_usuario, nombre, correo 
+    // Consulta para buscar por Nombre o correo
+    $sql = "SELECT id_usuario, nombre, primer_apellido, segundo_apellido, correo 
         FROM usuarios 
-        WHERE (id_usuario LIKE ? OR nombre LIKE ? OR correo LIKE ?)
+        WHERE (nombre LIKE ? OR primer_apellido LIKE ? OR segundo_apellido LIKE ? OR correo LIKE ?)
         AND id_rol <> 1";
     $stmt = $link->prepare($sql);
     $param = "%" . $busqueda . "%";
-    $stmt->bind_param("sss", $param, $param, $param);
+    $stmt->bind_param("ssss", $param, $param, $param, $param);
     $stmt->execute();
     $resultados = $stmt->get_result();
 }
@@ -40,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Modificar paciente</title>
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <title>Gestión de médico o recepcionista</title>
 </head>
 
 <body class="principal">
@@ -74,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
                     <a href="consultar_historial.php">Historial Médico</a>
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
                 <span style="font-size: 0.7em;">
@@ -86,11 +92,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
 
         <div class="container">
             <h2>Modificación de Usuarios!</h2>
-            <p>Ingrese Nombre, correo o ID de Usuario.</p>
+            <p>Ingrese Nombre, apellido o correo electrónico.</p>
 
             <!-- Formulario de búsqueda -->
             <form method="POST">
-                <input type="text" id="inputBuscar" name="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar paciente...">
+                <input type="text" id="inputBuscar" name="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" oninput="this.value = this.value.toUpperCase()" placeholder="Buscar médico o recepcionista...">
                 <button type="submit" class="btn"> <i class="fas fa-search"></i> Buscar</button>
                 <button type="button" class="btn"
                     onclick="document.getElementById('inputBuscar').value='';">
@@ -117,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["buscar"])) {
             <?php while ($fila = $resultados->fetch_assoc()): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($fila["id_usuario"]); ?></td>
-                    <td><?php echo htmlspecialchars($fila["nombre"]); ?></td>
+                    <td><?php echo htmlspecialchars($fila["nombre"] . " " . $fila["primer_apellido"] . " " . $fila["segundo_apellido"]); ?></td>
                     <td><?php echo htmlspecialchars($fila["correo"]); ?></td>
                     <td>
                         <a href="update_medical.php?id_usuario=<?php echo $fila['id_usuario']; ?>" class="btn-modificar">

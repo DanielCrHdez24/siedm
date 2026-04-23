@@ -22,6 +22,7 @@ $id_Usuario = $_SESSION['idUsuario'];
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <title>Dashboard</title>
 </head>
 

@@ -9,18 +9,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 $idRol = $_SESSION['idRol'];
 
-// Incluir la conexión a la base de datos
-include 'conexion.php';
+if ($idRol != 1) {
+    header("location: panel.php");
+    exit();
+}
 
-// Verificar si el id_usuario está presente en la URL
+// Incluir la conexión a la base de datos
+require_once 'conexion.php';
+
+//Se verifica si el id_usuario está presente en la URL
 if (isset($_GET['id_usuario'])) {
     $id_usuario = (int) $_GET['id_usuario'];
 } else {
-    die("Error: El id_usuario no está presente.");
+    header("location: rud_medical.php?error=Usuario+no+encontrado");
+    exit();
 }
 
 // Recuperar los datos del médico para precargar en el formulario
-$sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+$sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND id_rol IN (2,3)"; // Asegura que solo se puedan editar médicos o recepcionistas
 if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_stmt_bind_param($stmt, "i", $id_usuario);
     mysqli_stmt_execute($stmt);
@@ -34,12 +40,14 @@ if ($stmt = mysqli_prepare($link, $sql)) {
         $telefono = $row['telefono'];
         // Nota: No cargamos la contraseña por razones de seguridad
     } else {
-        die("Error: No se encontró el usuario.");
+        header("location: rud_medical.php?error=Usuario+no+encontrado");
+        exit();
     }
 
     mysqli_stmt_close($stmt);
 } else {
-    die("Error en la consulta de usuario: " . mysqli_error($link));
+    header("location: rud_medical.php?error=Error+en+la+consulta");
+    exit();
 }
 
 mysqli_close($link);
@@ -56,7 +64,8 @@ mysqli_close($link);
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles_desktop.css">
-    <title>Actualizar Médico</title>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <title>Actualizar Médico o Recepcionista</title>
 </head>
 
 <body class="principal">
@@ -68,20 +77,20 @@ mysqli_close($link);
             <nav class="navbar">
                 <a href="panel.php">Dashboard</a>
                 <?php
-                    // Verifica el rol y redirige a la página correspondiente
-                    if ($idRol == 4) {
-                        // Si el rol es 4, manda a perfil.php
-                        $url = 'perfil.php';
-                    } elseif ($idRol == 2 || $idRol == 3) {
-                        // Si el rol es 2 o 3, manda a perfil_dif.php
-                        $url = 'perfil_dif.php';
-                    } else {
-                        // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
-                        $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
-                    }
-                    ?>
+                // Verifica el rol y redirige a la página correspondiente
+                if ($idRol == 4) {
+                    // Si el rol es 4, manda a perfil.php
+                    $url = 'perfil.php';
+                } elseif ($idRol == 2 || $idRol == 3) {
+                    // Si el rol es 2 o 3, manda a perfil_dif.php
+                    $url = 'perfil_dif.php';
+                } else {
+                    // Si no es ninguno de los roles especificados, redirige a una página por defecto o muestra un mensaje
+                    $url = 'perfil_dif.php';  // Puedes redirigir a una página de error o algo similar
+                }
+                ?>
 
-                    <a href="<?php echo $url; ?>">Mi Perfil</a>
+                <a href="<?php echo $url; ?>">Mi Perfil</a>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
                     <a href="users.php">Gestión de Usuarios</a>
@@ -94,7 +103,7 @@ mysqli_close($link);
                 <?php endif; ?>
                 <?php if ($idRol == 1 || $idRol == 2): ?>
                     <!-- Menú para Admin o Médico-->
-                    <a href="configuración.php">Configuración</a>
+                    <a href="configuracion.php">Configuración</a>
                 <?php endif; ?>
                 <a href="logout.php" class="logout-link">Cerrar sesión</a>
                 <span style="font-size: 0.7em;">
@@ -106,40 +115,40 @@ mysqli_close($link);
         </header>
 
         <div class="container">
-            <h2>Actualizar información del Médico</h2>
+            <h2>Actualizar información del Médico o Recepcionista</h2>
             <?php
-if (isset($_GET['mensaje'])): 
-    $mensaje = htmlspecialchars($_GET['mensaje']);
-?>
-    <div class="alert alert-success" role="alert">
-        <?php echo $mensaje; ?>
-    </div>
-<?php endif; ?>
-            
-            <form class="form" action="actualizar_medico.php" method="POST">
-                
-                <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
+            if (isset($_GET['mensaje'])):
+                $mensaje = htmlspecialchars($_GET['mensaje']);
+            ?>
+                <div class="alert alert-success" role="alert">
+                    <?php echo $mensaje; ?>
+                </div>
+            <?php endif; ?>
 
-                <label for="nombre">Nombre del Médico:</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" required>
+            <form class="form" action="actualizar_medico.php" method="POST" onsubmit="return validateForm();">
+
+                <input type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($id_usuario); ?>">
+
+                <label for="nombre">Nombre del Médico o Recepcionista:</label>
+                <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" required pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
 
                 <label for="primer_apellido">Primer Apellido:</label>
-                <input type="text" id="primer_apellido" name="primer_apellido" value="<?php echo $primer_apellido; ?>" required>
+                <input type="text" id="primer_apellido" name="primer_apellido" value="<?php echo htmlspecialchars($primer_apellido); ?>" required pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
 
                 <label for="segundo_apellido">Segundo Apellido:</label>
-                <input type="text" id="segundo_apellido" name="segundo_apellido" value="<?php echo $segundo_apellido; ?>" required>
+                <input type="text" id="segundo_apellido" name="segundo_apellido" value="<?php echo htmlspecialchars($segundo_apellido); ?>" required pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
 
                 <label for="correo">Correo Electrónico:</label>
-                <input type="email" id="correo" name="correo" value="<?php echo $correo; ?>" required>
+                <input type="email" id="correo" name="correo" value="<?php echo htmlspecialchars($correo); ?>" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Ingrese un correo electrónico válido">
 
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" value="<?php echo $telefono; ?>" required>
+                <input type="tel" id="telefono" name="telefono" value="<?php echo htmlspecialchars($telefono); ?>" required pattern="[0-9]{10}" title="Ingrese un número de teléfono válido de 10 dígitos">
 
                 <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese nueva contraseña (opcional)">
+                <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese nueva contraseña (opcional)" minlength="6" title="La contraseña debe tener al menos 6 caracteres">
 
                 <label for="contrasena2">Confirma la contraseña:</label>
-                <input type="password" id="contrasena2" name="contrasena2" placeholder="Confirma nueva contraseña (opcional)">
+                <input type="password" id="contrasena2" name="contrasena2" placeholder="Confirma nueva contraseña (opcional)" minlength="6" title="La contraseña debe tener al menos 6 caracteres">
 
                 <button type="submit" class="btn"><i class="fas fa-save"></i> Actualizar</button>
 
@@ -157,6 +166,18 @@ if (isset($_GET['mensaje'])):
     </div>
 
     <script src="js/menu.js"></script>
+       <script>
+        function validateForm() {
+            let pass1 = document.getElementById("contrasena").value;
+            let pass2 = document.getElementById("contrasena2").value;
+
+            if (pass1 !== pass2) {
+                alert("Las contraseñas no coinciden");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 
 </html>
