@@ -2,11 +2,13 @@
 require_once('tcpdf/tcpdf.php');
 require_once('conexion.php');
 
+$id_paciente = $_GET['id_paciente'] ?? $_POST['id_paciente'] ?? null;
+
 if (!isset($_POST['id_paciente'])) {
-    die("<script>alert('ID de paciente no proporcionado.'); window.close();</script>");
+    header("location: consultar_historial.php?mensaje=No se ha recibido el ID del paciente para generar el PDF.");
+    exit;
 }
 
-$id_paciente = $_POST['id_paciente'];
 
 // Consulta datos del paciente
 $stmt = $link->prepare("SELECT * FROM pacientes WHERE id_paciente = ?");
@@ -16,7 +18,8 @@ $result_paciente = $stmt->get_result();
 $paciente = $result_paciente->fetch_assoc();
 
 if (!$paciente) {
-    die("<script>alert('Paciente no encontrado.'); window.close();</script>");
+    header("location: consultar_historial.php?mensaje=Paciente no encontrado");
+    exit;
 }
 
 

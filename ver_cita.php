@@ -186,13 +186,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $cita_id_get !== null) {
                     <label for="recomendaciones">Recomendaciones:</label>
                     <textarea name="recomendaciones" id="recomendaciones" rows="4" cols="50" disabled><?php echo htmlspecialchars($citas['recomendaciones']); ?></textarea>
 
-                    <input type="hidden" name="id_paciente" value="<?php echo htmlspecialchars($citas['id_paciente']); ?>">
+                
+
+                    
+                    <form action="generar_pdf_receta.php" method="POST" target="_blank">
+                         <input type="hidden" name="id_paciente" value="<?php echo htmlspecialchars($citas['id_paciente']); ?>">
                     <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($citas['id_cita']); ?>">
-
-                    <button type="submit" class="btn" onclick="window.location.href='consultar_cita.php';">
-                        <i class="fas fa-arrow-left"></i> Volver
-                    </button>
-
+                    <button type="submit" class="btn">
+                        <i class="fas fa-file-pdf"></i> Receta PDF</button>
+                        <button type="button" class="btn" onclick="window.location.href='citas.php'">
+                        <i class="fas fa-arrow-left"></i> Volver a Citas</button>
+                </form>
+                   
             
 
         </div>

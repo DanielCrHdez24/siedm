@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
         <div class="container">
             <h2>Seleccionar paciente</h2>
             <?php if (isset($_GET['mensaje'])): ?>
-                <div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin: 10px 0; border-radius: 5px;">
                     <?= htmlspecialchars($_GET['mensaje']) ?>
                 </div>
             <?php endif; ?>
@@ -131,12 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                                             <i class="fas fa-eye"></i> Ver
                                         </a>
                                         
-                                        <form action="generar_pdf.php" method="post" target="_blank" style="margin:0;">
-                                            <input type="hidden" name="id_paciente" value="<?= $paciente['id_paciente'] ?>">
-                                            <button type="submit" style="background:none; border:none; color:#d9534f; cursor:pointer; padding:0;">
-                                                <i class="fas fa-file-pdf"></i> PDF
-                                            </button>
-                                        </form>
                                     </div>
                                 </td>
                             </tr>

@@ -80,7 +80,11 @@ if ($idRol != 1 && $idRol != 2 && $idRol != 3) {
         <div class="container">
             <h1>Agregar paciente.</h1>
             <p>Ingresa los datos del paciente para iniciar el nuevo expediente.</p>
-
+            <?php if (isset($_GET['error'])): ?>
+                <div class="error-message" style="color: white; margin-bottom: 15px; background-color: #e74c3c; padding: 10px; border-radius: 5px;">
+                    <?php echo htmlspecialchars($_GET['error']); ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Formulario para agregar expediente -->
             <form action="insertar_info_paciente.php" method="POST" enctype="multipart/form-data">
@@ -259,15 +263,7 @@ if ($idRol != 1 && $idRol != 2 && $idRol != 3) {
             }
         });
 
-        function previewImage(event) {
-            const preview = document.getElementById("preview");
-            const [file] = event.target.files;
-
-            if (file) {
-                preview.src = URL.createObjectURL(file);
-                preview.style.display = "block";
-            }
-        }
+     
     </script>
 </body>
 

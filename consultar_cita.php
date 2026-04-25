@@ -127,12 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
                                             <a href="ver_cita.php?id_cita=<?= $cita['id_cita'] ?>" title="Ver Cita">
                                                 <i class="fas fa-eye"></i> Ver
                                             </a>
-                                            <form action="generar_pdf.php" method="post" target="_blank" style="margin:0;">
-                                                <input type="hidden" name="id_paciente" value="<?= $cita['id_paciente'] ?>">
-                                                <button type="submit" style="background:none; border:none; color:#d9534f; cursor:pointer; padding:0;">
-                                                    <i class="fas fa-file-pdf" title="Descargar PDF"></i>
-                                                </button>
-                                            </form>
+                                           
+                                                <input type="hidden" name="id_cita" value="<?= $cita['id_cita'] ?>">
+                                             
+                                          
                                         <?php else: ?>
                                             <a href="procesar_cita.php?id_cita=<?= $cita['id_cita'] ?>" title="Atender Cita">
                                                 <i class="fas fa-edit"></i> Atender
@@ -151,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($busqueda)) {
             <br>
             <div style="text-align: center;">
                 <button type="button" class="btn" onclick="window.location.href='citas.php';">
-                    <i class="fas fa-arrow-left"></i> Volver a Citas
+                    <i class="fas fa-arrow-left"></i> Volver a Gestión de Citas
                 </button>
             </div>
             <br>
